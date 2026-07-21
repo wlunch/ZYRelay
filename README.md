@@ -2,6 +2,8 @@
 
 ZYRelay DocIntelligence 是一个面向 PDF、DOCX 的规则优先文档智能 MVP。它把原始文档转换为可追溯的 MOM/SOM/BOM UOM Package，核心产物是基于治理标签的 `semantic_index`。0.3.0 将合同与团队代码规范能力封装为具有稳定 v1 契约的插件，并统一提供 Python、HTTP 和 CLI 三种入口。
 
+Rule-first PDF/DOCX intelligence engine for structured extraction, semantic indexing, evidence tracing, and standardized Python, HTTP, and CLI integration.
+
 ## 范围与原则
 
 - PDF：PyMuPDF 文本提取和可靠页码
