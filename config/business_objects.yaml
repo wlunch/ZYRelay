@@ -1,0 +1,33 @@
+business_objects:
+  - type: Contract
+    name: 合同
+    ontology_uri: uom://bom/Contract
+    required_labels: [contract_no, party]
+    optional_labels: [amount, date, organization]
+    min_required_matches: 2
+
+  - type: Invoice
+    name: 发票
+    ontology_uri: uom://bom/Invoice
+    required_labels: [invoice_no, amount]
+    optional_labels: [date, organization]
+    min_required_matches: 2
+
+  - type: TeamCodeConvention
+    name: 团队代码规范
+    ontology_uri: uom://bom/TeamCodeConvention
+    required_labels: [convention_requirement]
+    optional_labels:
+      - naming_convention
+      - formatting_convention
+      - comment_convention
+      - exception_convention
+      - logging_convention
+      - security_convention
+      - testing_convention
+      - git_convention
+      - review_convention
+      - programming_language
+      - tool_mapping
+    min_required_matches: 1
+    candidate_builder: code_convention

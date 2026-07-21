@@ -1,0 +1,190 @@
+labels:
+  - code: convention_requirement
+    name: 规范要求
+    category: rule_element
+    value_type: text
+    aliases: [必须, 应当, 应, 需要, 禁止, 不得, 不允许, 严禁, 建议, 推荐, 避免, 宜, 尽量, 可以, 可选, 按需]
+    patterns:
+      - '(必须|应当|需要|禁止|不得|不允许|严禁|建议|推荐|避免|宜|尽量|可以|可选|按需)'
+    description: 表示规范强制程度或要求类型
+    enabled: true
+
+  - code: convention_mandatory
+    name: 强制规范
+    category: severity
+    value_type: enum
+    aliases: [必须, 应当, 需要]
+    patterns: ['(必须|应当|需要)']
+    description: 团队强制执行的代码规范
+    enabled: true
+
+  - code: convention_prohibited
+    name: 禁止规范
+    category: severity
+    value_type: enum
+    aliases: [禁止, 不得, 不允许, 严禁, 杜绝]
+    patterns: ['(禁止|不得|不允许|严禁|杜绝)']
+    description: 团队明确禁止的代码规范
+    enabled: true
+
+  - code: convention_recommended
+    name: 推荐规范
+    category: severity
+    value_type: enum
+    aliases: [建议, 推荐, 宜, 尽量, 优先]
+    patterns: ['(建议|推荐|宜|尽量|优先)']
+    description: 团队推荐执行的代码规范
+    enabled: true
+
+  - code: naming_convention
+    name: 命名规范
+    category: convention_type
+    value_type: code_convention
+    aliases: [命名规范, 命名, 包名, 类名, 方法名, 函数名, 变量名, 常量名, 参数名, 字段名]
+    patterns: []
+    description: 标识符命名相关规范
+    enabled: true
+
+  - code: formatting_convention
+    name: 格式规范
+    category: convention_type
+    value_type: code_convention
+    aliases: [格式规范, 格式, 代码格式, 缩进, 空格, 空行, 换行, 行宽, 字符以内, 大括号, Tab]
+    patterns: []
+    description: 代码排版和格式化相关规范
+    enabled: true
+
+  - code: comment_convention
+    name: 注释规范
+    category: convention_type
+    value_type: code_convention
+    aliases: [注释规范, 文档注释, 类注释, 方法注释, 函数注释, Javadoc, docstring, 行内注释]
+    patterns: []
+    description: 注释及文档相关规范
+    enabled: true
+
+  - code: exception_convention
+    name: 异常处理规范
+    category: convention_type
+    value_type: code_convention
+    aliases: [异常处理, 错误处理, 捕获异常, 抛出异常, try, catch, except, finally]
+    patterns: []
+    description: 异常捕获、转换和抛出规范
+    enabled: true
+
+  - code: logging_convention
+    name: 日志规范
+    category: convention_type
+    value_type: code_convention
+    aliases: [日志规范, 日志级别, 日志, logger, debug, info, warning, warn, error, trace, System.out]
+    patterns: []
+    description: 日志内容和日志级别相关规范
+    enabled: true
+
+  - code: api_convention
+    name: API规范
+    category: convention_type
+    value_type: code_convention
+    aliases: [API规范, REST, HTTP状态码, 请求参数, 响应结构, 接口命名, URL, Controller]
+    patterns: []
+    description: API接口设计相关规范
+    enabled: true
+
+  - code: database_convention
+    name: 数据库规范
+    category: convention_type
+    value_type: code_convention
+    aliases: [数据库规范, 表名, 字段名, 索引, SQL, 事务, 主键, 外键, MyBatis, Mapper, DAO]
+    patterns: []
+    description: 数据库开发相关规范
+    enabled: true
+
+  - code: security_convention
+    name: 安全编码规范
+    category: convention_type
+    value_type: code_convention
+    aliases: [安全编码规范, 安全规范, 安全, SQL注入, XSS, 密码, 密钥, 敏感信息, 权限校验, 输入校验, Token, AppSecret, 硬编码]
+    patterns: []
+    description: 安全编码相关规范
+    enabled: true
+
+  - code: testing_convention
+    name: 测试规范
+    category: convention_type
+    value_type: code_convention
+    aliases: [测试规范, 单元测试, 集成测试, 测试覆盖率, 覆盖率, 测试用例, mock, fixture, 自测]
+    patterns: []
+    description: 软件测试相关规范
+    enabled: true
+
+  - code: git_convention
+    name: Git规范
+    category: convention_type
+    value_type: code_convention
+    aliases: [Git规范, 提交规范, 提交信息, commit, 分支规范, branch, merge, rebase, pull request]
+    patterns: []
+    description: Git提交与分支管理规范
+    enabled: true
+
+  - code: review_convention
+    name: 代码评审规范
+    category: convention_type
+    value_type: code_convention
+    aliases: [Code Review, 代码评审, 审查要求, Reviewer, Pull Request, PR, 上线审核]
+    patterns: []
+    description: 代码评审流程和检查项规范
+    enabled: true
+
+  - code: architecture_convention
+    name: 架构规范
+    category: convention_type
+    value_type: code_convention
+    aliases: [架构规范, 分层, 依赖方向, 模块边界, 循环依赖, 领域模型, service, repository, controller]
+    patterns: []
+    description: 架构和模块边界相关规范
+    enabled: true
+
+  - code: positive_example
+    name: 正确示例
+    category: example
+    value_type: code
+    aliases: [正确示例, 推荐写法, 正例]
+    patterns: ['(正确示例|推荐写法|正例)']
+    description: 规范对应的正确代码示例
+    enabled: true
+
+  - code: negative_example
+    name: 错误示例
+    category: example
+    value_type: code
+    aliases: [错误示例, 反例, 禁止写法, 错误写法]
+    patterns: ['(错误示例|反例|禁止写法|错误写法)']
+    description: 规范对应的错误代码示例
+    enabled: true
+
+  - code: programming_language
+    name: 编程语言
+    category: scope
+    value_type: enum
+    aliases: [Java, Python, JavaScript, TypeScript, Go, C++, SQL, Shell]
+    patterns: ['\b(Java|Python|JavaScript|TypeScript|Go|C\+\+|SQL|Shell)\b']
+    description: 规范适用的编程语言
+    enabled: true
+
+  - code: framework_scope
+    name: 框架范围
+    category: scope
+    value_type: text
+    aliases: [Spring, Spring Boot, Spring Cloud, SSM, Django, FastAPI, React, Vue, MyBatis, Hibernate]
+    patterns: []
+    description: 规范适用的框架或技术栈
+    enabled: true
+
+  - code: tool_mapping
+    name: 检查工具
+    category: enforcement
+    value_type: tool
+    aliases: [Checkstyle, PMD, SpotBugs, SonarQube, Ruff, Flake8, Black, ESLint, Prettier, Semgrep]
+    patterns: []
+    description: 可以执行规范检查的工具
+    enabled: true

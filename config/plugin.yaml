@@ -1,0 +1,33 @@
+plugin:
+  plugin_id: zyrelay.doc-intelligence
+  name: ZYRelay DocIntelligence
+  description: PDF/DOCX 文档解析、语义标签、代码规范提取与 UOM 对象生成插件
+  version: 0.3.0
+  api_version: v1
+  vendor: ZYECOS
+  plugin_type: document_structuring
+  enabled: true
+
+execution:
+  synchronous: true
+  max_file_size_bytes: 26214400
+  temp_dir: data/plugin_tmp
+  retain_temp_files: false
+  default_output_detail: standard
+
+features:
+  contracts: true
+  code_conventions: true
+  semantic_index: true
+  convention_index: true
+  llm: false
+  fuzzy_matching: false
+
+overrides:
+  allowed:
+    - mode
+    - output_detail
+    - enable_llm
+    - enable_fuzzy_matching
+    - retain_intermediate
+    - language_hint

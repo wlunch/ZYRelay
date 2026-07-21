@@ -1,0 +1,7 @@
+version: "1.0.0"
+review_status: accepted
+value_formats:
+  contract_no: '^[A-Za-z0-9_-]+$'
+  invoice_no: '^[A-Za-z0-9_-]+$'
+  amount: '^(?:人民币|￥|¥)?[0-9,]+(?:\.[0-9]+)?$'
+  date: '^\d{4}[年\-/]\d{1,2}[月\-/]\d{1,2}日?$'

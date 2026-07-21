@@ -1,0 +1,80 @@
+labels:
+  - code: contract_no
+    name: 合同编号
+    category: field
+    value_type: string
+    aliases: [合同编号, 合同号, 协议编号]
+    patterns:
+      - '(合同编号|合同号|协议编号)[：:\s]*([A-Za-z0-9_-]+)'
+    description: 合同或协议的唯一编号
+    ontology_uri: uom://som/ContractNumber
+    business_object_type: Contract
+    enabled: true
+
+  - code: invoice_no
+    name: 发票编号
+    category: field
+    value_type: string
+    aliases: [发票编号, 发票号码, 票号]
+    patterns:
+      - '(发票编号|发票号码|票号)[：:\s]*([A-Za-z0-9_-]+)'
+    description: 发票的唯一编号
+    ontology_uri: uom://som/InvoiceNumber
+    business_object_type: Invoice
+    enabled: true
+
+  - code: party
+    name: 合同主体
+    category: entity
+    value_type: organization
+    aliases: [甲方, 乙方, 买方, 卖方, 供应商, 客户]
+    patterns:
+      - '(甲方|乙方|买方|卖方|供应商|客户)[：:\s]*([^\n，。,；;]{2,80})'
+    description: 合同、采购或销售业务中的参与方
+    ontology_uri: uom://som/Party
+    business_object_type: Contract
+    enabled: true
+
+  - code: amount
+    name: 金额
+    category: field
+    value_type: decimal
+    aliases: [金额, 合同金额, 总价, 含税金额]
+    patterns:
+      - '(金额|合同金额|总价|含税金额)[：:\s]*((?:人民币|￥|¥)?[0-9,]+(?:\.[0-9]+)?)'
+    description: 文档中的业务金额
+    ontology_uri: uom://som/Amount
+    enabled: true
+
+  - code: date
+    name: 日期
+    category: field
+    value_type: date
+    aliases: [日期, 签订日期, 生效日期, 到期日期]
+    patterns:
+      - '\d{4}[年\-/]\d{1,2}[月\-/]\d{1,2}日?'
+    description: 文档中的日期信息
+    ontology_uri: uom://som/Date
+    enabled: true
+
+  - code: person
+    name: 人员
+    category: entity
+    value_type: person
+    aliases: [联系人, 负责人, 法定代表人, 签署人]
+    patterns:
+      - '(联系人|负责人|法定代表人|签署人)[：:\s]*([\u4e00-\u9fff·]{2,20})'
+    description: 文档中出现的人员
+    ontology_uri: uom://som/Person
+    enabled: true
+
+  - code: organization
+    name: 组织机构
+    category: entity
+    value_type: organization
+    aliases: [公司, 有限公司, 集团, 部门]
+    patterns:
+      - '([\u4e00-\u9fffA-Za-z0-9（）()]{2,60}(?:有限公司|集团|公司|部门))'
+    description: 企业、机构或部门
+    ontology_uri: uom://som/Organization
+    enabled: true

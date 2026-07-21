@@ -1,0 +1,53 @@
+version: "1.0.0"
+
+category_labels:
+  naming_convention: naming
+  formatting_convention: formatting
+  comment_convention: comment
+  exception_convention: exception
+  logging_convention: logging
+  api_convention: api
+  database_convention: database
+  security_convention: security
+  testing_convention: testing
+  git_convention: git
+  review_convention: review
+  architecture_convention: architecture
+
+naming_styles:
+  PascalCase:
+    aliases: [大驼峰, UpperCamelCase, 帕斯卡命名]
+    regex: '^[A-Z][A-Za-z0-9]*$'
+  camelCase:
+    aliases: [小驼峰, lowerCamelCase]
+    regex: '^[a-z][A-Za-z0-9]*$'
+  snake_case:
+    aliases: [下划线命名, 小写下划线, snake_case]
+    regex: '^[a-z][a-z0-9_]*$'
+  UPPER_SNAKE_CASE:
+    aliases: [大写下划线, 全部大写并使用下划线分隔, 全部大写并用下划线分隔, 全部大写]
+    regex: '^[A-Z][A-Z0-9_]*$'
+  kebab-case:
+    aliases: [短横线命名, kebab-case]
+    regex: '^[a-z][a-z0-9-]*$'
+
+targets:
+  class_name: [类名规范, 类名]
+  method_name: [方法名规范, 方法名, 函数名]
+  variable_name: [变量与参数规范, 变量名, 参数名]
+  constant_name: [常量规范, 常量名]
+  package_name: [包名规范, 包名]
+  function_length: [方法长度, 单个方法, 函数长度, 单个函数]
+  line_length: [行长度, 单行代码长度, 单行]
+  unit_test_coverage: [单元测试覆盖率, 测试覆盖率, 覆盖率]
+  public_method: [公共方法, 对外接口, 业务方法]
+  commit_message: [提交信息, 提交备注, commit message]
+  source_code: [源代码, 代码中, 业务代码]
+
+forbidden_calls:
+  - value: System.out.println
+    target: source_code
+    tool_hint: text_search
+  - value: Runtime.exec
+    target: source_code
+    tool_hint: text_search
