@@ -54,6 +54,7 @@ class ResourcePlan(BaseModel):
     bindings: dict[str, str]
     fallback_bindings: dict[str, list[str]] = Field(default_factory=dict)
     selection_records: list[ResourceBindingRecord] = Field(default_factory=list)
+    resource_health: dict[str, dict[str, Any]] = Field(default_factory=dict)
     plan_hash: str
     created_at: datetime = Field(default_factory=utc_now)
 
@@ -65,6 +66,24 @@ class OCRLine(BaseModel):
     page_no: int
     text: str
     bbox: list[float] = Field(min_length=4, max_length=4)
+    polygon: list[list[float]] = Field(default_factory=list)
     confidence: float = Field(ge=0, le=1)
     reading_order: int = Field(ge=0)
     model_execution_id: str
+
+
+class OCRPageResult(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    page_no: int
+    width: int
+    height: int
+    orientation: int | None = None
+    orientation_confidence: float | None = Field(default=None, ge=0, le=1)
+    lines: list[OCRLine] = Field(default_factory=list)
+    average_confidence: float = Field(ge=0, le=1)
+    resource_id: str
+    resource_version: str
+    model_execution_id: str
+    page_artifact: dict[str, Any] = Field(default_factory=dict)
+    warnings: list[str] = Field(default_factory=list)

@@ -23,7 +23,7 @@ class BuildBlocksStep:
 
         draft: list[tuple[str, BlockType, int | None, int | None, dict]] = []
         parsed = context.parsed_document
-        if parsed.elements:
+        if parsed.elements and not parsed.pages:
             for element in parsed.elements:
                 draft.append(
                     (
@@ -34,8 +34,25 @@ class BuildBlocksStep:
                         element.metadata,
                     )
                 )
-        else:
+        elif parsed.pages:
+            elements_by_page: dict[int, list] = {}
+            for element in parsed.elements:
+                if element.page_no is not None:
+                    elements_by_page.setdefault(element.page_no, []).append(element)
             for page in parsed.pages:
+                ocr_elements = elements_by_page.get(page.page_no, [])
+                if ocr_elements:
+                    for element in ocr_elements:
+                        draft.append(
+                            (
+                                element.text,
+                                element.block_type,
+                                element.page_no,
+                                element.heading_level,
+                                element.metadata,
+                            )
+                        )
+                    continue
                 for text in self._split_pdf_page(page.text):
                     draft.append(
                         (
@@ -51,6 +68,17 @@ class BuildBlocksStep:
                             },
                         )
                     )
+        else:
+            for element in parsed.elements:
+                draft.append(
+                    (
+                        element.text,
+                        element.block_type,
+                        element.page_no,
+                        element.heading_level,
+                        element.metadata,
+                    )
+                )
 
         if not any(text.strip() for text, *_ in draft) and parsed.requires_ocr:
             context.blocks = []

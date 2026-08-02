@@ -44,6 +44,7 @@ class ResourcePlanner:
         bindings: dict[str, str] = {}
         fallbacks: dict[str, list[str]] = {}
         records: list[ResourceBindingRecord] = []
+        health: dict[str, dict] = {}
         for capability, system_default in self.default_bindings.items():
             configured = resources.get(capability, {})
             primary = str(configured.get("primary") or system_default)
@@ -65,6 +66,16 @@ class ResourcePlanner:
                 raise ValueError(f"资源不可用且没有 fallback：{capability}")
             bindings[capability] = selected
             fallbacks[capability] = alternatives
+            selected_health = self.registry.get(selected).health_check()
+            health[capability] = {
+                "selected_resource_id": selected,
+                "available": selected_health.available,
+                "status": selected_health.status,
+                "details": selected_health.details,
+                "primary_resource_id": primary,
+                "primary_available": self.registry.available(primary),
+                "fallbacks": alternatives,
+            }
             records.append(
                 ResourceBindingRecord(
                     capability=capability,
@@ -95,6 +106,7 @@ class ResourcePlanner:
             bindings=bindings,
             fallback_bindings=fallbacks,
             selection_records=records,
+            resource_health=health,
             plan_hash=plan_hash,
         )
         self.store.save(plan, plan.plan_id)

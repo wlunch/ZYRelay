@@ -93,6 +93,7 @@ class ModelExecutionRecord(BaseModel):
     fallback_used: bool = False
     warnings: list[str] = Field(default_factory=list)
     errors: list[dict[str, Any]] = Field(default_factory=list)
+    details: dict[str, Any] = Field(default_factory=dict)
 
 
 class RelayExecution(BaseModel):

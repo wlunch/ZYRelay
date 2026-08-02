@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "zyrelay-docintelligence"
-version = "0.4.0"
+version = "0.5.0"
 description = "Rule-first, provenance-aware document intelligence for PDF and DOCX"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -25,9 +25,13 @@ dev = [
   "pytest>=8.3,<9.0",
   "pytest-cov>=5.0,<7.0",
 ]
+test = [
+  "pytest>=8.3,<9.0",
+  "pytest-cov>=5.0,<7.0",
+]
 paddleocr = [
-  "paddleocr==2.9.1; python_version >= '3.11' and python_version < '3.13'",
-  "paddlepaddle==2.6.2; python_version >= '3.11' and python_version < '3.13'",
+  "paddleocr==3.7.0",
+  "paddlepaddle==3.3.1",
 ]
 
 [project.scripts]
@@ -45,4 +49,5 @@ addopts = "-q"
 pythonpath = ["."]
 markers = [
   "model_integration: requires a pre-provisioned optional model",
+  "slow: executes a real local OCR model",
 ]

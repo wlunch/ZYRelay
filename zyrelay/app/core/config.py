@@ -40,6 +40,7 @@ class Settings:
     ground_truth_dir: Path = CONFIG_ROOT / "ground_truth"
     max_file_size: int = 25 * 1024 * 1024
     keep_prepared: bool = True
+    retain_ocr_intermediates: bool = False
     fuzzy_enabled: bool = False
     fuzzy_threshold: float = 88.0
     llm_enabled: bool = False
@@ -86,6 +87,9 @@ class Settings:
             ),
             max_file_size=int(os.getenv("ZYRELAY_MAX_FILE_SIZE", cls.max_file_size)),
             keep_prepared=_env_bool("ZYRELAY_KEEP_PREPARED", cls.keep_prepared),
+            retain_ocr_intermediates=_env_bool(
+                "ZYRELAY_RETAIN_OCR_INTERMEDIATES", cls.retain_ocr_intermediates
+            ),
             fuzzy_enabled=_env_bool("ZYRELAY_FUZZY_ENABLED", cls.fuzzy_enabled),
             fuzzy_threshold=float(
                 os.getenv("ZYRELAY_FUZZY_THRESHOLD", cls.fuzzy_threshold)

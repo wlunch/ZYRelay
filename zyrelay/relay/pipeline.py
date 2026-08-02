@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import shutil
 import tempfile
 import time
 import uuid
@@ -9,6 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, TypeVar
 
+from zyrelay.app.core.config import load_yaml
 from zyrelay.app.models import BlockType
 from zyrelay.app.parsers import ParsedElement
 from zyrelay.app.pipeline.base import Pipeline
@@ -32,7 +34,8 @@ from zyrelay.app.storage import LocalStorage
 from zyrelay.ground import GroundChooseService, GroundRepository
 from zyrelay.provenance import ProvenanceService
 from zyrelay.resources import ResourcePlanner, ResourceRegistry
-from zyrelay.resources.models import OCRLine, ResourceRequest
+from zyrelay.resources.models import OCRLine, OCRPageResult, ResourceRequest
+from zyrelay.resources.pdf_render import render_pdf_pages
 
 from .models import (
     ModelExecutionRecord,
@@ -75,8 +78,9 @@ class SimpleRelayPipeline:
         content = self._read_input(request)
         suffix = Path(request.input.file_name).suffix.lower()
         incoming_dir = self.settings.data_root / ".incoming"
-        incoming_dir.mkdir(parents=True, exist_ok=True)
-        fd, raw_path = tempfile.mkstemp(suffix=suffix, dir=incoming_dir)
+        work_dir = incoming_dir / execution.execution_id
+        work_dir.mkdir(parents=True, exist_ok=True)
+        fd, raw_path = tempfile.mkstemp(suffix=suffix, dir=work_dir)
         input_path = Path(raw_path)
         try:
             with os.fdopen(fd, "wb") as stream:
@@ -181,7 +185,14 @@ class SimpleRelayPipeline:
                 if not request.enable_ocr:
                     execution.warnings.append("OCR 已由请求显式关闭")
                 else:
-                    self._run_ocr(execution, plan.bindings["ocr"], input_path, context)
+                    self._run_ocr(
+                        execution,
+                        plan.bindings["ocr"],
+                        plan.fallback_bindings.get("ocr", []),
+                        input_path,
+                        work_dir,
+                        context,
+                    )
             elif request.enable_ocr:
                 self._run(
                     execution,
@@ -328,37 +339,141 @@ class SimpleRelayPipeline:
             )
             raise
         finally:
-            input_path.unlink(missing_ok=True)
+            if self.settings.retain_ocr_intermediates:
+                input_path.unlink(missing_ok=True)
+            else:
+                shutil.rmtree(work_dir, ignore_errors=True)
             execution.completed_at = datetime.now(timezone.utc)
             execution.duration_ms = (time.perf_counter() - started) * 1000
             execution.current_step = "complete_execution"
 
-    def _run_ocr(self, execution, resource_id: str, path: Path, context) -> None:
+    def _run_ocr(
+        self,
+        execution,
+        resource_id: str,
+        fallback_resource_ids: list[str],
+        path: Path,
+        work_dir: Path,
+        context,
+    ) -> None:
+        if context.parsed_document is None:
+            raise RuntimeError("OCR requires a parsed document")
+        page_numbers = [
+            page.page_no
+            for page in context.parsed_document.pages
+            if not page.text.strip() and page.has_images
+        ]
+        if not page_numbers:
+            execution.warnings.append("OCR Gate 未找到需要识别的图片型 PDF 页面")
+            return
+        ocr_config = load_yaml(self.settings.model_config).get("models", {}).get("paddleocr", {})
+        dpi = int(ocr_config.get("dpi", 200))
+        artifacts = self._run(
+            execution,
+            "render_ocr_pages",
+            lambda: render_pdf_pages(
+                path,
+                page_numbers,
+                work_dir / "ocr-pages",
+                dpi=dpi,
+                execution_id=execution.execution_id,
+            ),
+            input_summary={"page_numbers": page_numbers, "dpi": dpi},
+        )
+        public_artifacts = [
+            {**artifact.public_metadata, "file_path": str(artifact.file_path)}
+            for artifact in artifacts
+        ]
+        planned_model_execution_id = f"MEXEC-{uuid.uuid4().hex[:16].upper()}"
         response = self._run(
             execution,
             "optional_ocr",
             lambda: self.resource_registry.get(resource_id).execute(
-                ResourceRequest(capability="ocr", file_path=str(path), document_type="pdf"),
+                ResourceRequest(
+                    capability="ocr",
+                    file_path=str(path),
+                    document_type="pdf",
+                    options={
+                        "page_artifacts": public_artifacts,
+                        "model_execution_id": planned_model_execution_id,
+                    },
+                ),
                 context,
             ),
             resource_id=resource_id,
         )
+        if response.status != "completed" and resource_id != "noop-ocr":
+            for fallback_id in fallback_resource_ids:
+                if fallback_id == resource_id or not self.resource_registry.available(fallback_id):
+                    continue
+                execution.warnings.append(
+                    f"OCR primary resource {resource_id} 不可用，已回退到 {fallback_id}"
+                )
+                response = self._run(
+                    execution,
+                    "optional_ocr_fallback",
+                    lambda: self.resource_registry.get(fallback_id).execute(
+                        ResourceRequest(
+                            capability="ocr",
+                            file_path=str(path),
+                            document_type="pdf",
+                            options={"page_artifacts": public_artifacts},
+                        ),
+                        context,
+                    ),
+                    resource_id=fallback_id,
+                )
+                resource_id = fallback_id
+                break
         execution.warnings.extend(response.warnings)
-        lines = response.payload if isinstance(response.payload, list) else []
-        if lines and all(isinstance(item, OCRLine) for item in lines):
-            self._apply_ocr_lines(context, lines, resource_id)
+        pages = response.payload if isinstance(response.payload, list) else []
+        if pages and all(isinstance(item, OCRPageResult) for item in pages):
+            self._apply_ocr_pages(context, pages, resource_id, ocr_config)
+        elif pages and all(isinstance(item, OCRLine) for item in pages):
+            # Compatibility for custom resources built against the 0.4 OCRLine
+            # contract; production PaddleOCR always returns OCRPageResult.
+            legacy_lines = list(pages)
+            page_sizes = {
+                page.page_no: (int(page.width or 0), int(page.height or 0))
+                for page in context.parsed_document.pages
+            }
+            grouped: dict[int, list[OCRLine]] = {}
+            for line in legacy_lines:
+                grouped.setdefault(line.page_no, []).append(line)
+            pages = [
+                OCRPageResult(
+                    page_no=page_no,
+                    width=page_sizes.get(page_no, (0, 0))[0],
+                    height=page_sizes.get(page_no, (0, 0))[1],
+                    lines=group,
+                    average_confidence=sum(line.confidence for line in group) / len(group),
+                    resource_id=resource_id,
+                    resource_version=self.resource_registry.get(resource_id).version,
+                    model_execution_id=group[0].model_execution_id,
+                )
+                for page_no, group in grouped.items()
+            ]
+            self._apply_ocr_pages(context, pages, resource_id, ocr_config)
+        lines = [line for page in pages if isinstance(page, OCRPageResult) for line in page.lines]
         if resource_id in {"paddleocr", "noop-ocr"}:
-            model_id = response.metadata.get("model_execution_id") or f"MEXEC-{uuid.uuid4().hex[:16].upper()}"
+            model_id = response.metadata.get("model_execution_id") or planned_model_execution_id
             record = ModelExecutionRecord(
                 model_execution_id=model_id,
                 execution_id=execution.execution_id,
                 step_name="optional_ocr",
                 resource_id=resource_id,
-                resource_version=self.resource_registry.get(resource_id).version,
+                resource_version=str(
+                    response.metadata.get("paddleocr_version")
+                    or self.resource_registry.get(resource_id).version
+                ),
                 model_name="PaddleOCR" if resource_id == "paddleocr" else "NoOpOCR",
+                model_version=response.metadata.get("model_version"),
                 capability="ocr",
-                input_references=[f"document:{execution.document_id or 'pending'}"],
-                output_references=[f"ocr_lines:{len(lines)}"],
+                input_references=[artifact["uri"] for artifact in public_artifacts],
+                output_references=[
+                    f"ocr_lines:{len(lines)}",
+                    *[f"ocr_page:{page.page_no}" for page in pages if isinstance(page, OCRPageResult)],
+                ],
                 status=response.status,
                 started_at=datetime.now(timezone.utc),
                 completed_at=datetime.now(timezone.utc),
@@ -366,12 +481,28 @@ class SimpleRelayPipeline:
                 confidence_summary=self._confidence_summary(lines),
                 fallback_used=resource_id == "noop-ocr" or response.status != "completed",
                 warnings=response.warnings,
+                details={
+                    "device": response.metadata.get("device", "cpu"),
+                    "paddleocr_version": response.metadata.get("paddleocr_version"),
+                    "paddlepaddle_version": response.metadata.get("paddlepaddle_version"),
+                    "model_load_ms": response.metadata.get("model_load_ms", 0.0),
+                    "page_count": len(pages),
+                    "line_count": len(lines),
+                    "page_metrics": response.metadata.get("page_metrics", []),
+                    "page_artifacts": [
+                        {key: value for key, value in artifact.items() if key != "file_path"}
+                        for artifact in public_artifacts
+                    ],
+                },
             )
             execution.model_executions.append(record)
             self.model_execution_store.save(record, record.model_execution_id)
 
     @staticmethod
-    def _apply_ocr_lines(context, lines: list[OCRLine], resource_id: str) -> None:
+    def _apply_ocr_pages(context, pages: list[OCRPageResult], resource_id: str, config: dict) -> None:
+        lines = [line for page in pages for line in page.lines]
+        resource_version = pages[0].resource_version if pages else "unknown"
+        threshold = float(config.get("minimum_line_confidence", 0.5))
         context.parsed_document.elements = [
             ParsedElement(
                 text=line.text,
@@ -380,11 +511,14 @@ class SimpleRelayPipeline:
                 metadata={
                     "source_method": "ocr",
                     "resource_id": resource_id,
+                    "resource_version": resource_version,
                     "model_execution_id": line.model_execution_id,
                     "ocr_confidence": line.confidence,
                     "bbox": line.bbox,
+                    "polygon": line.polygon,
                     "page_no": line.page_no,
                     "reading_order": line.reading_order,
+                    "low_confidence": line.confidence < threshold,
                 },
             )
             for line in lines
@@ -396,6 +530,7 @@ class SimpleRelayPipeline:
         for page in context.parsed_document.pages:
             if page.page_no in by_page:
                 page.text = "\n".join(by_page[page.page_no])
+                page.text_source = "ocr"
 
     @staticmethod
     def _confidence_summary(lines: list[OCRLine]) -> dict[str, float]:
@@ -433,6 +568,8 @@ class SimpleRelayPipeline:
                 ground_snapshot_id=snapshot_id,
                 resource_plan_id=plan_id,
                 model_execution_ids=model_ids,
+                blocks=context.blocks,
+                model_executions=execution.model_executions,
             )
             updated.append(candidate.model_copy(update={"provenance_id": record.provenance_id}))
         context.code_conventions = updated

@@ -12,6 +12,7 @@ class ParsedPage:
     width: float | None = None
     height: float | None = None
     has_images: bool = False
+    text_source: str = "none"
 
 
 @dataclass

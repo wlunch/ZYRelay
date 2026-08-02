@@ -21,4 +21,6 @@ class ProvenanceRecord(BaseModel):
     rule_ids: list[str] = Field(default_factory=list)
     model_execution_ids: list[str] = Field(default_factory=list)
     validation_records: list[str] = Field(default_factory=list)
+    evidence: list[dict] = Field(default_factory=list)
+    model_details: list[dict] = Field(default_factory=list)
     created_at: datetime = Field(default_factory=utc_now)

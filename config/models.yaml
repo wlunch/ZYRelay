@@ -1,8 +1,24 @@
 models:
   paddleocr:
     enabled: true
+    provider: paddleocr
+    language: ch
+    device: cpu
     allow_download: false
     offline_mode: true
+    lazy_load: true
     cache_dir: data/model_cache/paddleocr
-    language: ch
-    use_gpu: false
+    minimum_line_confidence: 0.50
+    minimum_page_confidence: 0.55
+    use_orientation: true
+    dpi: 200
+    retain_intermediate: false
+    model_source: bos
+    model_version: "PaddleOCR 3.7.0 / PP-OCRv6-medium"
+    paddlepaddle_version: "3.3.1"
+    required_models:
+      - PP-LCNet_x1_0_doc_ori
+      - PP-LCNet_x1_0_textline_ori
+      - PP-OCRv6_medium_det
+      - PP-OCRv6_medium_rec
+    approval_status: development

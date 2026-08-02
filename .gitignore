@@ -2,6 +2,7 @@
 .env
 .pytest_cache/
 .venv/
+.venv-paddleocr/
 __pycache__/
 *.py[cod]
 .coverage
@@ -17,6 +18,7 @@ data/ground_selections/*
 data/ground_snapshots/*
 data/resource_plans/*
 data/model_executions/*
+data/model_installations/*
 data/provenance/*
 data/model_cache/*
 !data/documents/.gitkeep
@@ -30,5 +32,6 @@ data/model_cache/*
 !data/ground_snapshots/.gitkeep
 !data/resource_plans/.gitkeep
 !data/model_executions/.gitkeep
+!data/model_installations/.gitkeep
 !data/provenance/.gitkeep
 !data/model_cache/.gitkeep

@@ -44,6 +44,7 @@ class PDFParser:
                         width=float(page.rect.width),
                         height=float(page.rect.height),
                         has_images=has_images,
+                        text_source="native" if text.strip() else "none",
                     )
                 )
 

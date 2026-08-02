@@ -2,7 +2,7 @@ plugin:
   plugin_id: zyrelay.doc-intelligence
   name: ZYRelay DocIntelligence
   description: PDF/DOCX 文档解析、语义标签、代码规范提取与 UOM 对象生成插件
-  version: 0.4.0
+  version: 0.5.0
   api_version: v1
   vendor: ZYECOS
   plugin_type: document_structuring
