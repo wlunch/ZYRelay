@@ -16,6 +16,8 @@ from zyrelay.app.core.logging import configure_logging
 from zyrelay.app.services import DocumentService
 from zyrelay.plugin import DocIntelligencePlugin, PluginRegistry
 from zyrelay.plugin.dependencies import create_default_dependencies
+from zyrelay.relay import RelayService
+from zyrelay.app.api.routes_relay import router as relay_router
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -38,6 +40,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         )
     )
     app.state.plugin_registry = registry
+    app.state.relay_service = RelayService(settings)
 
     @app.middleware("http")
     async def request_context(request: Request, call_next):
@@ -68,6 +71,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(search_router)
     app.include_router(conventions_router)
     app.include_router(plugins_router)
+    app.include_router(relay_router)
     return app
 
 

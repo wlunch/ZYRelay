@@ -139,6 +139,7 @@ class CodeConventionCandidate(BaseModel):
     status: ConventionStatus = ConventionStatus.DETECTED
     ontology_uri: str | None = "uom://som/CodeConvention"
     rule_expression: RuleExpression | None = None
+    provenance_id: str | None = None
     version: str = "1.0"
     metadata: dict[str, Any] = Field(default_factory=dict)
 

@@ -36,6 +36,8 @@ class DOCXParser:
                                 text=text,
                                 block_type=BlockType.TABLE,
                                 metadata={
+                                    "source_method": "docx_xml",
+                                    "resource_id": "python-docx-parser",
                                     "rows": len(item.rows),
                                     "columns": max(
                                         (len(row.cells) for row in item.rows), default=0
@@ -102,6 +104,8 @@ class DOCXParser:
             block_type=block_type,
             heading_level=heading_level,
             metadata={
+                "source_method": "docx_xml",
+                "resource_id": "python-docx-parser",
                 "style": style_name,
                 "fonts": fonts,
                 "monospace": any(font.casefold() in monospace_names for font in fonts),

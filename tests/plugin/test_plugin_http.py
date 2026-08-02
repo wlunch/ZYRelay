@@ -33,7 +33,7 @@ def _client(tmp_path: Path) -> TestClient:
 def test_manifest_capabilities_and_schema_http(tmp_path) -> None:
     client = _client(tmp_path)
     assert client.get("/api/v1/plugins").status_code == 200
-    assert client.get(PLUGIN_URL).json()["version"] == "0.3.0"
+    assert client.get(PLUGIN_URL).json()["version"] == "0.4.0"
     assert (
         client.get(f"{PLUGIN_URL}/capabilities").json()["features"]["ocr"]
         is False

@@ -43,7 +43,12 @@ class BuildBlocksStep:
                             BlockType.PARAGRAPH,
                             page.page_no,
                             None,
-                            {"page_width": page.width, "page_height": page.height},
+                            {
+                                "source_method": "native_pdf_text",
+                                "resource_id": "pymupdf-parser",
+                                "page_width": page.width,
+                                "page_height": page.height,
+                            },
                         )
                     )
 

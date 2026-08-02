@@ -1,6 +1,6 @@
 # ZYRelay DocIntelligence
 
-ZYRelay DocIntelligence 是一个面向 PDF、DOCX 的规则优先文档智能 MVP。它把原始文档转换为可追溯的 MOM/SOM/BOM UOM Package，核心产物是基于治理标签的 `semantic_index`。0.3.0 将合同与团队代码规范能力封装为具有稳定 v1 契约的插件，并统一提供 Python、HTTP 和 CLI 三种入口。
+ZYRelay DocIntelligence 是一个面向 PDF、DOCX 的规则优先文档智能 MVP。它把原始文档转换为可追溯的 MOM/SOM/BOM UOM Package，核心产物是基于治理标签的 `semantic_index`。0.4.0 新增了可冻结的 GroundChoose、资源规划、按需 OCR 闸门和端到端 provenance；既有合同与团队代码规范能力仍通过稳定 v1 插件契约提供 Python、HTTP 和 CLI 三种入口。
 
 Rule-first PDF/DOCX intelligence engine for structured extraction, semantic indexing, evidence tracing, and standardized Python, HTTP, and CLI integration.
 
@@ -45,7 +45,12 @@ data/
 ├── doc_prepare/{document_id}/blocks.json
 ├── doc_index/{document_id}.json
 ├── plugin_executions/{execution_id}.json
-└── plugin_artifacts/{execution_id}/{artifact_id}.json
+├── plugin_artifacts/{execution_id}/{artifact_id}.json
+├── relay_executions/{execution_id}.json
+├── ground_selections/{selection_id}.json
+├── ground_snapshots/{snapshot_id}.json
+├── resource_plans/{resource_plan_id}.json
+└── provenance/{provenance_id}.json
 ```
 
 `data/doc_index/{document_id}.json` 是完整且可独立校验的 UOM Package。
@@ -68,6 +73,70 @@ curl http://127.0.0.1:8000/health
 ```
 
 OpenAPI 文档位于 `http://127.0.0.1:8000/docs`。
+
+## Relay 流程（0.4.0）
+
+`Relay` 是面向团队规范文档的固定、同步编排入口；它复用既有解析、标签、代码规范和 UOM 步骤，不引入工作流引擎。
+
+```text
+PDF / DOCX
+  → GroundChoose（选择并冻结团队规则）
+  → ResourcePlan（记录解析、OCR、布局等资源）
+  → 原生文本解析
+  → 仅扫描型 PDF 的 OCR 闸门
+  → 块、标签、规范候选与证据校验
+  → Provenance / semantic index / UOM Package
+```
+
+- Ground 选择优先级：显式 `ground_profile`、项目、团队、企业、模式、全局默认。每次执行都会保存不可变的配置快照与哈希。
+- 资源由 `config/enterprises/default/resources.yaml` 声明；默认 PDF/DOCX 解析、启发式布局、证据校验和本地存储均为本地资源。
+- OCR 只在 PDF 原生文本不足、且请求 `enable_ocr=true` 时运行；DOCX 和已有文本的 PDF 不会触发 OCR。
+- 每个规范候选都会保存 `provenance_id`，可回查文档、block、页码、offset、命中证据、所用资源、模型执行记录和 Ground 快照。
+
+### Ground 与模型配置
+
+- `config/ground/`：Ground profile、继承关系及标签/规则资产引用。
+- `config/ground/profiles.yaml`：企业、团队、项目和模式的绑定优先级。
+- `config/enterprises/default/resources.yaml`：资源主备顺序。
+- `config/models.yaml`：可选模型的离线策略和缓存路径。
+
+默认 OCR 为 `noop-ocr`：扫描 PDF 会被明确标为部分完成，绝不会用伪造文本冒充识别结果。可选 `paddleocr` 适配器默认禁止下载模型；只有预先安装依赖、预置模型缓存并创建 `data/model_cache/paddleocr/ready.json` 后才会被规划器选中。
+
+检查模型状态：
+
+```bash
+python -m zyrelay.models status
+python -m zyrelay.models verify paddleocr
+```
+
+PaddleOCR 可选依赖仅在 Python 3.11–3.12 环境声明：
+
+```bash
+pip install -e '.[dev,paddleocr]'
+```
+
+### Relay HTTP 调用与追溯
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/v1/relay/process \
+  -F 'file=@examples/team_code_convention.docx' \
+  -F 'enterprise_id=default' \
+  -F 'team_id=platform' \
+  -F 'mode=code_convention' \
+  -F 'enable_ocr=true' \
+  -F 'output_detail=full'
+```
+
+响应包含 `execution_id`、`ground_selection_id`、`ground_snapshot_id`、`resource_plan_id`、`model_execution_ids` 和各候选的 `provenance_id`。以下接口可安全回查，不会暴露本机绝对路径：
+
+```bash
+curl http://127.0.0.1:8000/api/v1/relay/executions/EXEC-ID
+curl http://127.0.0.1:8000/api/v1/relay/executions/EXEC-ID/ground
+curl http://127.0.0.1:8000/api/v1/relay/executions/EXEC-ID/resources
+curl http://127.0.0.1:8000/api/v1/relay/executions/EXEC-ID/models
+curl http://127.0.0.1:8000/api/v1/relay/provenance/PROV-ID
+curl http://127.0.0.1:8000/api/v1/relay/conventions/CANDIDATE-ID/provenance
+```
 
 ## 标签配置
 
@@ -262,7 +331,7 @@ curl 'http://127.0.0.1:8000/api/v1/conventions/search?document_id=DOC-ID&keyword
     "team_convention_profiles": []
   },
   "processing": {
-    "pipeline_version": "0.3.0",
+    "pipeline_version": "0.4.0",
     "ground_truth_version": "1.0.0",
     "label_config_hash": "...",
     "business_object_config_hash": "...",
@@ -388,7 +457,7 @@ pytest
 ## 已知限制
 
 - DOCX 文件本身通常不保存可靠的最终物理分页信息，因此 DOCX blocks 的 `page_no` 为 `null`；PDF 页码可靠。
-- 图片型 PDF 只检测并标记 `requires_ocr=true`；MVP 默认的 OCRProvider 不执行 OCR。
+- 图片型 PDF 默认使用 NoOp OCR，只会报告 `requires_ocr=true` 和部分完成状态；真实 PaddleOCR 需要在 Python 3.11–3.12 环境手工预置依赖与本地模型缓存，当前仓库不下载或分发模型权重。
 - PDF Block 使用页面文本和空行切分，不恢复复杂多栏阅读顺序、表格结构或 bbox。
 - PDF 中的规范标题、列表和代码示例仅使用文本启发式识别；复杂排版可能需要人工复核。
 - 第一迭代只生成单文档规范候选，不执行代码扫描、AST 分析或外部静态分析工具。

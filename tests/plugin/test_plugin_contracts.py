@@ -24,7 +24,7 @@ def test_manifest_capabilities_and_schemas(plugin_factory) -> None:
     capabilities = plugin.get_capabilities()
 
     assert manifest.plugin_id == "zyrelay.doc-intelligence"
-    assert manifest.version == "0.3.0"
+    assert manifest.version == "0.4.0"
     assert manifest.model_dump_json()
     assert capabilities.features["ocr"] is False
     assert capabilities.features["llm_optional"] is True
@@ -36,7 +36,7 @@ def test_registry_and_capabilities_operation(plugin_factory) -> None:
     plugin = plugin_factory()
     registry = PluginRegistry()
     registry.register(plugin)
-    assert registry.get_manifest("zyrelay.doc-intelligence").version == "0.3.0"
+    assert registry.get_manifest("zyrelay.doc-intelligence").version == "0.4.0"
     assert len(registry.list_plugins()) == 1
     response = plugin.execute(
         PluginRequest(operation=PluginOperation.GET_CAPABILITIES)
@@ -128,7 +128,7 @@ def test_python_sdk_output_levels_and_execution_record(
     response = plugin.execute(request)
 
     assert response.status == PluginStatus.COMPLETED
-    assert response.plugin_version == "0.3.0"
+    assert response.plugin_version == "0.4.0"
     assert response.result is not None
     assert response.result.summary.document_id
     assert response.result.mentions

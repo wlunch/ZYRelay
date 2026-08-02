@@ -32,6 +32,13 @@ class ProcessingRecord(BaseModel):
     business_object_config_hash: str
     code_convention_label_config_hash: str | None = None
     code_rule_pattern_config_hash: str | None = None
+    relay_execution_id: str | None = None
+    ground_selection_id: str | None = None
+    ground_snapshot_id: str | None = None
+    resource_plan_id: str | None = None
+    resolved_ground_hash: str | None = None
+    resource_plan_hash: str | None = None
+    model_execution_ids: list[str] = Field(default_factory=list)
     steps: list[ProcessingStepRecord] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
     errors: list[dict[str, Any]] = Field(default_factory=list)
