@@ -1,0 +1,8 @@
+models:
+  paddleocr:
+    enabled: true
+    allow_download: false
+    offline_mode: true
+    cache_dir: data/model_cache/paddleocr
+    language: ch
+    use_gpu: false

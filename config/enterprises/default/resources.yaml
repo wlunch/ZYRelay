@@ -1,0 +1,19 @@
+enterprise_id: default
+profile_id: default-resources
+version: 1.0.0
+resources:
+  pdf_parser:
+    primary: pymupdf-parser
+  docx_parser:
+    primary: python-docx-parser
+  ocr:
+    primary: paddleocr
+    fallbacks: [noop-ocr]
+  layout:
+    primary: heuristic-layout
+  convention_classifier:
+    primary: rule-convention-classifier
+  evidence_validator:
+    primary: rule-evidence-validator
+  storage:
+    primary: local-storage

@@ -1,0 +1,16 @@
+profile_id: code-convention-sampling
+name: 团队代码规范打样
+version: 1.0.0
+status: active
+applicable_modes: [code_convention, auto]
+labels:
+  - config/code_convention_labels.yaml
+rule_patterns:
+  - config/code_rule_patterns.yaml
+business_objects:
+  - config/business_objects.yaml
+validation_rules:
+  - config/ground/code_validation_rules.yaml
+resource_profile_id: default-resources
+metadata:
+  sampling: true

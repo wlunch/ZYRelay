@@ -1,0 +1,6 @@
+version: 1.0.0
+rules:
+  - rule_id: evidence_text_matches_block
+    description: 原文证据必须与 block offset 对应文本一致
+  - rule_id: numeric_threshold_in_evidence
+    description: 数值阈值必须存在于原文证据中

@@ -1,0 +1,9 @@
+bindings:
+  projects: {}
+  teams: {}
+  enterprises: {}
+  modes:
+    code_convention: code-convention-sampling
+    contract: contract-default
+    auto: code-convention-sampling
+global_default: code-convention-sampling

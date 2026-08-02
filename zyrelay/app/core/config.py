@@ -34,6 +34,9 @@ class Settings:
     )
     code_rule_pattern_config: Path = CONFIG_ROOT / "code_rule_patterns.yaml"
     plugin_config: Path = CONFIG_ROOT / "plugin.yaml"
+    ground_config_dir: Path = CONFIG_ROOT / "ground"
+    enterprise_config_dir: Path = CONFIG_ROOT / "enterprises"
+    model_config: Path = CONFIG_ROOT / "models.yaml"
     ground_truth_dir: Path = CONFIG_ROOT / "ground_truth"
     max_file_size: int = 25 * 1024 * 1024
     keep_prepared: bool = True
@@ -66,6 +69,17 @@ class Settings:
             ),
             plugin_config=Path(
                 os.getenv("ZYRELAY_PLUGIN_CONFIG", cls.plugin_config)
+            ),
+            ground_config_dir=Path(
+                os.getenv("ZYRELAY_GROUND_CONFIG_DIR", cls.ground_config_dir)
+            ),
+            enterprise_config_dir=Path(
+                os.getenv(
+                    "ZYRELAY_ENTERPRISE_CONFIG_DIR", cls.enterprise_config_dir
+                )
+            ),
+            model_config=Path(
+                os.getenv("ZYRELAY_MODEL_CONFIG", cls.model_config)
             ),
             ground_truth_dir=Path(
                 os.getenv("ZYRELAY_GROUND_TRUTH_DIR", cls.ground_truth_dir)

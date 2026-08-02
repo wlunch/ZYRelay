@@ -1,0 +1,10 @@
+profile_id: contract-default
+name: 合同文档默认 Ground
+version: 1.0.0
+status: active
+applicable_modes: [contract, auto]
+labels:
+  - config/labels.yaml
+business_objects:
+  - config/business_objects.yaml
+resource_profile_id: default-resources
