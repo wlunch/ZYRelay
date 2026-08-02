@@ -1,6 +1,6 @@
 # ZYRelay DocIntelligence
 
-ZYRelay DocIntelligence 是一个面向 PDF、DOCX 的规则优先文档智能 MVP。它把原始文档转换为可追溯的 MOM/SOM/BOM UOM Package，核心产物是基于治理标签的 `semantic_index`。0.4.0 新增了可冻结的 GroundChoose、资源规划、按需 OCR 闸门和端到端 provenance；既有合同与团队代码规范能力仍通过稳定 v1 插件契约提供 Python、HTTP 和 CLI 三种入口。
+ZYRelay DocIntelligence 是一个面向 PDF、DOCX 的规则优先文档智能 MVP。它把原始文档转换为可追溯的 MOM/SOM/BOM UOM Package，核心产物是基于治理标签的 `semantic_index`。0.5.0 已真实集成离线 PaddleOCR：扫描 PDF 经过页面渲染、OCR、block、规则、证据和 provenance 后生成 UOM；既有合同与团队代码规范能力仍通过稳定 v1 插件契约提供 Python、HTTP 和 CLI 三种入口。
 
 Rule-first PDF/DOCX intelligence engine for structured extraction, semantic indexing, evidence tracing, and standardized Python, HTTP, and CLI integration.
 
@@ -74,7 +74,7 @@ curl http://127.0.0.1:8000/health
 
 OpenAPI 文档位于 `http://127.0.0.1:8000/docs`。
 
-## Relay 流程（0.4.0）
+## Relay 流程（0.5.0）
 
 `Relay` 是面向团队规范文档的固定、同步编排入口；它复用既有解析、标签、代码规范和 UOM 步骤，不引入工作流引擎。
 
@@ -90,8 +90,9 @@ PDF / DOCX
 
 - Ground 选择优先级：显式 `ground_profile`、项目、团队、企业、模式、全局默认。每次执行都会保存不可变的配置快照与哈希。
 - 资源由 `config/enterprises/default/resources.yaml` 声明；默认 PDF/DOCX 解析、启发式布局、证据校验和本地存储均为本地资源。
-- OCR 只在 PDF 原生文本不足、且请求 `enable_ocr=true` 时运行；DOCX 和已有文本的 PDF 不会触发 OCR。
-- 每个规范候选都会保存 `provenance_id`，可回查文档、block、页码、offset、命中证据、所用资源、模型执行记录和 Ground 快照。
+- OCR 只在 PDF 原生文本不足、且请求 `enable_ocr=true` 时运行；DOCX、文本型 PDF 和混合 PDF 中已有文本的页面不触发 OCR。
+- 扫描页以 PyMuPDF 按 200 DPI 渲染为 RGB PNG；OCR block 保存 `bbox`、`polygon`、置信度、模型执行 ID 和页码。页面中间文件默认处理后删除。
+- 每个规范候选都会保存 `provenance_id`，可回查文档、block、页码、offset、命中证据、页面 artifact、所用资源、模型执行记录和 Ground 快照。
 
 ### Ground 与模型配置
 
@@ -100,19 +101,37 @@ PDF / DOCX
 - `config/enterprises/default/resources.yaml`：资源主备顺序。
 - `config/models.yaml`：可选模型的离线策略和缓存路径。
 
-默认 OCR 为 `noop-ocr`：扫描 PDF 会被明确标为部分完成，绝不会用伪造文本冒充识别结果。可选 `paddleocr` 适配器默认禁止下载模型；只有预先安装依赖、预置模型缓存并创建 `data/model_cache/paddleocr/ready.json` 后才会被规划器选中。
+默认 OCR 为 `noop-ocr`：扫描 PDF 会被明确标为部分完成，绝不会用伪造文本冒充识别结果。`paddleocr` 适配器只在包、四个官方模型和 `data/model_cache/paddleocr/ready.json` 都就绪时被规划器选中；普通 Relay 执行保持 `allow_download=false`，不会下载模型。
 
 检查模型状态：
 
 ```bash
 python -m zyrelay.models status
 python -m zyrelay.models verify paddleocr
+python -m zyrelay.models install paddleocr
 ```
 
-PaddleOCR 可选依赖仅在 Python 3.11–3.12 环境声明：
+### 已验证 PaddleOCR 环境与离线预置
+
+本次在 macOS ARM64 / Python 3.13.7 的独立 `.venv-paddleocr` 中实际验证：PaddlePaddle `3.3.1`、PaddleOCR `3.7.0`，CPU 模式。Python 3.13 已存在官方 macOS ARM64 wheel，因此未安装 Python 3.12；原有 `.venv` 保持为默认轻量测试环境。
 
 ```bash
-pip install -e '.[dev,paddleocr]'
+/usr/local/bin/python3 -m venv .venv-paddleocr
+.venv-paddleocr/bin/python -m pip install -e '.[test,paddleocr]'
+.venv-paddleocr/bin/python -m zyrelay.models install paddleocr
+.venv-paddleocr/bin/python -m zyrelay.models verify paddleocr
+```
+
+管理员 `install` 仅接受固定名称 `paddleocr`，使用 Paddle 官方 BOS 源预置 `PP-LCNet_x1_0_doc_ori`、`PP-LCNet_x1_0_textline_ori`、`PP-OCRv6_medium_det` 和 `PP-OCRv6_medium_rec`，执行本地图片烟雾推理并记录 SHA-256。模型缓存位于 `data/model_cache/paddleocr`，执行后生成离线就绪记录；运行时不联网。
+
+如果平台没有可用 Python 3.13 PaddlePaddle wheel，建议按 Python 3.12 创建同名独立环境，不要覆盖系统 Python 或已有 `.venv`。
+
+`config/models.yaml` 可调整 DPI（150–300）、置信度阈值和 `retain_intermediate`；不要在运行时把 `allow_download` 改为 `true`。
+
+生成真实样本：
+
+```bash
+.venv-paddleocr/bin/python examples/create_team_code_convention_samples.py
 ```
 
 ### Relay HTTP 调用与追溯
@@ -331,7 +350,7 @@ curl 'http://127.0.0.1:8000/api/v1/conventions/search?document_id=DOC-ID&keyword
     "team_convention_profiles": []
   },
   "processing": {
-    "pipeline_version": "0.4.0",
+    "pipeline_version": "0.5.0",
     "ground_truth_version": "1.0.0",
     "label_config_hash": "...",
     "business_object_config_hash": "...",
@@ -452,12 +471,20 @@ ZYRELAY_LLM_MODEL=
 pytest
 ```
 
-测试不访问网络或外部模型，覆盖 PDF/DOCX、表格与顺序、正则/别名、offset、semantic index、业务对象规则、UOM 序列化、上传/查询、无效文件、空文档、扫描 PDF 检测和 LLM 关闭场景。
+默认测试不下载模型；在普通 `.venv` 中模型集成用例会因缺少可选包或缓存而跳过。
+
+```bash
+.venv-paddleocr/bin/python -m pytest -m model_integration -q
+```
+
+该标记测试真实运行本地 PaddleOCR，验证扫描 PDF 的文本、bbox、置信度、模型执行记录、代码规范候选与 provenance。测试不访问网络。
 
 ## 已知限制
 
 - DOCX 文件本身通常不保存可靠的最终物理分页信息，因此 DOCX blocks 的 `page_no` 为 `null`；PDF 页码可靠。
-- 图片型 PDF 默认使用 NoOp OCR，只会报告 `requires_ocr=true` 和部分完成状态；真实 PaddleOCR 需要在 Python 3.11–3.12 环境手工预置依赖与本地模型缓存，当前仓库不下载或分发模型权重。
+- 模型缓存和安装记录不随 Git 分发；新机器必须先使用管理员命令预置官方模型，否则扫描 PDF 安全回退 NoOp OCR。
+- 当前实现按行构建 OCR block，使用 bbox 的纵/横坐标排序；不恢复复杂多栏、跨页表格或手写文本阅读顺序。
+- CPU OCR 的首次加载和高分辨率多页文档耗时明显，默认只处理 OCR Gate 选中的图片型页面。
 - PDF Block 使用页面文本和空行切分，不恢复复杂多栏阅读顺序、表格结构或 bbox。
 - PDF 中的规范标题、列表和代码示例仅使用文本启发式识别；复杂排版可能需要人工复核。
 - 第一迭代只生成单文档规范候选，不执行代码扫描、AST 分析或外部静态分析工具。
