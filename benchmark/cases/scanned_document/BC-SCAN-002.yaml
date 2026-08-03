@@ -1,0 +1,25 @@
+case_id: BC-SCAN-002
+name: Scanned sample – PEP 8 – Style Guide for Python Code
+category: scanned_document
+document:
+  manifest_id: BC-SCAN-002
+relay:
+  mode: code_convention
+  ground_profile_id: code-convention-sampling
+  enable_ocr: true
+  output_detail: full
+expected:
+  minimum_blocks: 1
+  minimum_conventions: 0
+  evidence_required: true
+  provenance_required: true
+  block_order_required: true
+  forbidden:
+  - evidence_missing
+  - invalid_offset
+  ocr_executed: true
+  non_empty_ocr_text: true
+  bbox_required: true
+  minimum_keyword_recall: 0.0
+expected_mentions: []
+expected_rules: []

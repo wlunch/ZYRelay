@@ -1,0 +1,21 @@
+case_id: BC-API-002
+name: The OAuth 2.0 Authorization Framework (RFC 6749)
+category: api_specification
+document:
+  manifest_id: BC-API-002
+relay:
+  mode: auto
+  ground_profile_id: code-convention-sampling
+  enable_ocr: false
+  output_detail: full
+expected:
+  minimum_blocks: 1
+  minimum_conventions: 0
+  evidence_required: true
+  provenance_required: true
+  block_order_required: true
+  forbidden:
+  - evidence_missing
+  - invalid_offset
+expected_mentions: []
+expected_rules: []

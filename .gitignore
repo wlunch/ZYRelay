@@ -35,3 +35,17 @@ data/model_cache/*
 !data/model_installations/.gitkeep
 !data/provenance/.gitkeep
 !data/model_cache/.gitkeep
+benchmark/private/*
+!benchmark/private/.gitkeep
+benchmark/sources/**/*.pdf
+benchmark/sources/**/*.html
+benchmark/scanned/**/*.pdf
+benchmark/scanned/**/*.metadata.json
+benchmark/results/baseline/
+benchmark/results/latest/
+benchmark/results/document_inspection.json
+benchmark/results/download_report.json
+benchmark/results/conversion_report.json
+benchmark/results/reports/*.docx
+benchmark/results/reports/rendered*/
+benchmark/results/reports/quicklook/

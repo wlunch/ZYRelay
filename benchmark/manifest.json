@@ -1,0 +1,886 @@
+{
+  "entries": [
+    {
+      "access_date": "2026-08-03T03:08:11Z",
+      "benchmark_id": "BC-API-001",
+      "category": "api_specification",
+      "expected_case_id": "BC-API-001",
+      "expected_features": [
+        "headings",
+        "tables",
+        "http_terms",
+        "long_document"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "IETF Trust Legal Provisions",
+      "local_path": "benchmark/sources/api_specification/rfc9110.pdf",
+      "mode": "auto",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "pdf",
+      "page_count": 194,
+      "private": true,
+      "publisher": "RFC Editor / IETF",
+      "redistribution_allowed": false,
+      "scan_quality": null,
+      "sha256": "60b30efa1048900833d1758440247fe8ac85a3134f2327388dcb24e07d814c89",
+      "size_bytes": 2858365,
+      "source_document_id": null,
+      "source_domain": "www.rfc-editor.org",
+      "source_id": "rfc9110",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc9110.pdf",
+      "title": "HTTP Semantics (RFC 9110)",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:09:22Z",
+      "benchmark_id": "BC-API-002",
+      "category": "api_specification",
+      "expected_case_id": "BC-API-002",
+      "expected_features": [
+        "headings",
+        "http_terms",
+        "schema_terms",
+        "long_document"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "IETF Trust Legal Provisions",
+      "local_path": "benchmark/sources/api_specification/rfc6749.pdf",
+      "mode": "auto",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "html",
+      "page_count": 66,
+      "private": true,
+      "publisher": "RFC Editor / IETF",
+      "redistribution_allowed": false,
+      "scan_quality": null,
+      "sha256": "6439d3b6c75f4fb06e6c0574c9f45355ca696b0541513c81fcc44b60a208a956",
+      "size_bytes": 1295665,
+      "source_document_id": null,
+      "source_domain": "www.rfc-editor.org",
+      "source_id": "rfc6749",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc6749.html",
+      "title": "The OAuth 2.0 Authorization Framework (RFC 6749)",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:08:14Z",
+      "benchmark_id": "BC-API-003",
+      "category": "api_specification",
+      "expected_case_id": "BC-API-003",
+      "expected_features": [
+        "headings",
+        "code_blocks",
+        "http_terms",
+        "schema_terms"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "JSON:API specification; local evaluation reference",
+      "local_path": "benchmark/sources/api_specification/jsonapi-11.pdf",
+      "mode": "auto",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "html",
+      "page_count": 34,
+      "private": true,
+      "publisher": "JSON:API",
+      "redistribution_allowed": false,
+      "scan_quality": null,
+      "sha256": "d735270e9daa2ee07ccac748db3e7965bd7e580d9222ab963d772ea27c0036d8",
+      "size_bytes": 893489,
+      "source_document_id": null,
+      "source_domain": "jsonapi.org",
+      "source_id": "jsonapi-11",
+      "source_url": "https://jsonapi.org/format/1.1/",
+      "title": "JSON:API Specification v1.1",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:07:42Z",
+      "benchmark_id": "BC-CODE-001",
+      "category": "code_convention",
+      "expected_case_id": "BC-CODE-001",
+      "expected_features": [
+        "headings",
+        "code_blocks",
+        "mandatory_rules",
+        "naming_rules"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "Copyright Google; local evaluation reference",
+      "local_path": "benchmark/sources/code_convention/google-java-style.pdf",
+      "mode": "code_convention",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "html",
+      "page_count": 18,
+      "private": true,
+      "publisher": "Google",
+      "redistribution_allowed": false,
+      "scan_quality": null,
+      "sha256": "070039243bfd46cffacda2f9a0ee8fdfa6c9e80234101cc21c8ed510d80d044f",
+      "size_bytes": 494827,
+      "source_document_id": null,
+      "source_domain": "google.github.io",
+      "source_id": "google-java-style",
+      "source_url": "https://google.github.io/styleguide/javaguide.html",
+      "title": "Google Java Style Guide",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:10:24Z",
+      "benchmark_id": "BC-CODE-002",
+      "category": "code_convention",
+      "expected_case_id": "BC-CODE-002",
+      "expected_features": [
+        "headings",
+        "code_blocks",
+        "line_length",
+        "naming_rules"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "PSF License",
+      "local_path": "benchmark/sources/code_convention/pep8.pdf",
+      "mode": "code_convention",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "html",
+      "page_count": 23,
+      "private": true,
+      "publisher": "Python Software Foundation",
+      "redistribution_allowed": false,
+      "scan_quality": null,
+      "sha256": "8d15a01812d2651d10ffe569914f16b30ba92a5ee0e0d1ee35e9e8b616d7cd2a",
+      "size_bytes": 516583,
+      "source_document_id": null,
+      "source_domain": "peps.python.org",
+      "source_id": "pep8",
+      "source_url": "https://peps.python.org/pep-0008/",
+      "title": "PEP 8 – Style Guide for Python Code",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:07:44Z",
+      "benchmark_id": "BC-CODE-003",
+      "category": "code_convention",
+      "expected_case_id": "BC-CODE-003",
+      "expected_features": [
+        "headings",
+        "code_blocks",
+        "formatting"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "GPL-2.0 documentation; local evaluation reference",
+      "local_path": "benchmark/sources/code_convention/linux-kernel-coding-style.pdf",
+      "mode": "code_convention",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "html",
+      "page_count": 20,
+      "private": true,
+      "publisher": "Linux Kernel Documentation",
+      "redistribution_allowed": false,
+      "scan_quality": null,
+      "sha256": "c8fb8b78b402c69a6b4af9be6ff401c5b41ac89bd92fea7dc6f85ee217f0b966",
+      "size_bytes": 433859,
+      "source_document_id": null,
+      "source_domain": "www.kernel.org",
+      "source_id": "linux-kernel-coding-style",
+      "source_url": "https://www.kernel.org/doc/html/latest/process/coding-style.html",
+      "title": "Linux kernel coding style",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:07:46Z",
+      "benchmark_id": "BC-CODE-004",
+      "category": "code_convention",
+      "expected_case_id": "BC-CODE-004",
+      "expected_features": [
+        "headings",
+        "code_blocks",
+        "mandatory_rules"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "Apache-2.0 WITH LLVM-exception documentation; local evaluation reference",
+      "local_path": "benchmark/sources/code_convention/llvm-coding-standards.pdf",
+      "mode": "code_convention",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "html",
+      "page_count": 34,
+      "private": true,
+      "publisher": "LLVM Project",
+      "redistribution_allowed": false,
+      "scan_quality": null,
+      "sha256": "2c87fb39dc115baaa4876a39f6950dff4c6acf89b099b6a03e05d68b104c46e4",
+      "size_bytes": 966720,
+      "source_document_id": null,
+      "source_domain": "llvm.org",
+      "source_id": "llvm-coding-standards",
+      "source_url": "https://llvm.org/docs/CodingStandards.html",
+      "title": "LLVM Coding Standards",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:07:47Z",
+      "benchmark_id": "BC-CODE-005",
+      "category": "code_convention",
+      "expected_case_id": "BC-CODE-005",
+      "expected_features": [
+        "headings",
+        "mandatory_rules",
+        "review"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "Copyright Google; local evaluation reference",
+      "local_path": "benchmark/sources/code_convention/google-code-review-standard.pdf",
+      "mode": "code_convention",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "html",
+      "page_count": 2,
+      "private": true,
+      "publisher": "Google Engineering Practices",
+      "redistribution_allowed": false,
+      "scan_quality": null,
+      "sha256": "298cdca8618ca69e50bde200ae0ea565dd770fd1f06f2a2bf75f4463ec89bca5",
+      "size_bytes": 75572,
+      "source_document_id": null,
+      "source_domain": "google.github.io",
+      "source_id": "google-code-review-standard",
+      "source_url": "https://google.github.io/eng-practices/review/reviewer/standard.html",
+      "title": "Google Code Review Standard",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:07:48Z",
+      "benchmark_id": "BC-CODE-006",
+      "category": "code_convention",
+      "expected_case_id": "BC-CODE-006",
+      "expected_features": [
+        "headings",
+        "security",
+        "mandatory_rules"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "OWASP content; local evaluation reference",
+      "local_path": "benchmark/sources/code_convention/owasp-secure-coding.pdf",
+      "mode": "code_convention",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "html",
+      "page_count": 7,
+      "private": true,
+      "publisher": "OWASP Foundation",
+      "redistribution_allowed": false,
+      "scan_quality": null,
+      "sha256": "d54cce44d38a554c1eec7d4c53edea7b3136455a2955bbed738cce8e20b74454",
+      "size_bytes": 270687,
+      "source_document_id": null,
+      "source_domain": "owasp.org",
+      "source_id": "owasp-secure-coding",
+      "source_url": "https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/",
+      "title": "OWASP Secure Coding Practices",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:07:51Z",
+      "benchmark_id": "BC-CONTRACT-001",
+      "category": "contract",
+      "expected_case_id": "BC-CONTRACT-001",
+      "expected_features": [
+        "headings",
+        "tables",
+        "contract_fields"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "contract-default",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "U.S. Government work",
+      "local_path": "benchmark/sources/contract/gsa-sf1449.pdf",
+      "mode": "contract",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "html",
+      "page_count": 11,
+      "private": false,
+      "publisher": "U.S. General Services Administration",
+      "redistribution_allowed": true,
+      "scan_quality": null,
+      "sha256": "208019935f53308bff29e66d4abd4486cb139c79ec9169cc4acdf1a5d392465e",
+      "size_bytes": 472219,
+      "source_document_id": null,
+      "source_domain": "www.gsa.gov",
+      "source_id": "gsa-sf1449",
+      "source_url": "https://www.gsa.gov/forms-library/solicitationcontractorder-commercial-items",
+      "title": "Solicitation/Contract/Order for Commercial Items (SF 1449)",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:07:54Z",
+      "benchmark_id": "BC-CONTRACT-002",
+      "category": "contract",
+      "expected_case_id": "BC-CONTRACT-002",
+      "expected_features": [
+        "headings",
+        "tables",
+        "contract_fields"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "contract-default",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "U.S. Government work",
+      "local_path": "benchmark/sources/contract/gsa-sf30.pdf",
+      "mode": "contract",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "html",
+      "page_count": 11,
+      "private": false,
+      "publisher": "U.S. General Services Administration",
+      "redistribution_allowed": true,
+      "scan_quality": null,
+      "sha256": "08160ddaa8d22bd136c0df5c014089b41340c86d8d1873c54af5010502f62e3a",
+      "size_bytes": 471978,
+      "source_document_id": null,
+      "source_domain": "www.gsa.gov",
+      "source_id": "gsa-sf30",
+      "source_url": "https://www.gsa.gov/forms-library/amendment-solicitationmodification-contract",
+      "title": "Amendment of Solicitation/Modification of Contract (SF 30)",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:07:57Z",
+      "benchmark_id": "BC-CONTRACT-003",
+      "category": "contract",
+      "expected_case_id": "BC-CONTRACT-003",
+      "expected_features": [
+        "headings",
+        "tables",
+        "contract_fields"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "contract-default",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "U.S. Government work",
+      "local_path": "benchmark/sources/contract/gsa-sf26.pdf",
+      "mode": "contract",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "html",
+      "page_count": 10,
+      "private": false,
+      "publisher": "U.S. General Services Administration",
+      "redistribution_allowed": true,
+      "scan_quality": null,
+      "sha256": "619bd27b59b2b2f2dc585b2eaca2811be23e74ec4930fcdbe753050f68a404ac",
+      "size_bytes": 470794,
+      "source_document_id": null,
+      "source_domain": "www.gsa.gov",
+      "source_id": "gsa-sf26",
+      "source_url": "https://www.gsa.gov/forms-library/awardcontract",
+      "title": "Award/Contract (SF 26)",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:07:59Z",
+      "benchmark_id": "BC-CONTRACT-004",
+      "category": "contract",
+      "expected_case_id": "BC-CONTRACT-004",
+      "expected_features": [
+        "headings",
+        "tables",
+        "contract_fields"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "contract-default",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "U.S. Government work",
+      "local_path": "benchmark/sources/contract/gsa-sf33.pdf",
+      "mode": "contract",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "html",
+      "page_count": 10,
+      "private": false,
+      "publisher": "U.S. General Services Administration",
+      "redistribution_allowed": true,
+      "scan_quality": null,
+      "sha256": "8bc7211bd705ccf1a97960cb64379994a59bc8b6f642824c7a78eb9eca0f6ac7",
+      "size_bytes": 471475,
+      "source_document_id": null,
+      "source_domain": "www.gsa.gov",
+      "source_id": "gsa-sf33",
+      "source_url": "https://www.gsa.gov/forms-library/solicitation-offer-and-award",
+      "title": "Solicitation, Offer and Award (SF 33)",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:08:02Z",
+      "benchmark_id": "BC-POLICY-001",
+      "category": "enterprise_policy",
+      "expected_case_id": "BC-POLICY-001",
+      "expected_features": [
+        "headings",
+        "tables",
+        "security",
+        "mandatory_rules"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "U.S. Government work",
+      "local_path": "benchmark/sources/enterprise_policy/nist-800-63b.pdf",
+      "mode": "auto",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "pdf",
+      "page_count": 80,
+      "private": false,
+      "publisher": "National Institute of Standards and Technology",
+      "redistribution_allowed": true,
+      "scan_quality": null,
+      "sha256": "ccfce7510a1267933f912d023306c6e7d485f21be63d271108b61aad6139127e",
+      "size_bytes": 1480377,
+      "source_document_id": null,
+      "source_domain": "nvlpubs.nist.gov",
+      "source_id": "nist-800-63b",
+      "source_url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63b.pdf",
+      "title": "Digital Identity Guidelines: Authentication and Lifecycle Management",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:08:07Z",
+      "benchmark_id": "BC-POLICY-002",
+      "category": "enterprise_policy",
+      "expected_case_id": "BC-POLICY-002",
+      "expected_features": [
+        "headings",
+        "tables",
+        "security",
+        "long_document"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "U.S. Government work",
+      "local_path": "benchmark/sources/enterprise_policy/nist-800-53.pdf",
+      "mode": "auto",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "pdf",
+      "page_count": 492,
+      "private": false,
+      "publisher": "National Institute of Standards and Technology",
+      "redistribution_allowed": true,
+      "scan_quality": null,
+      "sha256": "fc63bcd61715d0181dd8e85998b1e6201ae3515fc6626102101cab1841e11ec6",
+      "size_bytes": 6073678,
+      "source_document_id": null,
+      "source_domain": "nvlpubs.nist.gov",
+      "source_id": "nist-800-53",
+      "source_url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf",
+      "title": "Security and Privacy Controls for Information Systems and Organizations",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:08:08Z",
+      "benchmark_id": "BC-POLICY-003",
+      "category": "enterprise_policy",
+      "expected_case_id": "BC-POLICY-003",
+      "expected_features": [
+        "headings",
+        "security",
+        "mandatory_rules"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "UK Open Government Licence / local evaluation reference",
+      "local_path": "benchmark/sources/enterprise_policy/ncsc-password-guidance.pdf",
+      "mode": "auto",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "html",
+      "page_count": 13,
+      "private": true,
+      "publisher": "UK National Cyber Security Centre",
+      "redistribution_allowed": false,
+      "scan_quality": null,
+      "sha256": "517a1b7a672fc7fc0495761a89d34a3f4d39be8af78fb4073e62fa50b953cb7d",
+      "size_bytes": 355142,
+      "source_document_id": null,
+      "source_domain": "www.ncsc.gov.uk",
+      "source_id": "ncsc-password-guidance",
+      "source_url": "https://www.ncsc.gov.uk/collection/passwords/updating-your-approach",
+      "title": "Password administration for system owners",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T03:09:21Z",
+      "benchmark_id": "BC-POLICY-004",
+      "category": "enterprise_policy",
+      "expected_case_id": "BC-POLICY-004",
+      "expected_features": [
+        "headings",
+        "tables",
+        "security",
+        "policy"
+      ],
+      "generated_format": "pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": false,
+      "language": [
+        "en"
+      ],
+      "license": "U.S. Government work",
+      "local_path": "benchmark/sources/enterprise_policy/nist-800-61r2.pdf",
+      "mode": "auto",
+      "notes": "Official source; binary retained locally and ignored by Git.",
+      "original_format": "pdf",
+      "page_count": 80,
+      "private": false,
+      "publisher": "National Institute of Standards and Technology",
+      "redistribution_allowed": true,
+      "scan_quality": null,
+      "sha256": "b1c5ead0632dcfb979c59d8c462b094ad2465ddaf62d5c246289d6d9b4419df1",
+      "size_bytes": 1744473,
+      "source_document_id": null,
+      "source_domain": "nvlpubs.nist.gov",
+      "source_id": "nist-800-61r2",
+      "source_url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf",
+      "title": "Computer Security Incident Handling Guide",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T05:33:46Z",
+      "benchmark_id": "BC-SCAN-001",
+      "category": "code_convention",
+      "expected_case_id": "BC-SCAN-001",
+      "expected_features": [
+        "headings",
+        "code_blocks",
+        "mandatory_rules",
+        "naming_rules",
+        "ocr",
+        "bbox",
+        "provenance"
+      ],
+      "generated_format": "image_only_pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": true,
+      "language": [
+        "en"
+      ],
+      "license": "Copyright Google; local evaluation reference",
+      "local_path": "benchmark/scanned/code_convention/BC-SCAN-001.pdf",
+      "mode": "code_convention",
+      "notes": "Image-only OCR sample generated locally from a capped page sample; no original text layer.",
+      "original_format": "pdf",
+      "page_count": 3,
+      "private": true,
+      "publisher": "Google",
+      "redistribution_allowed": false,
+      "scan_quality": "clean",
+      "sha256": "aebb8cfe4613ea97d349892fbd513aff166cef5d72c3fa63fc9798f1c7ef501e",
+      "size_bytes": 844178,
+      "source_document_id": "BC-CODE-001",
+      "source_domain": "google.github.io",
+      "source_id": "google-java-style",
+      "source_url": "https://google.github.io/styleguide/javaguide.html",
+      "title": "Scanned sample – Google Java Style Guide",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T05:33:46Z",
+      "benchmark_id": "BC-SCAN-002",
+      "category": "code_convention",
+      "expected_case_id": "BC-SCAN-002",
+      "expected_features": [
+        "headings",
+        "code_blocks",
+        "line_length",
+        "naming_rules",
+        "ocr",
+        "bbox",
+        "provenance"
+      ],
+      "generated_format": "image_only_pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": true,
+      "language": [
+        "en"
+      ],
+      "license": "PSF License",
+      "local_path": "benchmark/scanned/code_convention/BC-SCAN-002.pdf",
+      "mode": "code_convention",
+      "notes": "Image-only OCR sample generated locally from a capped page sample; no original text layer.",
+      "original_format": "pdf",
+      "page_count": 3,
+      "private": true,
+      "publisher": "Python Software Foundation",
+      "redistribution_allowed": false,
+      "scan_quality": "clean",
+      "sha256": "984a082a29f3b3f3d83fb2b3724b69a00989e18f6ae5777200591bac9d4cb46e",
+      "size_bytes": 845474,
+      "source_document_id": "BC-CODE-002",
+      "source_domain": "peps.python.org",
+      "source_id": "pep8",
+      "source_url": "https://peps.python.org/pep-0008/",
+      "title": "Scanned sample – PEP 8 – Style Guide for Python Code",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T05:33:46Z",
+      "benchmark_id": "BC-SCAN-003",
+      "category": "contract",
+      "expected_case_id": "BC-SCAN-003",
+      "expected_features": [
+        "headings",
+        "tables",
+        "contract_fields",
+        "ocr",
+        "bbox",
+        "provenance"
+      ],
+      "generated_format": "image_only_pdf",
+      "ground_profile_id": "contract-default",
+      "is_scanned": true,
+      "language": [
+        "en"
+      ],
+      "license": "U.S. Government work",
+      "local_path": "benchmark/scanned/contract/BC-SCAN-003.pdf",
+      "mode": "contract",
+      "notes": "Image-only OCR sample generated locally from a capped page sample; no original text layer.",
+      "original_format": "pdf",
+      "page_count": 2,
+      "private": true,
+      "publisher": "U.S. General Services Administration",
+      "redistribution_allowed": false,
+      "scan_quality": "medium",
+      "sha256": "4a036a848f3fd3a40be870fff3654a52c7e5f22ed6a51012a96c90108e0c504a",
+      "size_bytes": 449683,
+      "source_document_id": "BC-CONTRACT-001",
+      "source_domain": "www.gsa.gov",
+      "source_id": "gsa-sf1449",
+      "source_url": "https://www.gsa.gov/forms-library/solicitationcontractorder-commercial-items",
+      "title": "Scanned sample – Solicitation/Contract/Order for Commercial Items (SF 1449)",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T05:33:46Z",
+      "benchmark_id": "BC-SCAN-004",
+      "category": "contract",
+      "expected_case_id": "BC-SCAN-004",
+      "expected_features": [
+        "headings",
+        "tables",
+        "contract_fields",
+        "ocr",
+        "bbox",
+        "provenance"
+      ],
+      "generated_format": "image_only_pdf",
+      "ground_profile_id": "contract-default",
+      "is_scanned": true,
+      "language": [
+        "en"
+      ],
+      "license": "U.S. Government work",
+      "local_path": "benchmark/scanned/contract/BC-SCAN-004.pdf",
+      "mode": "contract",
+      "notes": "Image-only OCR sample generated locally from a capped page sample; no original text layer.",
+      "original_format": "pdf",
+      "page_count": 2,
+      "private": true,
+      "publisher": "U.S. General Services Administration",
+      "redistribution_allowed": false,
+      "scan_quality": "medium",
+      "sha256": "4a036a848f3fd3a40be870fff3654a52c7e5f22ed6a51012a96c90108e0c504a",
+      "size_bytes": 449683,
+      "source_document_id": "BC-CONTRACT-002",
+      "source_domain": "www.gsa.gov",
+      "source_id": "gsa-sf30",
+      "source_url": "https://www.gsa.gov/forms-library/amendment-solicitationmodification-contract",
+      "title": "Scanned sample – Amendment of Solicitation/Modification of Contract (SF 30)",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T05:33:46Z",
+      "benchmark_id": "BC-SCAN-005",
+      "category": "enterprise_policy",
+      "expected_case_id": "BC-SCAN-005",
+      "expected_features": [
+        "headings",
+        "security",
+        "mandatory_rules",
+        "ocr",
+        "bbox",
+        "provenance"
+      ],
+      "generated_format": "image_only_pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": true,
+      "language": [
+        "en"
+      ],
+      "license": "UK Open Government Licence / local evaluation reference",
+      "local_path": "benchmark/scanned/enterprise_policy/BC-SCAN-005.pdf",
+      "mode": "auto",
+      "notes": "Image-only OCR sample generated locally from a capped page sample; no original text layer.",
+      "original_format": "pdf",
+      "page_count": 3,
+      "private": true,
+      "publisher": "UK National Cyber Security Centre",
+      "redistribution_allowed": false,
+      "scan_quality": "clean",
+      "sha256": "2cbd7186c567b98729a6a2a0f03e8407e9f20324c8aaa1e2b6693a8b5c115e0f",
+      "size_bytes": 600918,
+      "source_document_id": "BC-POLICY-003",
+      "source_domain": "www.ncsc.gov.uk",
+      "source_id": "ncsc-password-guidance",
+      "source_url": "https://www.ncsc.gov.uk/collection/passwords/updating-your-approach",
+      "title": "Scanned sample – Password administration for system owners",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    },
+    {
+      "access_date": "2026-08-03T05:33:46Z",
+      "benchmark_id": "BC-SCAN-006",
+      "category": "enterprise_policy",
+      "expected_case_id": "BC-SCAN-006",
+      "expected_features": [
+        "headings",
+        "tables",
+        "security",
+        "policy",
+        "ocr",
+        "bbox",
+        "provenance"
+      ],
+      "generated_format": "image_only_pdf",
+      "ground_profile_id": "code-convention-sampling",
+      "is_scanned": true,
+      "language": [
+        "en"
+      ],
+      "license": "U.S. Government work",
+      "local_path": "benchmark/scanned/enterprise_policy/BC-SCAN-006.pdf",
+      "mode": "auto",
+      "notes": "Image-only OCR sample generated locally from a capped page sample; no original text layer.",
+      "original_format": "pdf",
+      "page_count": 3,
+      "private": true,
+      "publisher": "National Institute of Standards and Technology",
+      "redistribution_allowed": false,
+      "scan_quality": "degraded",
+      "sha256": "5e99c5de463e20579ed93ddb1b4fc9a8e1fca9eb4e0832dbc0707e290c9f4c4a",
+      "size_bytes": 451168,
+      "source_document_id": "BC-POLICY-004",
+      "source_domain": "nvlpubs.nist.gov",
+      "source_id": "nist-800-61r2",
+      "source_url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf",
+      "title": "Scanned sample – Computer Security Incident Handling Guide",
+      "tool_versions": {
+        "PyMuPDF": "1.28.0"
+      }
+    }
+  ],
+  "generated_at": "2026-08-03T05:33:46Z",
+  "version": "1.0"
+}

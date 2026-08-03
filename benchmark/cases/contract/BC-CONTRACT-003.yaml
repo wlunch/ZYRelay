@@ -1,0 +1,23 @@
+case_id: BC-CONTRACT-003
+name: Award/Contract (SF 26)
+category: contract
+document:
+  manifest_id: BC-CONTRACT-003
+relay:
+  mode: contract
+  ground_profile_id: contract-default
+  enable_ocr: false
+  output_detail: full
+expected:
+  minimum_blocks: 1
+  minimum_conventions: 0
+  evidence_required: true
+  provenance_required: true
+  block_order_required: true
+  forbidden:
+  - evidence_missing
+  - invalid_offset
+  required_labels: []
+  contract_candidate_required: false
+expected_mentions: []
+expected_rules: []

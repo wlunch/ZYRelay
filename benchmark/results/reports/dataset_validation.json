@@ -1,0 +1,12 @@
+{
+  "counts": {
+    "api_specification": 3,
+    "code_convention": 6,
+    "contract": 4,
+    "enterprise_policy": 4
+  },
+  "entry_count": 23,
+  "errors": [],
+  "scan_count": 6,
+  "valid": true
+}

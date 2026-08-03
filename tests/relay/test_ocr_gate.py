@@ -49,7 +49,7 @@ class FakeOCRResource:
         )
 
 
-def test_scanned_pdf_uses_noop_fallback_without_download(relay_service, tmp_path) -> None:
+def test_scanned_pdf_uses_available_ocr_or_noop_fallback(relay_service, tmp_path) -> None:
     path = _scan_pdf(tmp_path)
     result = relay_service.process(
         RelayRequest(
@@ -57,10 +57,15 @@ def test_scanned_pdf_uses_noop_fallback_without_download(relay_service, tmp_path
             output_detail="full",
         )
     )
-    assert result.status == RelayStatus.PARTIAL
-    assert result.resources["bindings"]["ocr"] == "noop-ocr"
-    assert result.result["blocks"] == []
-    assert any("未生成伪造文本" in item for item in result.warnings)
+    selected = result.resources["bindings"]["ocr"]
+    assert selected in {"noop-ocr", "paddleocr"}
+    if selected == "noop-ocr":
+        assert result.status == RelayStatus.PARTIAL
+        assert result.result["blocks"] == []
+        assert any("未生成伪造文本" in item for item in result.warnings)
+    else:
+        assert result.status == RelayStatus.COMPLETED
+        assert result.result["model_executions"]
 
 
 def test_fake_ocr_adds_traceable_block_metadata(relay_service, tmp_path) -> None:

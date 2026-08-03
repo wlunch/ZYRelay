@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["case_id", "category", "document", "relay", "expected"],
+  "properties": {
+    "case_id": {"type": "string", "pattern": "^BC-(CODE|CONTRACT|POLICY|API|SCAN)-[0-9]{3}$"},
+    "category": {"enum": ["code_convention", "contract", "enterprise_policy", "api_specification", "scanned_document"]},
+    "document": {"type": "object", "required": ["manifest_id"]},
+    "relay": {"type": "object", "required": ["mode", "output_detail"]},
+    "expected": {"type": "object"}
+  }
+}

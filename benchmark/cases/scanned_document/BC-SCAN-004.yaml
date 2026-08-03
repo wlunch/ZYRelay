@@ -1,0 +1,27 @@
+case_id: BC-SCAN-004
+name: Scanned sample – Amendment of Solicitation/Modification of Contract (SF 30)
+category: scanned_document
+document:
+  manifest_id: BC-SCAN-004
+relay:
+  mode: contract
+  ground_profile_id: contract-default
+  enable_ocr: true
+  output_detail: full
+expected:
+  minimum_blocks: 1
+  minimum_conventions: 0
+  evidence_required: true
+  provenance_required: true
+  block_order_required: true
+  forbidden:
+  - evidence_missing
+  - invalid_offset
+  required_labels: []
+  contract_candidate_required: false
+  ocr_executed: true
+  non_empty_ocr_text: true
+  bbox_required: true
+  minimum_keyword_recall: 0.0
+expected_mentions: []
+expected_rules: []

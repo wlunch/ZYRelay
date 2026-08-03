@@ -1,0 +1,18 @@
+# Source documents and generated outputs remain local by default.
+private/*
+!private/.gitkeep
+sources/**/*.pdf
+sources/**/*.html
+scanned/**/*.pdf
+scanned/**/*.metadata.json
+results/latest/
+results/baseline/
+results/document_inspection.json
+results/download_report.json
+results/conversion_report.json
+results/reports/*.docx
+results/reports/rendered*/
+results/reports/quicklook/
+*.tmp
+browser_cache/
+download_cache/

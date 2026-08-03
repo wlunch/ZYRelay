@@ -1,0 +1,34 @@
+version: "1.0"
+suite_defaults:
+  enterprise_id: benchmark
+  output_detail: full
+  evidence_required: true
+  provenance_required: true
+scan_variants:
+  - benchmark_id: BC-SCAN-001
+    source_id: google-java-style
+    quality: clean
+    max_pages: 3
+  - benchmark_id: BC-SCAN-002
+    source_id: pep8
+    quality: clean
+    max_pages: 3
+  - benchmark_id: BC-SCAN-003
+    source_id: gsa-sf1449
+    quality: medium
+    max_pages: 2
+  - benchmark_id: BC-SCAN-004
+    source_id: gsa-sf30
+    quality: medium
+    max_pages: 2
+  - benchmark_id: BC-SCAN-005
+    source_id: ncsc-password-guidance
+    quality: clean
+    max_pages: 3
+  - benchmark_id: BC-SCAN-006
+    source_id: nist-800-61r2
+    quality: degraded
+    max_pages: 3
+regression:
+  ocr_keyword_recall_drop: 0.05
+  duration_growth_warning: 0.30

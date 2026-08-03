@@ -1,0 +1,1145 @@
+{
+  "changes": [
+    {
+      "baseline": {
+        "block_count": 2582,
+        "case_id": "BC-API-001",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 3230.1523329224437,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-API-001",
+      "flags": [],
+      "latest": {
+        "block_count": 2582,
+        "case_id": "BC-API-001",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 3230.1523329224437,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 925,
+        "case_id": "BC-API-002",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 997.753040981479,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-API-002",
+      "flags": [],
+      "latest": {
+        "block_count": 925,
+        "case_id": "BC-API-002",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 997.753040981479,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 456,
+        "case_id": "BC-API-003",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 560.7352090300992,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-API-003",
+      "flags": [],
+      "latest": {
+        "block_count": 456,
+        "case_id": "BC-API-003",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 560.7352090300992,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 243,
+        "case_id": "BC-CODE-001",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 327.1609590156004,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-CODE-001",
+      "flags": [],
+      "latest": {
+        "block_count": 243,
+        "case_id": "BC-CODE-001",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 327.1609590156004,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 330,
+        "case_id": "BC-CODE-002",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 385.95891604200006,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-CODE-002",
+      "flags": [],
+      "latest": {
+        "block_count": 330,
+        "case_id": "BC-CODE-002",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 385.95891604200006,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 310,
+        "case_id": "BC-CODE-003",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 369.9877919862047,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-CODE-003",
+      "flags": [],
+      "latest": {
+        "block_count": 310,
+        "case_id": "BC-CODE-003",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 369.9877919862047,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 380,
+        "case_id": "BC-CODE-004",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 602.3988749366254,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-CODE-004",
+      "flags": [],
+      "latest": {
+        "block_count": 380,
+        "case_id": "BC-CODE-004",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 602.3988749366254,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 28,
+        "case_id": "BC-CODE-005",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 92.44495793245733,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-CODE-005",
+      "flags": [],
+      "latest": {
+        "block_count": 28,
+        "case_id": "BC-CODE-005",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 92.44495793245733,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 107,
+        "case_id": "BC-CODE-006",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 118.17291704937816,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-CODE-006",
+      "flags": [],
+      "latest": {
+        "block_count": 107,
+        "case_id": "BC-CODE-006",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 118.17291704937816,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 66,
+        "case_id": "BC-CONTRACT-001",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 150.2479580231011,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "partial",
+        "warning_count": 2
+      },
+      "case_id": "BC-CONTRACT-001",
+      "flags": [],
+      "latest": {
+        "block_count": 66,
+        "case_id": "BC-CONTRACT-001",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 150.2479580231011,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "partial",
+        "warning_count": 2
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 66,
+        "case_id": "BC-CONTRACT-002",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 146.84483292512596,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "partial",
+        "warning_count": 2
+      },
+      "case_id": "BC-CONTRACT-002",
+      "flags": [],
+      "latest": {
+        "block_count": 66,
+        "case_id": "BC-CONTRACT-002",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 146.84483292512596,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "partial",
+        "warning_count": 2
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 66,
+        "case_id": "BC-CONTRACT-003",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 156.06762503739446,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-CONTRACT-003",
+      "flags": [],
+      "latest": {
+        "block_count": 66,
+        "case_id": "BC-CONTRACT-003",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 156.06762503739446,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 66,
+        "case_id": "BC-CONTRACT-004",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 148.14870804548264,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-CONTRACT-004",
+      "flags": [],
+      "latest": {
+        "block_count": 66,
+        "case_id": "BC-CONTRACT-004",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 148.14870804548264,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 674,
+        "case_id": "BC-POLICY-001",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 1303.737625014037,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-POLICY-001",
+      "flags": [],
+      "latest": {
+        "block_count": 674,
+        "case_id": "BC-POLICY-001",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 1303.737625014037,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 1860,
+        "case_id": "BC-POLICY-002",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 9211.745208012871,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-POLICY-002",
+      "flags": [],
+      "latest": {
+        "block_count": 1860,
+        "case_id": "BC-POLICY-002",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 9211.745208012871,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 140,
+        "case_id": "BC-POLICY-003",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 261.3397079985589,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-POLICY-003",
+      "flags": [],
+      "latest": {
+        "block_count": 140,
+        "case_id": "BC-POLICY-003",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 261.3397079985589,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 1025,
+        "case_id": "BC-POLICY-004",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 1500.308083021082,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      },
+      "case_id": "BC-POLICY-004",
+      "flags": [],
+      "latest": {
+        "block_count": 1025,
+        "case_id": "BC-POLICY-004",
+        "checks": {
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 1500.308083021082,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 0
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 104,
+        "case_id": "BC-SCAN-001",
+        "checks": {
+          "bbox_required": true,
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "non_empty_ocr_text": true,
+          "ocr_executed": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 133912.99670900026,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 1
+      },
+      "case_id": "BC-SCAN-001",
+      "flags": [],
+      "latest": {
+        "block_count": 104,
+        "case_id": "BC-SCAN-001",
+        "checks": {
+          "bbox_required": true,
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "non_empty_ocr_text": true,
+          "ocr_executed": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 133912.99670900026,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 1
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 131,
+        "case_id": "BC-SCAN-002",
+        "checks": {
+          "bbox_required": true,
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "non_empty_ocr_text": true,
+          "ocr_executed": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 135338.13587499934,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 1
+      },
+      "case_id": "BC-SCAN-002",
+      "flags": [],
+      "latest": {
+        "block_count": 131,
+        "case_id": "BC-SCAN-002",
+        "checks": {
+          "bbox_required": true,
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "non_empty_ocr_text": true,
+          "ocr_executed": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 135338.13587499934,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 1
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 90,
+        "case_id": "BC-SCAN-003",
+        "checks": {
+          "bbox_required": true,
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "non_empty_ocr_text": true,
+          "ocr_executed": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 78166.16787500061,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 1
+      },
+      "case_id": "BC-SCAN-003",
+      "flags": [],
+      "latest": {
+        "block_count": 90,
+        "case_id": "BC-SCAN-003",
+        "checks": {
+          "bbox_required": true,
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "non_empty_ocr_text": true,
+          "ocr_executed": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 78166.16787500061,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 1
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 90,
+        "case_id": "BC-SCAN-004",
+        "checks": {
+          "bbox_required": true,
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "non_empty_ocr_text": true,
+          "ocr_executed": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 72287.13741699903,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 1
+      },
+      "case_id": "BC-SCAN-004",
+      "flags": [],
+      "latest": {
+        "block_count": 90,
+        "case_id": "BC-SCAN-004",
+        "checks": {
+          "bbox_required": true,
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "non_empty_ocr_text": true,
+          "ocr_executed": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 72287.13741699903,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 1
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 120,
+        "case_id": "BC-SCAN-005",
+        "checks": {
+          "bbox_required": true,
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "non_empty_ocr_text": true,
+          "ocr_executed": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 99703.19166699846,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 1
+      },
+      "case_id": "BC-SCAN-005",
+      "flags": [],
+      "latest": {
+        "block_count": 120,
+        "case_id": "BC-SCAN-005",
+        "checks": {
+          "bbox_required": true,
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "non_empty_ocr_text": true,
+          "ocr_executed": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 99703.19166699846,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 1
+      }
+    },
+    {
+      "baseline": {
+        "block_count": 93,
+        "case_id": "BC-SCAN-006",
+        "checks": {
+          "bbox_required": true,
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "non_empty_ocr_text": true,
+          "ocr_executed": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 93225.32833399964,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 1
+      },
+      "case_id": "BC-SCAN-006",
+      "flags": [],
+      "latest": {
+        "block_count": 93,
+        "case_id": "BC-SCAN-006",
+        "checks": {
+          "bbox_required": true,
+          "block_order_valid": true,
+          "evidence_valid": true,
+          "minimum_blocks": true,
+          "minimum_conventions": true,
+          "non_empty_ocr_text": true,
+          "ocr_executed": true,
+          "provenance_valid": true
+        },
+        "convention_count": 0,
+        "duration_ms": 93225.32833399964,
+        "error_count": 0,
+        "evidence_valid_rate": 1.0,
+        "expected_item_recall": 1.0,
+        "forbidden_output_count": 0,
+        "forbidden_outputs": [],
+        "processing_success": true,
+        "provenance_valid_rate": 1.0,
+        "status": "completed",
+        "warning_count": 1
+      }
+    }
+  ],
+  "regression": false
+}

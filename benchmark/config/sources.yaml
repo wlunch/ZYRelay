@@ -1,0 +1,224 @@
+version: "1.0"
+max_download_bytes: 26214400
+sources:
+  - source_id: google-java-style
+    category: code_convention
+    title: Google Java Style Guide
+    publisher: Google
+    source_url: https://google.github.io/styleguide/javaguide.html
+    source_domain: google.github.io
+    source_type: html
+    conversion: libreoffice_pdf
+    language: [en]
+    expected_features: [headings, code_blocks, mandatory_rules, naming_rules]
+    license: "Copyright Google; local evaluation reference"
+    redistribution_allowed: false
+    enabled: true
+  - source_id: pep8
+    category: code_convention
+    title: PEP 8 – Style Guide for Python Code
+    publisher: Python Software Foundation
+    source_url: https://peps.python.org/pep-0008/
+    source_domain: peps.python.org
+    source_type: html
+    conversion: libreoffice_pdf
+    language: [en]
+    expected_features: [headings, code_blocks, line_length, naming_rules]
+    license: "PSF License"
+    redistribution_allowed: false
+    enabled: true
+  - source_id: linux-kernel-coding-style
+    category: code_convention
+    title: Linux kernel coding style
+    publisher: Linux Kernel Documentation
+    source_url: https://www.kernel.org/doc/html/latest/process/coding-style.html
+    source_domain: www.kernel.org
+    source_type: html
+    conversion: libreoffice_pdf
+    language: [en]
+    expected_features: [headings, code_blocks, formatting]
+    license: "GPL-2.0 documentation; local evaluation reference"
+    redistribution_allowed: false
+    enabled: true
+  - source_id: llvm-coding-standards
+    category: code_convention
+    title: LLVM Coding Standards
+    publisher: LLVM Project
+    source_url: https://llvm.org/docs/CodingStandards.html
+    source_domain: llvm.org
+    source_type: html
+    conversion: libreoffice_pdf
+    language: [en]
+    expected_features: [headings, code_blocks, mandatory_rules]
+    license: "Apache-2.0 WITH LLVM-exception documentation; local evaluation reference"
+    redistribution_allowed: false
+    enabled: true
+  - source_id: google-code-review-standard
+    category: code_convention
+    title: Google Code Review Standard
+    publisher: Google Engineering Practices
+    source_url: https://google.github.io/eng-practices/review/reviewer/standard.html
+    source_domain: google.github.io
+    source_type: html
+    conversion: libreoffice_pdf
+    language: [en]
+    expected_features: [headings, mandatory_rules, review]
+    license: "Copyright Google; local evaluation reference"
+    redistribution_allowed: false
+    enabled: true
+  - source_id: owasp-secure-coding
+    category: code_convention
+    title: OWASP Secure Coding Practices
+    publisher: OWASP Foundation
+    source_url: https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/
+    source_domain: owasp.org
+    source_type: html
+    conversion: libreoffice_pdf
+    language: [en]
+    expected_features: [headings, security, mandatory_rules]
+    license: "OWASP content; local evaluation reference"
+    redistribution_allowed: false
+    enabled: true
+  - source_id: gsa-sf1449
+    category: contract
+    title: Solicitation/Contract/Order for Commercial Items (SF 1449)
+    publisher: U.S. General Services Administration
+    source_url: https://www.gsa.gov/forms-library/solicitationcontractorder-commercial-items
+    source_domain: www.gsa.gov
+    source_type: html
+    conversion: libreoffice_pdf
+    language: [en]
+    expected_features: [headings, tables, contract_fields]
+    license: "U.S. Government work"
+    redistribution_allowed: true
+    enabled: true
+  - source_id: gsa-sf30
+    category: contract
+    title: Amendment of Solicitation/Modification of Contract (SF 30)
+    publisher: U.S. General Services Administration
+    source_url: https://www.gsa.gov/forms-library/amendment-solicitationmodification-contract
+    source_domain: www.gsa.gov
+    source_type: html
+    conversion: libreoffice_pdf
+    language: [en]
+    expected_features: [headings, tables, contract_fields]
+    license: "U.S. Government work"
+    redistribution_allowed: true
+    enabled: true
+  - source_id: gsa-sf26
+    category: contract
+    title: Award/Contract (SF 26)
+    publisher: U.S. General Services Administration
+    source_url: https://www.gsa.gov/forms-library/awardcontract
+    source_domain: www.gsa.gov
+    source_type: html
+    conversion: libreoffice_pdf
+    language: [en]
+    expected_features: [headings, tables, contract_fields]
+    license: "U.S. Government work"
+    redistribution_allowed: true
+    enabled: true
+  - source_id: gsa-sf33
+    category: contract
+    title: Solicitation, Offer and Award (SF 33)
+    publisher: U.S. General Services Administration
+    source_url: https://www.gsa.gov/forms-library/solicitation-offer-and-award
+    source_domain: www.gsa.gov
+    source_type: html
+    conversion: libreoffice_pdf
+    language: [en]
+    expected_features: [headings, tables, contract_fields]
+    license: "U.S. Government work"
+    redistribution_allowed: true
+    enabled: true
+  - source_id: nist-800-63b
+    category: enterprise_policy
+    title: "Digital Identity Guidelines: Authentication and Lifecycle Management"
+    publisher: National Institute of Standards and Technology
+    source_url: https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63b.pdf
+    source_domain: nvlpubs.nist.gov
+    source_type: pdf
+    conversion: none
+    language: [en]
+    expected_features: [headings, tables, security, mandatory_rules]
+    license: "U.S. Government work"
+    redistribution_allowed: true
+    enabled: true
+  - source_id: nist-800-53
+    category: enterprise_policy
+    title: Security and Privacy Controls for Information Systems and Organizations
+    publisher: National Institute of Standards and Technology
+    source_url: https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf
+    source_domain: nvlpubs.nist.gov
+    source_type: pdf
+    conversion: none
+    language: [en]
+    expected_features: [headings, tables, security, long_document]
+    license: "U.S. Government work"
+    redistribution_allowed: true
+    enabled: true
+  - source_id: ncsc-password-guidance
+    category: enterprise_policy
+    title: Password administration for system owners
+    publisher: UK National Cyber Security Centre
+    source_url: https://www.ncsc.gov.uk/collection/passwords/updating-your-approach
+    source_domain: www.ncsc.gov.uk
+    source_type: html
+    conversion: libreoffice_pdf
+    language: [en]
+    expected_features: [headings, security, mandatory_rules]
+    license: "UK Open Government Licence / local evaluation reference"
+    redistribution_allowed: false
+    enabled: true
+  - source_id: nist-800-61r2
+    category: enterprise_policy
+    title: Computer Security Incident Handling Guide
+    publisher: National Institute of Standards and Technology
+    source_url: https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf
+    source_domain: nvlpubs.nist.gov
+    source_type: pdf
+    conversion: none
+    language: [en]
+    expected_features: [headings, tables, security, policy]
+    license: "U.S. Government work"
+    redistribution_allowed: true
+    enabled: true
+  - source_id: rfc9110
+    category: api_specification
+    title: HTTP Semantics (RFC 9110)
+    publisher: RFC Editor / IETF
+    source_url: https://www.rfc-editor.org/rfc/rfc9110.pdf
+    source_domain: www.rfc-editor.org
+    source_type: pdf
+    conversion: none
+    language: [en]
+    expected_features: [headings, tables, http_terms, long_document]
+    license: "IETF Trust Legal Provisions"
+    redistribution_allowed: false
+    enabled: true
+  - source_id: rfc6749
+    category: api_specification
+    title: The OAuth 2.0 Authorization Framework (RFC 6749)
+    publisher: RFC Editor / IETF
+    source_url: https://www.rfc-editor.org/rfc/rfc6749.html
+    source_domain: www.rfc-editor.org
+    source_type: html
+    conversion: libreoffice_pdf
+    language: [en]
+    expected_features: [headings, http_terms, schema_terms, long_document]
+    license: "IETF Trust Legal Provisions"
+    redistribution_allowed: false
+    enabled: true
+  - source_id: jsonapi-11
+    category: api_specification
+    title: "JSON:API Specification v1.1"
+    publisher: JSON:API
+    source_url: https://jsonapi.org/format/1.1/
+    source_domain: jsonapi.org
+    source_type: html
+    conversion: libreoffice_pdf
+    language: [en]
+    expected_features: [headings, code_blocks, http_terms, schema_terms]
+    license: "JSON:API specification; local evaluation reference"
+    redistribution_allowed: false
+    enabled: true
