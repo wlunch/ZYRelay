@@ -1,0 +1,7 @@
+version: 1.0.0
+thresholds:
+  label_regex_confidence: 0.95
+  label_alias_exact_confidence: 0.90
+  evidence_minimum_confidence: 0.50
+  ocr_minimum_line_confidence: 0.50
+  plugin_health_timeout_seconds: 5

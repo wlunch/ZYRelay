@@ -17,15 +17,15 @@ class MatchResult:
 
 
 class RegexMatcher:
-    def match(
-        self, block: DocumentBlock, label: LabelDefinition
-    ) -> list[MatchResult]:
+    def match(self, block: DocumentBlock, label: LabelDefinition) -> list[MatchResult]:
         results: list[MatchResult] = []
         for pattern_text in label.patterns:
             pattern = re.compile(pattern_text)
             for match in pattern.finditer(block.text):
                 captured = [
-                    group for group in match.groups() if group is not None and group != ""
+                    group
+                    for group in match.groups()
+                    if group is not None and group != ""
                 ]
                 value = captured[-1] if captured else match.group(0)
                 results.append(
@@ -41,4 +41,3 @@ class RegexMatcher:
                     )
                 )
         return results
-

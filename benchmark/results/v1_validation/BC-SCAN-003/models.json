@@ -1,0 +1,375 @@
+[
+  {
+    "capability": "spell_correction",
+    "completed_at": "2026-08-10T10:32:08.482301Z",
+    "confidence_summary": {},
+    "details": {
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-SCAN-003/runtime_data/model_cache/symspell",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "SymSpellPy 6.10",
+          "plugin_name": "symspell"
+        },
+        "status": "available"
+      },
+      "routing": {
+        "capability": "spell_correction",
+        "decision": "skip",
+        "input_signals": {
+          "block_count": 0,
+          "entity_mention_count": 0,
+          "file_type": "pdf",
+          "mode": "contract",
+          "ocr_block_count": 0,
+          "requires_ocr": true,
+          "resource_id": "symspell",
+          "table_block_count": 0
+        },
+        "reason": "not_ocr_text",
+        "resource_id": "symspell"
+      }
+    },
+    "duration_ms": 0.0,
+    "errors": [],
+    "execution_id": "EXEC-99AAE947489C4332",
+    "fallback_used": false,
+    "input_references": [],
+    "model_execution_id": "MEXEC-3295E824BFD44FD9",
+    "model_name": "symspell",
+    "model_version": "SymSpellPy 6.10",
+    "output_references": [],
+    "resource_id": "symspell",
+    "resource_version": "6.10.0",
+    "started_at": "2026-08-10T10:32:08.369245Z",
+    "status": "skipped",
+    "step_name": "route_spell_correction",
+    "warnings": []
+  },
+  {
+    "capability": "table_recognition",
+    "completed_at": "2026-08-10T10:32:08.364379Z",
+    "confidence_summary": {},
+    "details": {
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-SCAN-003/runtime_data/model_cache",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "1.0.0",
+          "plugin_name": "heuristic-table"
+        },
+        "status": "available"
+      },
+      "routing": {
+        "capability": "table_recognition",
+        "decision": "skip",
+        "input_signals": {
+          "block_count": 0,
+          "entity_mention_count": 0,
+          "file_type": "pdf",
+          "mode": "contract",
+          "ocr_block_count": 0,
+          "requires_ocr": true,
+          "resource_id": "heuristic-table",
+          "table_block_count": 0
+        },
+        "reason": "no_table_signal",
+        "resource_id": "heuristic-table"
+      }
+    },
+    "duration_ms": 0.0,
+    "errors": [],
+    "execution_id": "EXEC-99AAE947489C4332",
+    "fallback_used": false,
+    "input_references": [],
+    "model_execution_id": "MEXEC-33C1E47A575F436A",
+    "model_name": "heuristic-table",
+    "model_version": "1.0.0",
+    "output_references": [],
+    "resource_id": "heuristic-table",
+    "resource_version": "1.0.0",
+    "started_at": "2026-08-10T10:32:08.274518Z",
+    "status": "skipped",
+    "step_name": "route_table_recognition",
+    "warnings": []
+  },
+  {
+    "capability": "ocr",
+    "completed_at": "2026-08-10T10:32:08.032894Z",
+    "confidence_summary": {},
+    "details": {
+      "device": "cpu",
+      "line_count": 0,
+      "model_load_ms": 0.0,
+      "paddleocr_version": null,
+      "paddlepaddle_version": null,
+      "page_artifacts": [
+        {
+          "artifact_id": "PAGE-EXEC-99AAE947489C4332-001",
+          "dpi": 200,
+          "height": 2339,
+          "page_no": 1,
+          "sha256": "4396939a4c7817846b85838a1915d188a025df1879c36a0d6c3e4f4406b9c2b5",
+          "temporary": true,
+          "uri": "relay://executions/EXEC-99AAE947489C4332/pages/001.png",
+          "width": 1654
+        },
+        {
+          "artifact_id": "PAGE-EXEC-99AAE947489C4332-002",
+          "dpi": 200,
+          "height": 2339,
+          "page_no": 2,
+          "sha256": "469d901a45fe22979e92730c7730d20d12c7d5873066070e02691f547f07972d",
+          "temporary": true,
+          "uri": "relay://executions/EXEC-99AAE947489C4332/pages/002.png",
+          "width": 1654
+        }
+      ],
+      "page_count": 0,
+      "page_metrics": []
+    },
+    "duration_ms": 0.0,
+    "errors": [],
+    "execution_id": "EXEC-99AAE947489C4332",
+    "fallback_used": true,
+    "input_references": [
+      "relay://executions/EXEC-99AAE947489C4332/pages/001.png",
+      "relay://executions/EXEC-99AAE947489C4332/pages/002.png"
+    ],
+    "model_execution_id": "MEXEC-638F805EE0964FF7",
+    "model_name": "NoOpOCR",
+    "model_version": null,
+    "output_references": [
+      "ocr_lines:0"
+    ],
+    "resource_id": "noop-ocr",
+    "resource_version": "1.0.0",
+    "started_at": "2026-08-10T10:32:08.032883Z",
+    "status": "partial",
+    "step_name": "optional_ocr",
+    "warnings": [
+      "OCR 模型不可用，扫描 PDF 未生成伪造文本"
+    ]
+  },
+  {
+    "capability": "ner",
+    "completed_at": "2026-08-10T10:32:08.809930Z",
+    "confidence_summary": {},
+    "details": {
+      "cache_dir": "benchmark/results/v1_validation/BC-SCAN-003/runtime_data/model_cache",
+      "enabled": true,
+      "fallback": "organization_pattern",
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-SCAN-003/runtime_data/model_cache",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "1.0.0",
+          "plugin_name": "heuristic-ner"
+        },
+        "status": "available"
+      },
+      "model_id": null,
+      "model_version": "1.0.0",
+      "plugin": "heuristic-ner",
+      "plugin_name": "heuristic-ner"
+    },
+    "duration_ms": 45.39600000134669,
+    "errors": [],
+    "execution_id": "EXEC-99AAE947489C4332",
+    "fallback_used": true,
+    "input_references": [
+      "document:DOC-4A036A848F3FD3A4"
+    ],
+    "model_execution_id": "MEXEC-657571A0897C4BFE",
+    "model_name": "heuristic-ner",
+    "model_version": "1.0.0",
+    "output_references": [
+      "ner:0_blocks"
+    ],
+    "resource_id": "heuristic-ner",
+    "resource_version": "1.0.0",
+    "started_at": "2026-08-10T10:32:08.809921Z",
+    "status": "completed",
+    "step_name": "run_ner",
+    "warnings": []
+  },
+  {
+    "capability": "language_detection",
+    "completed_at": "2026-08-10T10:32:08.269920Z",
+    "confidence_summary": {},
+    "details": {
+      "cache_dir": "benchmark/results/v1_validation/BC-SCAN-003/runtime_data/model_cache",
+      "enabled": true,
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-SCAN-003/runtime_data/model_cache",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "1.0.0",
+          "plugin_name": "heuristic-language"
+        },
+        "status": "available"
+      },
+      "model_id": null,
+      "model_version": "1.0.0",
+      "plugin": "heuristic-language",
+      "plugin_name": "heuristic-language"
+    },
+    "duration_ms": 46.34916700888425,
+    "errors": [],
+    "execution_id": "EXEC-99AAE947489C4332",
+    "fallback_used": true,
+    "input_references": [
+      "document:DOC-4A036A848F3FD3A4"
+    ],
+    "model_execution_id": "MEXEC-6F4E486A15EB41E3",
+    "model_name": "heuristic-language",
+    "model_version": "1.0.0",
+    "output_references": [
+      "language_detection:0_blocks"
+    ],
+    "resource_id": "heuristic-language",
+    "resource_version": "1.0.0",
+    "started_at": "2026-08-10T10:32:08.269912Z",
+    "status": "completed",
+    "step_name": "run_language_detection",
+    "warnings": []
+  },
+  {
+    "capability": "layout",
+    "completed_at": "2026-08-10T10:32:08.130365Z",
+    "confidence_summary": {},
+    "details": {
+      "health": {
+        "available": true,
+        "details": {},
+        "status": "available"
+      },
+      "plugin": "heuristic-layout"
+    },
+    "duration_ms": 0.1485419925302267,
+    "errors": [],
+    "execution_id": "EXEC-99AAE947489C4332",
+    "fallback_used": true,
+    "input_references": [
+      "document:DOC-4A036A848F3FD3A4"
+    ],
+    "model_execution_id": "MEXEC-993FE8573A7A418B",
+    "model_name": "heuristic-layout",
+    "model_version": "1.0.0",
+    "output_references": [
+      "layout:0_blocks"
+    ],
+    "resource_id": "heuristic-layout",
+    "resource_version": "1.0.0",
+    "started_at": "2026-08-10T10:32:08.130355Z",
+    "status": "completed",
+    "step_name": "run_layout",
+    "warnings": []
+  },
+  {
+    "capability": "document_classifier",
+    "completed_at": "2026-08-10T10:32:08.126032Z",
+    "confidence_summary": {},
+    "details": {
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-SCAN-003/runtime_data/model_cache",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "1.0.0",
+          "plugin_name": "heuristic-document-classifier"
+        },
+        "status": "available"
+      },
+      "routing": {
+        "capability": "document_classifier",
+        "decision": "skip",
+        "input_signals": {
+          "block_count": 0,
+          "entity_mention_count": 0,
+          "file_type": "pdf",
+          "mode": "contract",
+          "ocr_block_count": 0,
+          "requires_ocr": true,
+          "resource_id": "heuristic-document-classifier",
+          "table_block_count": 0
+        },
+        "reason": "document_mode_already_known",
+        "resource_id": "heuristic-document-classifier"
+      }
+    },
+    "duration_ms": 0.0,
+    "errors": [],
+    "execution_id": "EXEC-99AAE947489C4332",
+    "fallback_used": false,
+    "input_references": [],
+    "model_execution_id": "MEXEC-F062B1DA3078481B",
+    "model_name": "heuristic-document-classifier",
+    "model_version": "1.0.0",
+    "output_references": [],
+    "resource_id": "heuristic-document-classifier",
+    "resource_version": "1.0.0",
+    "started_at": "2026-08-10T10:32:08.036759Z",
+    "status": "skipped",
+    "step_name": "route_document_classifier",
+    "warnings": []
+  },
+  {
+    "capability": "code_detection",
+    "completed_at": "2026-08-10T10:32:08.599260Z",
+    "confidence_summary": {},
+    "details": {
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-SCAN-003/runtime_data/model_cache/tree_sitter",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "tree-sitter 0.26",
+          "plugin_name": "tree-sitter-code"
+        },
+        "status": "available"
+      },
+      "routing": {
+        "capability": "code_detection",
+        "decision": "skip",
+        "input_signals": {
+          "block_count": 0,
+          "entity_mention_count": 0,
+          "file_type": "pdf",
+          "mode": "contract",
+          "ocr_block_count": 0,
+          "requires_ocr": true,
+          "resource_id": "tree-sitter-code",
+          "table_block_count": 0
+        },
+        "reason": "no_code_signal",
+        "resource_id": "tree-sitter-code"
+      }
+    },
+    "duration_ms": 0.0,
+    "errors": [],
+    "execution_id": "EXEC-99AAE947489C4332",
+    "fallback_used": false,
+    "input_references": [],
+    "model_execution_id": "MEXEC-FAEDD8EC4F754420",
+    "model_name": "tree-sitter-code",
+    "model_version": "tree-sitter 0.26",
+    "output_references": [],
+    "resource_id": "tree-sitter-code",
+    "resource_version": "1.0.0",
+    "started_at": "2026-08-10T10:32:08.486577Z",
+    "status": "skipped",
+    "step_name": "route_code_detection",
+    "warnings": []
+  }
+]

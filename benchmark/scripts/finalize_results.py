@@ -1,4 +1,5 @@
 """Create a portable benchmark summary from independently executed cases."""
+
 from __future__ import annotations
 
 import argparse
@@ -11,13 +12,21 @@ from typing import Any
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from benchmark.scripts.common import RESULTS_ROOT, json_dump, json_load, now_utc, sha256_file
+from benchmark.scripts.common import (
+    RESULTS_ROOT,
+    json_dump,
+    json_load,
+    now_utc,
+    sha256_file,
+)
 
 
 def _git_revision() -> str | None:
     try:
         return subprocess.check_output(
-            ["git", "rev-parse", "HEAD"], text=True, stderr=subprocess.DEVNULL,
+            ["git", "rev-parse", "HEAD"],
+            text=True,
+            stderr=subprocess.DEVNULL,
             cwd=Path(__file__).resolve().parents[2],
         ).strip()
     except (OSError, subprocess.CalledProcessError):
@@ -61,15 +70,37 @@ def finalize(output: Path) -> dict[str, Any]:
         "python": sys.version,
         "platform": platform.platform(),
         "model_versions": sorted(model_versions),
-        "input_hashes": {path.name: sha256_file(path) for path in config_files if path.exists()},
+        "input_hashes": {
+            path.name: sha256_file(path) for path in config_files if path.exists()
+        },
         "summary": {
             "case_count": len(cases),
-            "successful_cases": sum(item.get("status") in {"completed", "partial"} for item in cases),
+            "successful_cases": sum(
+                item.get("status") in {"completed", "partial"} for item in cases
+            ),
             "failed_cases": sum(item.get("status") == "failed" for item in cases),
             "total_duration_ms": total_duration,
-            "expected_item_recall": round(sum(float(item.get("expected_item_recall", 0)) for item in cases) / len(cases), 4) if cases else 0.0,
-            "evidence_valid_rate": round(sum(float(item.get("evidence_valid_rate", 0)) for item in cases) / len(cases), 4) if cases else 0.0,
-            "provenance_valid_rate": round(sum(float(item.get("provenance_valid_rate", 0)) for item in cases) / len(cases), 4) if cases else 0.0,
+            "expected_item_recall": round(
+                sum(float(item.get("expected_item_recall", 0)) for item in cases)
+                / len(cases),
+                4,
+            )
+            if cases
+            else 0.0,
+            "evidence_valid_rate": round(
+                sum(float(item.get("evidence_valid_rate", 0)) for item in cases)
+                / len(cases),
+                4,
+            )
+            if cases
+            else 0.0,
+            "provenance_valid_rate": round(
+                sum(float(item.get("provenance_valid_rate", 0)) for item in cases)
+                / len(cases),
+                4,
+            )
+            if cases
+            else 0.0,
         },
         "cases": cases,
     }
@@ -82,7 +113,9 @@ def main() -> int:
     parser.add_argument("--output", type=Path, default=RESULTS_ROOT / "baseline")
     args = parser.parse_args()
     report = finalize(args.output)
-    print(f"cases={report['summary']['case_count']} success={report['summary']['successful_cases']}")
+    print(
+        f"cases={report['summary']['case_count']} success={report['summary']['successful_cases']}"
+    )
     return 0 if report["summary"]["failed_cases"] == 0 else 1
 
 

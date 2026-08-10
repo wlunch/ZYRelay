@@ -5,9 +5,17 @@ from pathlib import Path
 
 if __package__ in {None, ""}:
     import sys
+
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from benchmark.scripts.common import RESULTS_ROOT, SCANNED_ROOT, SOURCES_ROOT, document_info, json_dump, relative
+from benchmark.scripts.common import (
+    RESULTS_ROOT,
+    SCANNED_ROOT,
+    SOURCES_ROOT,
+    document_info,
+    json_dump,
+    relative,
+)
 
 
 def inspect() -> list[dict]:

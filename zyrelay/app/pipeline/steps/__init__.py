@@ -1,4 +1,12 @@
+from zyrelay.app.semantics import BuildSemanticObjectsStep
+
 from .blocks import BuildBlocksStep, NormalizeTextStep, normalize_text
+from .convention_steps import (
+    BuildConventionIndexStep,
+    BuildConventionSectionsStep,
+    ExtractConventionCandidatesStep,
+    ValidateConventionCandidatesStep,
+)
 from .extract import ExtractDocumentStep
 from .package import BuildUOMPackageStep, SaveResultStep
 from .semantic_steps import (
@@ -8,12 +16,6 @@ from .semantic_steps import (
     MatchLabelsStep,
 )
 from .validate import ValidateFileStep
-from .convention_steps import (
-    BuildConventionIndexStep,
-    BuildConventionSectionsStep,
-    ExtractConventionCandidatesStep,
-    ValidateConventionCandidatesStep,
-)
 
 __all__ = [
     "BuildBlocksStep",
@@ -21,14 +23,15 @@ __all__ = [
     "BuildConventionSectionsStep",
     "BuildSemanticCandidatesStep",
     "BuildSemanticIndexStep",
+    "BuildSemanticObjectsStep",
     "BuildUOMPackageStep",
-    "ExtractDocumentStep",
     "ExtractConventionCandidatesStep",
+    "ExtractDocumentStep",
     "LLMEnrichmentStep",
     "MatchLabelsStep",
     "NormalizeTextStep",
     "SaveResultStep",
-    "ValidateFileStep",
     "ValidateConventionCandidatesStep",
+    "ValidateFileStep",
     "normalize_text",
 ]

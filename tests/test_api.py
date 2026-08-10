@@ -59,6 +59,27 @@ def test_upload_query_and_uom(sample_pdf, tmp_path) -> None:
         "llm_enrichment",
     ]
     assert step_names[-2:] == ["build_uom_package", "save_result"]
+    assert package["semantic_objects"]["validation"]["valid"] is True
+    assert package["semantic_objects"]["validation"]["evidence_count"] > 0
+
+    objects = client.get(
+        f"/api/v1/documents/{document_id}/semantic-objects",
+        params={"object_type": "observation"},
+    )
+    assert objects.status_code == 200
+    assert objects.json()["objects"]
+    assert all(item["evidence_ids"] for item in objects.json()["objects"])
+
+    evidence = client.get(f"/api/v1/documents/{document_id}/evidence")
+    assert evidence.status_code == 200
+    assert evidence.json()["objects"][0]["attributes"]["matched_text"]
+
+    export = client.get(
+        f"/api/v1/documents/{document_id}/semantic-objects/export",
+        params={"format": "graph-json"},
+    )
+    assert export.status_code == 200
+    assert export.json()["nodes"]
 
 
 def test_unsupported_file_type(tmp_path) -> None:

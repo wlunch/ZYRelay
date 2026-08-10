@@ -20,9 +20,7 @@ class LocalStorage:
         for directory in (self.documents_dir, self.prepare_dir, self.index_dir):
             directory.mkdir(parents=True, exist_ok=True)
 
-    def save_source(
-        self, document_id: str, file_name: str, content: bytes
-    ) -> Path:
+    def save_source(self, document_id: str, file_name: str, content: bytes) -> Path:
         extension = Path(file_name).suffix.lower()
         destination = self.documents_dir / document_id / f"source{extension}"
         self._atomic_write_bytes(destination, content)
@@ -103,4 +101,3 @@ class LocalStorage:
         except (TypeError, ValueError) as exc:
             raise StorageError(f"JSON 序列化校验失败：{destination}") from exc
         cls._atomic_write_bytes(destination, encoded)
-

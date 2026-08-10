@@ -9,11 +9,46 @@ resources:
   ocr:
     primary: paddleocr
     fallbacks: [noop-ocr]
+  document_classifier:
+    primary: minilm-document-classifier
+    fallbacks: [heuristic-document-classifier]
+  language_detection:
+    primary: fasttext-language
+    fallbacks: [heuristic-language]
   layout:
-    primary: heuristic-layout
+    primary: doclayout-yolo
+    fallbacks: [heuristic-layout]
+  table_recognition:
+    primary: table-transformer
+    fallbacks: [heuristic-table]
+  spell_correction:
+    primary: symspell
+    fallbacks: [noop-spell]
+  code_detection:
+    primary: tree-sitter-code
+    fallbacks: [heuristic-code]
+  ner:
+    primary: gliner-ner
+    fallbacks: [heuristic-ner]
   convention_classifier:
     primary: rule-convention-classifier
   evidence_validator:
     primary: rule-evidence-validator
   storage:
     primary: local-storage
+contexts:
+  environments:
+    prod:
+      resources:
+        ocr:
+          primary: paddleocr
+          fallbacks: [noop-ocr]
+        ner:
+          primary: gliner-ner
+          fallbacks: [heuristic-ner]
+    test:
+      resources:
+        layout:
+          primary: heuristic-layout
+        table_recognition:
+          primary: heuristic-table

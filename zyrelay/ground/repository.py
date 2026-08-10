@@ -128,7 +128,9 @@ class GroundRepository:
         return files, hashes
 
     @staticmethod
-    def _merge_profile(base: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]:
+    def _merge_profile(
+        base: dict[str, Any], override: dict[str, Any]
+    ) -> dict[str, Any]:
         merged = {**base}
         for key, value in override.items():
             if key == "extends" and value is None:

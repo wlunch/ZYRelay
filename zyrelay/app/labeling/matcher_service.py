@@ -13,7 +13,6 @@ from .alias_matcher import AliasMatcher
 from .label_repository import LabelRepository
 from .regex_matcher import MatchResult, RegexMatcher
 
-
 METHOD_PRIORITY = {
     MatchMethod.REGEX: 4,
     MatchMethod.ALIAS_EXACT: 3,
@@ -85,7 +84,9 @@ class MatcherService:
                         evidence=block.text[evidence_start:evidence_end],
                     )
                 )
-        mentions.sort(key=lambda item: (item.block_id, item.start_offset, item.label_code))
+        mentions.sort(
+            key=lambda item: (item.block_id, item.start_offset, item.label_code)
+        )
         return mentions, warnings
 
     @staticmethod
@@ -135,7 +136,9 @@ class MatcherService:
                 f"{winner.label_code}/{winner.match_method} 在 "
                 f"{candidate.start_offset}:{candidate.end_offset} 重叠，保留后者"
             )
-        accepted.sort(key=lambda item: (item.start_offset, item.end_offset, item.label_code))
+        accepted.sort(
+            key=lambda item: (item.start_offset, item.end_offset, item.label_code)
+        )
         return accepted, conflicts
 
     @staticmethod

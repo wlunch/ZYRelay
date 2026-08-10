@@ -1,6 +1,6 @@
 # ZYRelay DocIntelligence
 
-ZYRelay DocIntelligence 是一个面向 PDF、DOCX 的规则优先文档智能 MVP。它把原始文档转换为可追溯的 MOM/SOM/BOM UOM Package，核心产物是基于治理标签的 `semantic_index`。0.5.0 已真实集成离线 PaddleOCR：扫描 PDF 经过页面渲染、OCR、block、规则、证据和 provenance 后生成 UOM；既有合同与团队代码规范能力仍通过稳定 v1 插件契约提供 Python、HTTP 和 CLI 三种入口。
+ZYRelay DocIntelligence 1.0 是一个面向 PDF、DOCX 的规则优先企业文档智能平台。它把原始文档转换为可追溯的 MOM/SOM/BOM UOM Package，核心产物是基于治理标签的 `semantic_index` 和确定性 Semantic Objects。它不实现知识图谱、World Model、RAG 或 Agent；既有合同与团队代码规范能力通过稳定 v1 插件契约提供 Python、HTTP 和 CLI 三种入口。
 
 Rule-first PDF/DOCX intelligence engine for structured extraction, semantic indexing, evidence tracing, and standardized Python, HTTP, and CLI integration.
 
@@ -74,18 +74,21 @@ curl http://127.0.0.1:8000/health
 
 OpenAPI 文档位于 `http://127.0.0.1:8000/docs`。
 
-## Relay 流程（0.5.0）
+## Relay 流程（1.0）
 
 `Relay` 是面向团队规范文档的固定、同步编排入口；它复用既有解析、标签、代码规范和 UOM 步骤，不引入工作流引擎。
 
 ```text
 PDF / DOCX
   → GroundChoose（选择并冻结团队规则）
-  → ResourcePlan（记录解析、OCR、布局等资源）
+  → ResourcePlan（记录解析、OCR 和本地 AI 资源）
   → 原生文本解析
   → 仅扫描型 PDF 的 OCR 闸门
-  → 块、标签、规范候选与证据校验
-  → Provenance / semantic index / UOM Package
+  → 文档分类 / 布局分析（辅助元数据）
+  → BuildBlocks → 语言、表格、拼写、代码块检测
+  → 规则标签提取 → NER（辅助实体）
+  → 规范候选与证据校验
+  → Provenance / semantic index / Semantic Objects / UOM Package
 ```
 
 - Ground 选择优先级：显式 `ground_profile`、项目、团队、企业、模式、全局默认。每次执行都会保存不可变的配置快照与哈希。
@@ -93,6 +96,41 @@ PDF / DOCX
 - OCR 只在 PDF 原生文本不足、且请求 `enable_ocr=true` 时运行；DOCX、文本型 PDF 和混合 PDF 中已有文本的页面不触发 OCR。
 - 扫描页以 PyMuPDF 按 200 DPI 渲染为 RGB PNG；OCR block 保存 `bbox`、`polygon`、置信度、模型执行 ID 和页码。页面中间文件默认处理后删除。
 - 每个规范候选都会保存 `provenance_id`，可回查文档、block、页码、offset、命中证据、页面 artifact、所用资源、模型执行记录和 Ground 快照。
+
+v0.6 的模型运行顺序不改变 Relay 的主链路：`GroundChoose → ResourcePlan → Parser → OCR Gate → Rule Extraction → Provenance → semantic_index → UOM Package` 仍然是权威流程。模型步骤被插入为资源计划内的可选元数据补充；发生不可用、平台不兼容或推理错误时，使用本地启发式 fallback 并写入 `ResourcePlan`、`ModelExecution`、`processing` 和 warnings。
+
+### 模型路由与企业资源配置（v0.7）
+
+`ModelRouter` 会在每个可选模型之前记录执行或跳过决定。DOCX 不触发 OCR/视觉布局；原生文本 PDF 不触发 OCR；扫描 PDF 才会调用 PaddleOCR；拼写校正仅处理 OCR 文本；NER 只在规则标签没有覆盖实体时执行。`ResourcePlan` 记录主备资源、enabled、planned/actual execution、skip reason、版本与 gate 输入信号。
+
+企业只需覆盖 `config/enterprises/{enterprise_id}/resources.yaml`，无需改 Relay 主链路。示例位于 `enterprise-a`（本地 AI 优先）和 `enterprise-b`（启发式布局、禁用 NER）。`python -m zyrelay.models warmup` 仅预热已安装模型；`zyrelay benchmark compare-models` 可比较两组模型执行记录。详见 [ModelRouting](docs/ModelRouting.md)。
+
+### World-Model-Ready 语义对象（v1.0）
+
+语义对象层位于既有 SOM 与 BOM 之间，保留所有旧字段和 API。它将已有 candidates、规则、标签命中和 block 证据转为 `entity`、`rule`、`relation`、`event`、`document_object`、`observation`、`evidence`、`business_object`。每项都保留 document/page/block/offset、Ground、ResourcePlan 和 provenance 信息；对象 ID 基于文档哈希和原文位置稳定生成。
+
+```text
+Document → blocks / mentions / convention candidates → Evidence
+         → Semantic Objects → compatible BOM candidates → external consumer
+```
+
+不会构建知识图谱或写入任何外部系统。详见 [SemanticObjects](docs/SemanticObjects.md)、[ObjectModel](docs/ObjectModel.md) 与 [WorldModelReady](docs/WorldModelReady.md)。
+
+### Production hardening（v1.0）
+
+v1.0 保持上述 Relay 主链路与 API 不变，并新增企业 scope（enterprise / department / team / project / dev-test-prod）、YAML 资源覆盖、插件 manifest 与启停控制、配置版本/哈希清单、语义对象 schema migration、执行 history/重试/性能数据，以及内存基准指标。每一个模型资源、规则对象和业务对象都能从 UOM 和 provenance 回溯到文档、页码、block、offset、Ground、ResourcePlan、模型执行和时间戳。
+
+```bash
+# 一键容器部署
+docker compose up --build
+
+# 质量与基准
+make test
+make lint
+make benchmark
+```
+
+部署后访问 `http://127.0.0.1:8000/docs`。完整说明见 [Architecture](docs/Architecture.md)、[PluginSDK](docs/PluginSDK.md)、[ResourceManager](docs/ResourceManager.md)、[Benchmark](docs/Benchmark.md)、[Deployment](docs/Deployment.md)、[MigrationGuide](docs/MigrationGuide.md)。
 
 ### Ground 与模型配置
 
@@ -103,13 +141,28 @@ PDF / DOCX
 
 默认 OCR 为 `noop-ocr`：扫描 PDF 会被明确标为部分完成，绝不会用伪造文本冒充识别结果。`paddleocr` 适配器只在包、四个官方模型和 `data/model_cache/paddleocr/ready.json` 都就绪时被规划器选中；普通 Relay 执行保持 `allow_download=false`，不会下载模型。
 
-检查模型状态：
+安装本地 AI 依赖并检查模型状态：
 
 ```bash
+pip install -e '.[dev,paddleocr,local-ai]'
+python -m zyrelay.models install all
 python -m zyrelay.models status
-python -m zyrelay.models verify paddleocr
-python -m zyrelay.models install paddleocr
+python -m zyrelay.models verify all
 ```
+
+模型权重统一缓存到 `data/model_cache/`，路径全部由 `config/models.yaml` 配置。`install all` 是可重复的管理员预置命令；正常 Relay 请求只使用本地缓存，绝不在处理请求时联网下载。
+
+| 资源插件 | 主模型 | 作用 | 离线 fallback |
+| --- | --- | --- | --- |
+| `minilm-document-classifier` | sentence-transformers MiniLM | 文档类型辅助分类 | 关键词分类 |
+| `fasttext-language` | fastText lid.176 | block 语言 | 字符集识别 |
+| `doclayout-yolo` | DocLayout-YOLO | 页面布局类型 | parser block 类型 |
+| `table-transformer` | Microsoft Table Transformer | 表格结构/标识 | 原生 table block |
+| `gliner-ner` | GLiNER | 可定位实体建议 | 组织机构正则 |
+| `tree-sitter-code` | Tree-sitter | 代码、配置和 Markdown 代码段 | 模式检测 |
+| `symspell` | SymSpellPy | 拼写建议（不改原文） | 空建议 |
+
+每个模型插件都实现 `available()`、`health()`、`execute()`、`version` 和 `metadata()`；每次执行都生成 `ModelExecution`，并将插件、模型版本、延迟、健康状态与 fallback 状态回写至 `ResourcePlan`。`DocumentBlock` 增加了 `layout_type`、`language`、`is_code`、`code_language`、`table_id`、`entities`；`processing` 增加 `layout`、`table`、`classifier`、`language`、`ner`、`spell`。
 
 ### 已验证 PaddleOCR 环境与离线预置
 
@@ -350,7 +403,7 @@ curl 'http://127.0.0.1:8000/api/v1/conventions/search?document_id=DOC-ID&keyword
     "team_convention_profiles": []
   },
   "processing": {
-    "pipeline_version": "0.5.0",
+    "pipeline_version": "1.0.0",
     "ground_truth_version": "1.0.0",
     "label_config_hash": "...",
     "business_object_config_hash": "...",

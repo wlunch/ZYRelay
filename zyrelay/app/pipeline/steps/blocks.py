@@ -117,9 +117,7 @@ class BuildBlocksStep:
         if not clean:
             return []
         chunks = [
-            chunk.strip()
-            for chunk in re.split(r"\n[ \t]*\n+", clean)
-            if chunk.strip()
+            chunk.strip() for chunk in re.split(r"\n[ \t]*\n+", clean) if chunk.strip()
         ]
         return chunks
 

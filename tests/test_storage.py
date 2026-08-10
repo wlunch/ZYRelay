@@ -25,9 +25,7 @@ def test_atomic_package_storage_and_serialization(tmp_path) -> None:
         package_id="PKG-1",
         source=source,
         mom=MOMSection(document=source, blocks=[]),
-        som=SOMSection(
-            labels=[], mentions=[], semantic_index={}, candidates=[]
-        ),
+        som=SOMSection(labels=[], mentions=[], semantic_index={}, candidates=[]),
         bom=BOMSection(business_objects=[]),
         processing=ProcessingRecord(
             pipeline_version="0.1.0",
@@ -41,4 +39,3 @@ def test_atomic_package_storage_and_serialization(tmp_path) -> None:
 
     assert json.loads(path.read_text(encoding="utf-8"))["schema_version"] == "1.0"
     assert storage.load_package(source.document_id) == package
-

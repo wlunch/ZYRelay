@@ -35,7 +35,9 @@ class GroundChooseService:
         )
         profile, inherited = self.repository.resolve_profile(selected_id)
         candidates: list[CandidateProfile] = []
-        for priority, item in enumerate(sorted(profiles.values(), key=lambda p: p.profile_id), 1):
+        for priority, item in enumerate(
+            sorted(profiles.values(), key=lambda p: p.profile_id), 1
+        ):
             matched = item.profile_id == profile.profile_id
             candidates.append(
                 CandidateProfile(

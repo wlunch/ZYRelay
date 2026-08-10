@@ -15,4 +15,6 @@ class RuleConventionClassifierResource:
         return request.capability == "convention_classifier"
 
     def execute(self, request: ResourceRequest, context: object) -> ResourceResponse:
-        return ResourceResponse(status="completed", metadata={"delegates_to": "existing_rules"})
+        return ResourceResponse(
+            status="completed", metadata={"delegates_to": "existing_rules"}
+        )

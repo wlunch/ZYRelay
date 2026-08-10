@@ -14,6 +14,19 @@ class HeuristicLayoutResource:
     def health_check(self) -> ResourceHealth:
         return ResourceHealth(available=True, status="available")
 
+    def available(self) -> bool:
+        return True
+
+    def health(self) -> ResourceHealth:
+        return self.health_check()
+
+    def metadata(self) -> dict:
+        return {
+            "plugin_name": self.resource_id,
+            "model_version": self.version,
+            "fallback": True,
+        }
+
     def supports(self, request: ResourceRequest) -> bool:
         return request.capability == "layout"
 
@@ -24,7 +37,9 @@ class HeuristicLayoutResource:
         if parsed.elements:
             types = [item.block_type.value for item in parsed.elements]
         else:
-            types = [BlockType.PARAGRAPH.value for page in parsed.pages if page.text.strip()]
+            types = [
+                BlockType.PARAGRAPH.value for page in parsed.pages if page.text.strip()
+            ]
         return ResourceResponse(
             status="completed",
             payload={"detected_block_types": types, "method": "heuristic"},

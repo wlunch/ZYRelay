@@ -10,10 +10,7 @@ from zyrelay.plugin.contracts import (
 )
 from zyrelay.plugin.error_mapper import map_exception
 
-
-DOCX_MIME = (
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-)
+DOCX_MIME = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 
 
 def _request(path, **options) -> PluginRequest:
@@ -43,9 +40,7 @@ def test_old_and_plugin_entries_produce_same_document(
     )
     assert response.result is not None
     assert response.result.summary.document_id == document_id
-    assert len(response.result.code_conventions) == len(
-        legacy.som.code_conventions
-    )
+    assert len(response.result.code_conventions) == len(legacy.som.code_conventions)
     assert response.result.code_conventions[0]["rule_expression"] == (
         legacy.som.code_conventions[0].rule_expression.model_dump(mode="json")
     )
@@ -97,9 +92,7 @@ def test_operations_overrides_and_llm_failure_warning(
 
 
 def test_error_mapping_is_stable_and_hides_traceback() -> None:
-    error = map_exception(
-        ParseFailedError("解析器内部失败", details={"page": 1})
-    )
+    error = map_exception(ParseFailedError("解析器内部失败", details={"page": 1}))
     assert error.code == "parse_failed"
     assert error.stage == "parsing"
     assert "traceback" not in error.model_dump_json().lower()

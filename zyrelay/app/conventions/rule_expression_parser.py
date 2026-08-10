@@ -68,7 +68,10 @@ class RuleExpressionParser:
                     tool_hint=item.tool_hint,
                 )
 
-        if re.search(r"硬编码.*(?:密码|密钥|Token|AppSecret)|(?:密码|密钥|Token|AppSecret).*硬编码", clean):
+        if re.search(
+            r"硬编码.*(?:密码|密钥|Token|AppSecret)|(?:密码|密钥|Token|AppSecret).*硬编码",
+            clean,
+        ):
             return RuleExpression(
                 target=target or "source_code",
                 operator=RuleOperator.NOT_CONTAINS_SENSITIVE_SECRET,
@@ -76,7 +79,9 @@ class RuleExpressionParser:
                 tool_hint=None,
             )
 
-        if target and re.search(r"必须.*(?:添加|包含)|均需.*(?:添加|包含)|建议.*添加", clean):
+        if target and re.search(
+            r"必须.*(?:添加|包含)|均需.*(?:添加|包含)|建议.*添加", clean
+        ):
             expected = "Javadoc" if "Javadoc" in clean else "documentation_comment"
             return RuleExpression(
                 target=target,

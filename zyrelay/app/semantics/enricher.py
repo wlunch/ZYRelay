@@ -121,9 +121,7 @@ class OpenAICompatibleSemanticEnricher:
                                         "block_id": {"type": "string"},
                                         "evidence": {"type": "string"},
                                         "attributes": {"type": "object"},
-                                        "ontology_uri": {
-                                            "type": ["string", "null"]
-                                        },
+                                        "ontology_uri": {"type": ["string", "null"]},
                                         "confidence": {
                                             "type": "number",
                                             "minimum": 0,
@@ -186,4 +184,3 @@ class OpenAICompatibleSemanticEnricher:
                 )
             )
         return validated
-

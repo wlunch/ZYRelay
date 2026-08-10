@@ -1,0 +1,774 @@
+{
+  "bindings": {
+    "code_detection": "tree-sitter-code",
+    "convention_classifier": "rule-convention-classifier",
+    "document_classifier": "heuristic-document-classifier",
+    "docx_parser": "python-docx-parser",
+    "evidence_validator": "rule-evidence-validator",
+    "language_detection": "heuristic-language",
+    "layout": "heuristic-layout",
+    "ner": "heuristic-ner",
+    "ocr": "noop-ocr",
+    "pdf_parser": "pymupdf-parser",
+    "spell_correction": "symspell",
+    "storage": "local-storage",
+    "table_recognition": "heuristic-table"
+  },
+  "created_at": "2026-08-10T10:32:02.661142Z",
+  "department_id": null,
+  "enterprise_id": "benchmark",
+  "environment": "dev",
+  "execution_id": "EXEC-F2779FDE1D6E4757",
+  "fallback_bindings": {
+    "code_detection": [
+      "heuristic-code"
+    ],
+    "convention_classifier": [],
+    "document_classifier": [
+      "heuristic-document-classifier"
+    ],
+    "docx_parser": [],
+    "evidence_validator": [],
+    "language_detection": [
+      "heuristic-language"
+    ],
+    "layout": [
+      "heuristic-layout"
+    ],
+    "ner": [
+      "heuristic-ner"
+    ],
+    "ocr": [
+      "noop-ocr"
+    ],
+    "pdf_parser": [],
+    "spell_correction": [
+      "noop-spell"
+    ],
+    "storage": [],
+    "table_recognition": [
+      "heuristic-table"
+    ]
+  },
+  "plan_hash": "6f09d7e807d0e4e4c0cb6539529ee7201413dc6d45dee4e6941bec9f4c9b79c3",
+  "plan_id": "RPLAN-35980028D9D64D7F",
+  "project_id": null,
+  "resource_config_hash": "c452613ec169f86f08a270bef01dd5900db0937a5d2ad3cfe6be1444f2ca4c24",
+  "resource_config_version": "1.0.0",
+  "resource_health": {
+    "code_detection": {
+      "actual_execution": false,
+      "available": true,
+      "details": {
+        "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-004/runtime_data/model_cache/tree_sitter",
+        "enabled": true,
+        "model_id": null,
+        "model_version": "tree-sitter 0.26",
+        "plugin_name": "tree-sitter-code"
+      },
+      "fallbacks": [
+        "heuristic-code"
+      ],
+      "model_version": "1.0.0",
+      "planned_execution": false,
+      "plugin_name": "tree-sitter-code",
+      "primary_available": true,
+      "primary_resource_id": "tree-sitter-code",
+      "selected_resource_id": "tree-sitter-code",
+      "skip_reason": "no_code_signal",
+      "status": "available"
+    },
+    "convention_classifier": {
+      "available": true,
+      "details": {},
+      "fallbacks": [],
+      "model_version": "1.0.0",
+      "plugin_name": "rule-convention-classifier",
+      "primary_available": true,
+      "primary_resource_id": "rule-convention-classifier",
+      "selected_resource_id": "rule-convention-classifier",
+      "status": "available"
+    },
+    "document_classifier": {
+      "actual_execution": false,
+      "available": true,
+      "details": {
+        "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-004/runtime_data/model_cache",
+        "enabled": true,
+        "model_id": null,
+        "model_version": "1.0.0",
+        "plugin_name": "heuristic-document-classifier"
+      },
+      "fallbacks": [
+        "heuristic-document-classifier"
+      ],
+      "model_version": "1.0.0",
+      "planned_execution": false,
+      "plugin_name": "heuristic-document-classifier",
+      "primary_available": false,
+      "primary_resource_id": "minilm-document-classifier",
+      "selected_resource_id": "heuristic-document-classifier",
+      "skip_reason": "document_mode_already_known",
+      "status": "available"
+    },
+    "docx_parser": {
+      "available": true,
+      "details": {},
+      "fallbacks": [],
+      "model_version": "1.2.0",
+      "plugin_name": "python-docx-parser",
+      "primary_available": true,
+      "primary_resource_id": "python-docx-parser",
+      "selected_resource_id": "python-docx-parser",
+      "status": "available"
+    },
+    "evidence_validator": {
+      "available": true,
+      "details": {},
+      "fallbacks": [],
+      "model_version": "1.0.0",
+      "plugin_name": "rule-evidence-validator",
+      "primary_available": true,
+      "primary_resource_id": "rule-evidence-validator",
+      "selected_resource_id": "rule-evidence-validator",
+      "status": "available"
+    },
+    "language_detection": {
+      "actual_execution": true,
+      "available": true,
+      "details": {
+        "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-004/runtime_data/model_cache",
+        "enabled": true,
+        "model_id": null,
+        "model_version": "1.0.0",
+        "plugin_name": "heuristic-language"
+      },
+      "fallback_used": true,
+      "fallbacks": [
+        "heuristic-language"
+      ],
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-004/runtime_data/model_cache",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "1.0.0",
+          "plugin_name": "heuristic-language"
+        },
+        "status": "available"
+      },
+      "latency_ms": 49.45358299301006,
+      "model_execution_id": "MEXEC-F1FB9CFC1D574391",
+      "model_version": "1.0.0",
+      "planned_execution": true,
+      "plugin_name": "heuristic-language",
+      "primary_available": false,
+      "primary_resource_id": "fasttext-language",
+      "selected_resource_id": "heuristic-language",
+      "status": "available"
+    },
+    "layout": {
+      "actual_execution": true,
+      "available": true,
+      "details": {},
+      "fallback_used": true,
+      "fallbacks": [
+        "heuristic-layout"
+      ],
+      "health": {
+        "available": true,
+        "details": {},
+        "status": "available"
+      },
+      "latency_ms": 0.1779580197762698,
+      "model_execution_id": "MEXEC-13F608098E3C4BC8",
+      "model_version": "1.0.0",
+      "planned_execution": true,
+      "plugin_name": "heuristic-layout",
+      "primary_available": false,
+      "primary_resource_id": "doclayout-yolo",
+      "selected_resource_id": "heuristic-layout",
+      "status": "available"
+    },
+    "ner": {
+      "actual_execution": true,
+      "available": true,
+      "details": {
+        "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-004/runtime_data/model_cache",
+        "enabled": true,
+        "model_id": null,
+        "model_version": "1.0.0",
+        "plugin_name": "heuristic-ner"
+      },
+      "fallback_used": true,
+      "fallbacks": [
+        "heuristic-ner"
+      ],
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-004/runtime_data/model_cache",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "1.0.0",
+          "plugin_name": "heuristic-ner"
+        },
+        "status": "available"
+      },
+      "latency_ms": 47.61887501808815,
+      "model_execution_id": "MEXEC-AEE9B296F9E34B3D",
+      "model_version": "1.0.0",
+      "planned_execution": true,
+      "plugin_name": "heuristic-ner",
+      "primary_available": false,
+      "primary_resource_id": "gliner-ner",
+      "selected_resource_id": "heuristic-ner",
+      "status": "available"
+    },
+    "ocr": {
+      "actual_execution": false,
+      "available": true,
+      "details": {},
+      "fallbacks": [
+        "noop-ocr"
+      ],
+      "model_version": "1.0.0",
+      "planned_execution": false,
+      "plugin_name": "noop-ocr",
+      "primary_available": false,
+      "primary_resource_id": "paddleocr",
+      "selected_resource_id": "noop-ocr",
+      "skip_reason": "request_disabled",
+      "status": "available"
+    },
+    "pdf_parser": {
+      "available": true,
+      "details": {},
+      "fallbacks": [],
+      "model_version": "1.28.0",
+      "plugin_name": "pymupdf-parser",
+      "primary_available": true,
+      "primary_resource_id": "pymupdf-parser",
+      "selected_resource_id": "pymupdf-parser",
+      "status": "available"
+    },
+    "spell_correction": {
+      "actual_execution": false,
+      "available": true,
+      "details": {
+        "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-004/runtime_data/model_cache/symspell",
+        "enabled": true,
+        "model_id": null,
+        "model_version": "SymSpellPy 6.10",
+        "plugin_name": "symspell"
+      },
+      "fallbacks": [
+        "noop-spell"
+      ],
+      "model_version": "6.10.0",
+      "planned_execution": false,
+      "plugin_name": "symspell",
+      "primary_available": true,
+      "primary_resource_id": "symspell",
+      "selected_resource_id": "symspell",
+      "skip_reason": "not_ocr_text",
+      "status": "available"
+    },
+    "storage": {
+      "available": true,
+      "details": {},
+      "fallbacks": [],
+      "model_version": "1.0.0",
+      "plugin_name": "local-storage",
+      "primary_available": true,
+      "primary_resource_id": "local-storage",
+      "selected_resource_id": "local-storage",
+      "status": "available"
+    },
+    "table_recognition": {
+      "actual_execution": false,
+      "available": true,
+      "details": {
+        "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-004/runtime_data/model_cache",
+        "enabled": true,
+        "model_id": null,
+        "model_version": "1.0.0",
+        "plugin_name": "heuristic-table"
+      },
+      "fallbacks": [
+        "heuristic-table"
+      ],
+      "model_version": "1.0.0",
+      "planned_execution": false,
+      "plugin_name": "heuristic-table",
+      "primary_available": false,
+      "primary_resource_id": "table-transformer",
+      "selected_resource_id": "heuristic-table",
+      "skip_reason": "no_table_signal",
+      "status": "available"
+    }
+  },
+  "resource_profile_id": "default-resources",
+  "selection_records": [
+    {
+      "actual_execution": false,
+      "capability": "pdf_parser",
+      "compatibility": {
+        "api_version": "v1",
+        "status": "compatible"
+      },
+      "enabled": true,
+      "fallback_used": false,
+      "gate_decision": null,
+      "health": {
+        "available": true,
+        "details": {},
+        "status": "available"
+      },
+      "input_signals": {},
+      "latency_ms": null,
+      "model_execution_id": null,
+      "model_version": "1.28.0",
+      "planned_execution": true,
+      "plugin_name": "pymupdf-parser",
+      "rejected_resources": [],
+      "selected_resource_id": "pymupdf-parser",
+      "selection_reason": "enterprise_profile",
+      "skip_reason": null
+    },
+    {
+      "actual_execution": false,
+      "capability": "docx_parser",
+      "compatibility": {
+        "api_version": "v1",
+        "status": "compatible"
+      },
+      "enabled": true,
+      "fallback_used": false,
+      "gate_decision": null,
+      "health": {
+        "available": true,
+        "details": {},
+        "status": "available"
+      },
+      "input_signals": {},
+      "latency_ms": null,
+      "model_execution_id": null,
+      "model_version": "1.2.0",
+      "planned_execution": true,
+      "plugin_name": "python-docx-parser",
+      "rejected_resources": [],
+      "selected_resource_id": "python-docx-parser",
+      "selection_reason": "enterprise_profile",
+      "skip_reason": null
+    },
+    {
+      "actual_execution": false,
+      "capability": "ocr",
+      "compatibility": {
+        "api_version": "v1",
+        "status": "compatible"
+      },
+      "enabled": true,
+      "fallback_used": true,
+      "gate_decision": "skip",
+      "health": {
+        "available": true,
+        "details": {},
+        "status": "available"
+      },
+      "input_signals": {
+        "block_count": 0,
+        "entity_mention_count": 0,
+        "file_type": "pdf",
+        "mode": "contract",
+        "ocr_block_count": 0,
+        "requires_ocr": false,
+        "resource_id": "noop-ocr",
+        "table_block_count": 0
+      },
+      "latency_ms": null,
+      "model_execution_id": "MEXEC-69C1460C72D04A68",
+      "model_version": "1.0.0",
+      "planned_execution": false,
+      "plugin_name": "noop-ocr",
+      "rejected_resources": [
+        "paddleocr"
+      ],
+      "selected_resource_id": "noop-ocr",
+      "selection_reason": "enterprise_profile",
+      "skip_reason": "request_disabled"
+    },
+    {
+      "actual_execution": false,
+      "capability": "document_classifier",
+      "compatibility": {
+        "api_version": "v1",
+        "status": "compatible"
+      },
+      "enabled": true,
+      "fallback_used": true,
+      "gate_decision": "skip",
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-004/runtime_data/model_cache",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "1.0.0",
+          "plugin_name": "heuristic-document-classifier"
+        },
+        "status": "available"
+      },
+      "input_signals": {
+        "block_count": 0,
+        "entity_mention_count": 0,
+        "file_type": "pdf",
+        "mode": "contract",
+        "ocr_block_count": 0,
+        "requires_ocr": false,
+        "resource_id": "heuristic-document-classifier",
+        "table_block_count": 0
+      },
+      "latency_ms": null,
+      "model_execution_id": "MEXEC-44E9710063434A67",
+      "model_version": "1.0.0",
+      "planned_execution": false,
+      "plugin_name": "heuristic-document-classifier",
+      "rejected_resources": [
+        "minilm-document-classifier"
+      ],
+      "selected_resource_id": "heuristic-document-classifier",
+      "selection_reason": "enterprise_profile",
+      "skip_reason": "document_mode_already_known"
+    },
+    {
+      "actual_execution": true,
+      "capability": "language_detection",
+      "compatibility": {
+        "api_version": "v1",
+        "status": "compatible"
+      },
+      "enabled": true,
+      "fallback_used": true,
+      "gate_decision": "run",
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-004/runtime_data/model_cache",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "1.0.0",
+          "plugin_name": "heuristic-language"
+        },
+        "status": "available"
+      },
+      "input_signals": {
+        "block_count": 66,
+        "entity_mention_count": 0,
+        "file_type": "pdf",
+        "mode": "contract",
+        "ocr_block_count": 0,
+        "requires_ocr": false,
+        "resource_id": "heuristic-language",
+        "table_block_count": 0
+      },
+      "latency_ms": 49.45358299301006,
+      "model_execution_id": "MEXEC-F1FB9CFC1D574391",
+      "model_version": "1.0.0",
+      "planned_execution": true,
+      "plugin_name": "heuristic-language",
+      "rejected_resources": [
+        "fasttext-language"
+      ],
+      "selected_resource_id": "heuristic-language",
+      "selection_reason": "enterprise_profile",
+      "skip_reason": null
+    },
+    {
+      "actual_execution": true,
+      "capability": "layout",
+      "compatibility": {
+        "api_version": "v1",
+        "status": "compatible"
+      },
+      "enabled": true,
+      "fallback_used": true,
+      "gate_decision": "run",
+      "health": {
+        "available": true,
+        "details": {},
+        "status": "available"
+      },
+      "input_signals": {
+        "block_count": 0,
+        "entity_mention_count": 0,
+        "file_type": "pdf",
+        "mode": "contract",
+        "ocr_block_count": 0,
+        "requires_ocr": false,
+        "resource_id": "heuristic-layout",
+        "table_block_count": 0
+      },
+      "latency_ms": 0.1779580197762698,
+      "model_execution_id": "MEXEC-13F608098E3C4BC8",
+      "model_version": "1.0.0",
+      "planned_execution": true,
+      "plugin_name": "heuristic-layout",
+      "rejected_resources": [
+        "doclayout-yolo"
+      ],
+      "selected_resource_id": "heuristic-layout",
+      "selection_reason": "enterprise_profile",
+      "skip_reason": null
+    },
+    {
+      "actual_execution": false,
+      "capability": "table_recognition",
+      "compatibility": {
+        "api_version": "v1",
+        "status": "compatible"
+      },
+      "enabled": true,
+      "fallback_used": true,
+      "gate_decision": "skip",
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-004/runtime_data/model_cache",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "1.0.0",
+          "plugin_name": "heuristic-table"
+        },
+        "status": "available"
+      },
+      "input_signals": {
+        "block_count": 66,
+        "entity_mention_count": 0,
+        "file_type": "pdf",
+        "mode": "contract",
+        "ocr_block_count": 0,
+        "requires_ocr": false,
+        "resource_id": "heuristic-table",
+        "table_block_count": 0
+      },
+      "latency_ms": null,
+      "model_execution_id": "MEXEC-4960A2721EC24306",
+      "model_version": "1.0.0",
+      "planned_execution": false,
+      "plugin_name": "heuristic-table",
+      "rejected_resources": [
+        "table-transformer"
+      ],
+      "selected_resource_id": "heuristic-table",
+      "selection_reason": "enterprise_profile",
+      "skip_reason": "no_table_signal"
+    },
+    {
+      "actual_execution": false,
+      "capability": "spell_correction",
+      "compatibility": {
+        "api_version": "v1",
+        "status": "compatible"
+      },
+      "enabled": true,
+      "fallback_used": false,
+      "gate_decision": "skip",
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-004/runtime_data/model_cache/symspell",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "SymSpellPy 6.10",
+          "plugin_name": "symspell"
+        },
+        "status": "available"
+      },
+      "input_signals": {
+        "block_count": 66,
+        "entity_mention_count": 0,
+        "file_type": "pdf",
+        "mode": "contract",
+        "ocr_block_count": 0,
+        "requires_ocr": false,
+        "resource_id": "symspell",
+        "table_block_count": 0
+      },
+      "latency_ms": null,
+      "model_execution_id": "MEXEC-A0A67E30336D4664",
+      "model_version": "6.10.0",
+      "planned_execution": false,
+      "plugin_name": "symspell",
+      "rejected_resources": [],
+      "selected_resource_id": "symspell",
+      "selection_reason": "enterprise_profile",
+      "skip_reason": "not_ocr_text"
+    },
+    {
+      "actual_execution": false,
+      "capability": "code_detection",
+      "compatibility": {
+        "api_version": "v1",
+        "status": "compatible"
+      },
+      "enabled": true,
+      "fallback_used": false,
+      "gate_decision": "skip",
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-004/runtime_data/model_cache/tree_sitter",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "tree-sitter 0.26",
+          "plugin_name": "tree-sitter-code"
+        },
+        "status": "available"
+      },
+      "input_signals": {
+        "block_count": 66,
+        "entity_mention_count": 0,
+        "file_type": "pdf",
+        "mode": "contract",
+        "ocr_block_count": 0,
+        "requires_ocr": false,
+        "resource_id": "tree-sitter-code",
+        "table_block_count": 0
+      },
+      "latency_ms": null,
+      "model_execution_id": "MEXEC-CB1B50A22D7F4C53",
+      "model_version": "1.0.0",
+      "planned_execution": false,
+      "plugin_name": "tree-sitter-code",
+      "rejected_resources": [],
+      "selected_resource_id": "tree-sitter-code",
+      "selection_reason": "enterprise_profile",
+      "skip_reason": "no_code_signal"
+    },
+    {
+      "actual_execution": true,
+      "capability": "ner",
+      "compatibility": {
+        "api_version": "v1",
+        "status": "compatible"
+      },
+      "enabled": true,
+      "fallback_used": true,
+      "gate_decision": "run",
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-004/runtime_data/model_cache",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "1.0.0",
+          "plugin_name": "heuristic-ner"
+        },
+        "status": "available"
+      },
+      "input_signals": {
+        "block_count": 66,
+        "entity_mention_count": 0,
+        "file_type": "pdf",
+        "mode": "contract",
+        "ocr_block_count": 0,
+        "requires_ocr": false,
+        "resource_id": "heuristic-ner",
+        "table_block_count": 0
+      },
+      "latency_ms": 47.61887501808815,
+      "model_execution_id": "MEXEC-AEE9B296F9E34B3D",
+      "model_version": "1.0.0",
+      "planned_execution": true,
+      "plugin_name": "heuristic-ner",
+      "rejected_resources": [
+        "gliner-ner"
+      ],
+      "selected_resource_id": "heuristic-ner",
+      "selection_reason": "enterprise_profile",
+      "skip_reason": null
+    },
+    {
+      "actual_execution": false,
+      "capability": "convention_classifier",
+      "compatibility": {
+        "api_version": "v1",
+        "status": "compatible"
+      },
+      "enabled": true,
+      "fallback_used": false,
+      "gate_decision": null,
+      "health": {
+        "available": true,
+        "details": {},
+        "status": "available"
+      },
+      "input_signals": {},
+      "latency_ms": null,
+      "model_execution_id": null,
+      "model_version": "1.0.0",
+      "planned_execution": true,
+      "plugin_name": "rule-convention-classifier",
+      "rejected_resources": [],
+      "selected_resource_id": "rule-convention-classifier",
+      "selection_reason": "enterprise_profile",
+      "skip_reason": null
+    },
+    {
+      "actual_execution": false,
+      "capability": "evidence_validator",
+      "compatibility": {
+        "api_version": "v1",
+        "status": "compatible"
+      },
+      "enabled": true,
+      "fallback_used": false,
+      "gate_decision": null,
+      "health": {
+        "available": true,
+        "details": {},
+        "status": "available"
+      },
+      "input_signals": {},
+      "latency_ms": null,
+      "model_execution_id": null,
+      "model_version": "1.0.0",
+      "planned_execution": true,
+      "plugin_name": "rule-evidence-validator",
+      "rejected_resources": [],
+      "selected_resource_id": "rule-evidence-validator",
+      "selection_reason": "enterprise_profile",
+      "skip_reason": null
+    },
+    {
+      "actual_execution": false,
+      "capability": "storage",
+      "compatibility": {
+        "api_version": "v1",
+        "status": "compatible"
+      },
+      "enabled": true,
+      "fallback_used": false,
+      "gate_decision": null,
+      "health": {
+        "available": true,
+        "details": {},
+        "status": "available"
+      },
+      "input_signals": {},
+      "latency_ms": null,
+      "model_execution_id": null,
+      "model_version": "1.0.0",
+      "planned_execution": true,
+      "plugin_name": "local-storage",
+      "rejected_resources": [],
+      "selected_resource_id": "local-storage",
+      "selection_reason": "enterprise_profile",
+      "skip_reason": null
+    }
+  ],
+  "team_id": null
+}

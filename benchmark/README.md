@@ -79,7 +79,7 @@ results/baseline/BC-SCAN-001/
 └── evaluation.json
 ```
 
-评估项包括处理成功、最小 block 数、约定候选最小数、证据与 provenance 完整性、block 顺序，以及扫描件的 OCR 运行、非空文本和 bbox。`compare_results.py` 会报告预期召回、证据、provenance 和耗时变化；预期召回/证据/provenance 下降判为回归，耗时增长仅告警。
+评估项包括处理成功、最小 block 数、约定候选最小数、证据与 provenance 完整性、block 顺序，以及扫描件的 OCR 运行、非空文本和 bbox。v1.0 额外记录 semantic object / relation 数、实体与规则召回、semantic evidence 完整率、稳定对象 ID、峰值 Python 内存与资源插件执行对比。`compare_results.py` 会报告预期召回、证据、provenance、语义对象、耗时和内存变化；语义证据下降或对象 ID 不稳定判为回归，耗时/内存增长仅告警。
 
 ## 维护规则
 

@@ -25,9 +25,7 @@ from .mappers.request_mapper import EXECUTION_ID
 
 
 class DocIntelligencePlugin:
-    def __init__(
-        self, dependencies: PluginDependencies | None = None
-    ) -> None:
+    def __init__(self, dependencies: PluginDependencies | None = None) -> None:
         self.dependencies = dependencies or create_default_dependencies()
         self.request_mapper = PluginRequestMapper(
             self.dependencies.config,
@@ -50,8 +48,7 @@ class DocIntelligencePlugin:
         request_id = request.request_id or self.dependencies.id_generator("REQ")
         execution_id = (
             request.execution_id
-            if request.execution_id
-            and EXECUTION_ID.fullmatch(request.execution_id)
+            if request.execution_id and EXECUTION_ID.fullmatch(request.execution_id)
             else self.dependencies.id_generator("EXEC")
         )
         validation = self.validate(request)
@@ -69,12 +66,8 @@ class DocIntelligencePlugin:
             self._save_execution(request, response, input_summary={})
             return response
 
-        effective_options = self.request_mapper.effective_options(
-            request.options
-        )
-        request = request.model_copy(
-            update={"options": effective_options}
-        )
+        effective_options = self.request_mapper.effective_options(request.options)
+        request = request.model_copy(update={"options": effective_options})
 
         if request.operation == PluginOperation.GET_CAPABILITIES:
             response = self._response(
@@ -161,10 +154,7 @@ class DocIntelligencePlugin:
                 else PluginStatus.COMPLETED
             )
             trace = (
-                [
-                    step.model_dump(mode="json")
-                    for step in package.processing.steps
-                ]
+                [step.model_dump(mode="json") for step in package.processing.steps]
                 if request.options.output_detail == OutputDetail.FULL
                 else []
             )
@@ -239,9 +229,7 @@ class DocIntelligencePlugin:
             return self.dependencies.document_service
         return self.dependencies.service_factory(settings)
 
-    def _save_artifacts(
-        self, execution_id: str, package: UOMPackage
-    ):
+    def _save_artifacts(self, execution_id: str, package: UOMPackage):
         safe_uom = self.response_mapper.sanitize(
             package.model_dump(mode="json", exclude_none=False),
             artifact_uri=f"plugin://executions/{execution_id}/uom",

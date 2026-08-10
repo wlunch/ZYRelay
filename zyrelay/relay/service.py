@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import uuid
-from pathlib import Path
 
 from zyrelay.app.core.config import Settings
 from zyrelay.ground import GroundChooseService, GroundRepository
@@ -18,7 +17,7 @@ class RelayService:
         self.settings = settings or Settings.from_env()
         self.ground_repository = GroundRepository(self.settings)
         self.ground_chooser = GroundChooseService(self.ground_repository)
-        self.resources = create_default_registry()
+        self.resources = create_default_registry(self.settings)
         self.resource_planner = ResourcePlanner(self.settings, self.resources)
         self.provenance = ProvenanceService(self.settings.data_root)
         self.execution_store = JsonRecordRepository(
@@ -42,14 +41,25 @@ class RelayService:
             execution_id=f"EXEC-{uuid.uuid4().hex[:16].upper()}",
             request_id=request.request_id or f"REQ-{uuid.uuid4().hex[:16].upper()}",
             enterprise_id=request.enterprise_id,
+            department_id=request.department_id,
             team_id=request.team_id,
             project_id=request.project_id,
+            environment=request.environment,
+            retry_limit=request.retry_limit,
             mode=request.mode,
-            metadata={key: value for key, value in request.metadata.items() if not key.startswith("_")},
+            metadata={
+                key: value
+                for key, value in request.metadata.items()
+                if not key.startswith("_")
+            },
         )
         try:
-            package, selection, snapshot, plan = self.pipeline.execute(request, execution)
-            result = self._result_payload(request, execution, package, selection, snapshot, plan)
+            package, selection, snapshot, plan = self.pipeline.execute(
+                request, execution
+            )
+            result = self._result_payload(
+                request, execution, package, selection, snapshot, plan
+            )
             return result
         finally:
             self.execution_store.save(execution, execution.execution_id)
@@ -62,8 +72,12 @@ class RelayService:
         if not execution.ground_selection_id or not execution.ground_snapshot_id:
             raise FileNotFoundError(execution_id)
         return {
-            "selection": self.ground_repository.selection_store.load(execution.ground_selection_id),
-            "snapshot": self.ground_repository.snapshot_store.load(execution.ground_snapshot_id),
+            "selection": self.ground_repository.selection_store.load(
+                execution.ground_selection_id
+            ),
+            "snapshot": self.ground_repository.snapshot_store.load(
+                execution.ground_snapshot_id
+            ),
         }
 
     def get_resources(self, execution_id: str):
@@ -74,7 +88,8 @@ class RelayService:
 
     def get_models(self, execution_id: str) -> list[ModelExecutionRecord]:
         return [
-            item for item in self.model_execution_store.list()
+            item
+            for item in self.model_execution_store.list()
             if item.execution_id == execution_id
         ]
 
@@ -88,27 +103,49 @@ class RelayService:
         return result
 
     @staticmethod
-    def _result_payload(request, execution, package, selection, snapshot, plan) -> RelayResult:
+    def _result_payload(
+        request, execution, package, selection, snapshot, plan
+    ) -> RelayResult:
         document = package.source.model_dump(mode="json", exclude={"source_uri"})
         document["source_uri"] = f"relay://executions/{execution.execution_id}/source"
         payload = {
             "document": document,
-            "code_conventions": [item.model_dump(mode="json") for item in package.som.code_conventions],
+            "code_conventions": [
+                item.model_dump(mode="json") for item in package.som.code_conventions
+            ],
             "convention_index": package.som.convention_index.model_dump(mode="json"),
-            "business_objects": [item.model_dump(mode="json") for item in package.bom.business_objects],
+            "business_objects": [
+                item.model_dump(mode="json") for item in package.bom.business_objects
+            ],
+            "semantic_object_summary": package.semantic_objects.validation.model_dump(
+                mode="json"
+            ),
             "uom_artifact": execution.artifacts[0] if execution.artifacts else {},
         }
         if request.output_detail == "full":
             payload.update(
                 {
-                    "blocks": [item.model_dump(mode="json") for item in package.mom.blocks],
-                    "mentions": [item.model_dump(mode="json") for item in package.som.mentions],
+                    "blocks": [
+                        item.model_dump(mode="json") for item in package.mom.blocks
+                    ],
+                    "mentions": [
+                        item.model_dump(mode="json") for item in package.som.mentions
+                    ],
                     "semantic_index": {
                         key: value.model_dump(mode="json")
                         for key, value in package.som.semantic_index.items()
                     },
-                    "step_records": [item.model_dump(mode="json") for item in execution.steps],
-                    "model_executions": [item.model_dump(mode="json") for item in execution.model_executions],
+                    "step_records": [
+                        item.model_dump(mode="json") for item in execution.steps
+                    ],
+                    "model_executions": [
+                        item.model_dump(mode="json")
+                        for item in execution.model_executions
+                    ],
+                    "semantic_objects": [
+                        item.model_dump(mode="json")
+                        for item in package.semantic_objects.objects
+                    ],
                 }
             )
         return RelayResult(
@@ -124,9 +161,18 @@ class RelayService:
             },
             resources={
                 "plan_id": plan.plan_id,
+                "scope": {
+                    "enterprise_id": plan.enterprise_id,
+                    "department_id": plan.department_id,
+                    "team_id": plan.team_id,
+                    "project_id": plan.project_id,
+                    "environment": plan.environment,
+                },
                 "bindings": plan.bindings,
                 "fallbacks_used": [
-                    item.capability for item in plan.selection_records if item.fallback_used
+                    item.capability
+                    for item in plan.selection_records
+                    if item.fallback_used
                 ],
             },
             result=payload,

@@ -1,0 +1,15 @@
+{
+  "blocks_generated": 66,
+  "conventions_generated": 0,
+  "layout_duration_ms": 0.13741699513047934,
+  "model_executed_count": 3,
+  "model_inference_duration_ms": 164.7218340076506,
+  "model_load_duration_ms": 0.0,
+  "model_skipped_count": 5,
+  "ner_duration_ms": 72.42412501364015,
+  "ocr_duration_ms": 0,
+  "pages_processed": 11,
+  "parser_duration_ms": 269.1241670108866,
+  "table_duration_ms": 0,
+  "total_duration_ms": 5189.509084011661
+}

@@ -3,12 +3,10 @@ import json
 from zyrelay.plugin.cli import main
 
 
-def test_cli_manifest_and_execute(
-    sample_docx, tmp_path, monkeypatch, capsys
-) -> None:
+def test_cli_manifest_and_execute(sample_docx, tmp_path, monkeypatch, capsys) -> None:
     monkeypatch.setenv("ZYRELAY_DATA_ROOT", str(tmp_path / "data"))
     assert main(["manifest"]) == 0
-    assert json.loads(capsys.readouterr().out)["version"] == "0.5.0"
+    assert json.loads(capsys.readouterr().out)["version"] == "1.0.0"
 
     output = tmp_path / "result.json"
     assert (

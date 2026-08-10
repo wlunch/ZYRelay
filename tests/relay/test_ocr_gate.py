@@ -49,7 +49,9 @@ class FakeOCRResource:
         )
 
 
-def test_scanned_pdf_uses_available_ocr_or_noop_fallback(relay_service, tmp_path) -> None:
+def test_scanned_pdf_uses_available_ocr_or_noop_fallback(
+    relay_service, tmp_path
+) -> None:
     path = _scan_pdf(tmp_path)
     result = relay_service.process(
         RelayRequest(
@@ -83,4 +85,7 @@ def test_fake_ocr_adds_traceable_block_metadata(relay_service, tmp_path) -> None
     assert block["metadata"]["bbox"] == [10.0, 20.0, 200.0, 42.0]
     assert block["metadata"]["ocr_confidence"] == 0.96
     assert block["metadata"]["model_execution_id"] == "MEXEC-FAKE-000001"
-    assert result.result["model_executions"][0]["model_execution_id"] == "MEXEC-FAKE-000001"
+    assert (
+        result.result["model_executions"][0]["model_execution_id"]
+        == "MEXEC-FAKE-000001"
+    )

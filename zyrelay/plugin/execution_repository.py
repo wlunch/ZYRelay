@@ -13,7 +13,6 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from .contracts import PluginError, PluginResponse, PluginStatus, PluginWarning
 
-
 EXECUTION_ID = re.compile(r"^EXEC-[A-F0-9]{16}$")
 
 
@@ -44,9 +43,7 @@ class LocalExecutionRepository:
         self.root = root
         self.root.mkdir(parents=True, exist_ok=True)
 
-    def save(
-        self, record: PluginExecutionRecord, response: PluginResponse
-    ) -> None:
+    def save(self, record: PluginExecutionRecord, response: PluginResponse) -> None:
         self._validate_id(record.execution_id)
         self._atomic_json(
             self.root / f"{record.execution_id}.json",

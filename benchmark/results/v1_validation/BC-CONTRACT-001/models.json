@@ -1,0 +1,360 @@
+[
+  {
+    "capability": "document_classifier",
+    "completed_at": "2026-08-10T10:31:47.405485Z",
+    "confidence_summary": {},
+    "details": {
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-001/runtime_data/model_cache",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "1.0.0",
+          "plugin_name": "heuristic-document-classifier"
+        },
+        "status": "available"
+      },
+      "routing": {
+        "capability": "document_classifier",
+        "decision": "skip",
+        "input_signals": {
+          "block_count": 0,
+          "entity_mention_count": 0,
+          "file_type": "pdf",
+          "mode": "contract",
+          "ocr_block_count": 0,
+          "requires_ocr": true,
+          "resource_id": "heuristic-document-classifier",
+          "table_block_count": 0
+        },
+        "reason": "document_mode_already_known",
+        "resource_id": "heuristic-document-classifier"
+      }
+    },
+    "duration_ms": 0.0,
+    "errors": [],
+    "execution_id": "EXEC-FFE1A583DE514932",
+    "fallback_used": false,
+    "input_references": [],
+    "model_execution_id": "MEXEC-06F5DF38CC524CCB",
+    "model_name": "heuristic-document-classifier",
+    "model_version": "1.0.0",
+    "output_references": [],
+    "resource_id": "heuristic-document-classifier",
+    "resource_version": "1.0.0",
+    "started_at": "2026-08-10T10:31:47.309002Z",
+    "status": "skipped",
+    "step_name": "route_document_classifier",
+    "warnings": []
+  },
+  {
+    "capability": "ner",
+    "completed_at": "2026-08-10T10:31:48.413710Z",
+    "confidence_summary": {},
+    "details": {
+      "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-001/runtime_data/model_cache",
+      "enabled": true,
+      "fallback": "organization_pattern",
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-001/runtime_data/model_cache",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "1.0.0",
+          "plugin_name": "heuristic-ner"
+        },
+        "status": "available"
+      },
+      "model_id": null,
+      "model_version": "1.0.0",
+      "plugin": "heuristic-ner",
+      "plugin_name": "heuristic-ner"
+    },
+    "duration_ms": 72.42412501364015,
+    "errors": [],
+    "execution_id": "EXEC-FFE1A583DE514932",
+    "fallback_used": true,
+    "input_references": [
+      "document:DOC-208019935F53308B"
+    ],
+    "model_execution_id": "MEXEC-2504DB8D34A24537",
+    "model_name": "heuristic-ner",
+    "model_version": "1.0.0",
+    "output_references": [
+      "ner:66_blocks"
+    ],
+    "resource_id": "heuristic-ner",
+    "resource_version": "1.0.0",
+    "started_at": "2026-08-10T10:31:48.413699Z",
+    "status": "completed",
+    "step_name": "run_ner",
+    "warnings": []
+  },
+  {
+    "capability": "spell_correction",
+    "completed_at": "2026-08-10T10:31:47.829001Z",
+    "confidence_summary": {},
+    "details": {
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-001/runtime_data/model_cache/symspell",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "SymSpellPy 6.10",
+          "plugin_name": "symspell"
+        },
+        "status": "available"
+      },
+      "routing": {
+        "capability": "spell_correction",
+        "decision": "skip",
+        "input_signals": {
+          "block_count": 66,
+          "entity_mention_count": 0,
+          "file_type": "pdf",
+          "mode": "contract",
+          "ocr_block_count": 0,
+          "requires_ocr": true,
+          "resource_id": "symspell",
+          "table_block_count": 0
+        },
+        "reason": "not_ocr_text",
+        "resource_id": "symspell"
+      }
+    },
+    "duration_ms": 0.0,
+    "errors": [],
+    "execution_id": "EXEC-FFE1A583DE514932",
+    "fallback_used": false,
+    "input_references": [],
+    "model_execution_id": "MEXEC-2C2AF53DF6D44FD8",
+    "model_name": "symspell",
+    "model_version": "SymSpellPy 6.10",
+    "output_references": [],
+    "resource_id": "symspell",
+    "resource_version": "6.10.0",
+    "started_at": "2026-08-10T10:31:47.709680Z",
+    "status": "skipped",
+    "step_name": "route_spell_correction",
+    "warnings": []
+  },
+  {
+    "capability": "code_detection",
+    "completed_at": "2026-08-10T10:31:47.958357Z",
+    "confidence_summary": {},
+    "details": {
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-001/runtime_data/model_cache/tree_sitter",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "tree-sitter 0.26",
+          "plugin_name": "tree-sitter-code"
+        },
+        "status": "available"
+      },
+      "routing": {
+        "capability": "code_detection",
+        "decision": "skip",
+        "input_signals": {
+          "block_count": 66,
+          "entity_mention_count": 0,
+          "file_type": "pdf",
+          "mode": "contract",
+          "ocr_block_count": 0,
+          "requires_ocr": true,
+          "resource_id": "tree-sitter-code",
+          "table_block_count": 0
+        },
+        "reason": "no_code_signal",
+        "resource_id": "tree-sitter-code"
+      }
+    },
+    "duration_ms": 0.0,
+    "errors": [],
+    "execution_id": "EXEC-FFE1A583DE514932",
+    "fallback_used": false,
+    "input_references": [],
+    "model_execution_id": "MEXEC-2C8D2531C8784BF6",
+    "model_name": "tree-sitter-code",
+    "model_version": "tree-sitter 0.26",
+    "output_references": [],
+    "resource_id": "tree-sitter-code",
+    "resource_version": "1.0.0",
+    "started_at": "2026-08-10T10:31:47.839556Z",
+    "status": "skipped",
+    "step_name": "route_code_detection",
+    "warnings": []
+  },
+  {
+    "capability": "ocr",
+    "completed_at": "2026-08-10T10:31:47.304592Z",
+    "confidence_summary": {},
+    "details": {
+      "health": {
+        "available": true,
+        "details": {},
+        "status": "available"
+      },
+      "routing": {
+        "capability": "ocr",
+        "decision": "skip",
+        "input_signals": {
+          "block_count": 0,
+          "entity_mention_count": 0,
+          "file_type": "pdf",
+          "mode": "contract",
+          "ocr_block_count": 0,
+          "requires_ocr": true,
+          "resource_id": "noop-ocr",
+          "table_block_count": 0
+        },
+        "reason": "request_disabled",
+        "resource_id": "noop-ocr"
+      }
+    },
+    "duration_ms": 0.0,
+    "errors": [],
+    "execution_id": "EXEC-FFE1A583DE514932",
+    "fallback_used": false,
+    "input_references": [],
+    "model_execution_id": "MEXEC-3F93E8DC9B774EEC",
+    "model_name": "noop-ocr",
+    "model_version": "1.0.0",
+    "output_references": [],
+    "resource_id": "noop-ocr",
+    "resource_version": "1.0.0",
+    "started_at": "2026-08-10T10:31:47.304494Z",
+    "status": "skipped",
+    "step_name": "route_ocr",
+    "warnings": []
+  },
+  {
+    "capability": "language_detection",
+    "completed_at": "2026-08-10T10:31:47.605023Z",
+    "confidence_summary": {},
+    "details": {
+      "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-001/runtime_data/model_cache",
+      "enabled": true,
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-001/runtime_data/model_cache",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "1.0.0",
+          "plugin_name": "heuristic-language"
+        },
+        "status": "available"
+      },
+      "model_id": null,
+      "model_version": "1.0.0",
+      "plugin": "heuristic-language",
+      "plugin_name": "heuristic-language"
+    },
+    "duration_ms": 92.16029199887998,
+    "errors": [],
+    "execution_id": "EXEC-FFE1A583DE514932",
+    "fallback_used": true,
+    "input_references": [
+      "document:DOC-208019935F53308B"
+    ],
+    "model_execution_id": "MEXEC-5418A10B9EF943FE",
+    "model_name": "heuristic-language",
+    "model_version": "1.0.0",
+    "output_references": [
+      "language_detection:66_blocks"
+    ],
+    "resource_id": "heuristic-language",
+    "resource_version": "1.0.0",
+    "started_at": "2026-08-10T10:31:47.605016Z",
+    "status": "completed",
+    "step_name": "run_language_detection",
+    "warnings": []
+  },
+  {
+    "capability": "table_recognition",
+    "completed_at": "2026-08-10T10:31:47.705056Z",
+    "confidence_summary": {},
+    "details": {
+      "health": {
+        "available": true,
+        "details": {
+          "cache_dir": "benchmark/results/v1_validation/BC-CONTRACT-001/runtime_data/model_cache",
+          "enabled": true,
+          "model_id": null,
+          "model_version": "1.0.0",
+          "plugin_name": "heuristic-table"
+        },
+        "status": "available"
+      },
+      "routing": {
+        "capability": "table_recognition",
+        "decision": "skip",
+        "input_signals": {
+          "block_count": 66,
+          "entity_mention_count": 0,
+          "file_type": "pdf",
+          "mode": "contract",
+          "ocr_block_count": 0,
+          "requires_ocr": true,
+          "resource_id": "heuristic-table",
+          "table_block_count": 0
+        },
+        "reason": "no_table_signal",
+        "resource_id": "heuristic-table"
+      }
+    },
+    "duration_ms": 0.0,
+    "errors": [],
+    "execution_id": "EXEC-FFE1A583DE514932",
+    "fallback_used": false,
+    "input_references": [],
+    "model_execution_id": "MEXEC-5874D90219A846BD",
+    "model_name": "heuristic-table",
+    "model_version": "1.0.0",
+    "output_references": [],
+    "resource_id": "heuristic-table",
+    "resource_version": "1.0.0",
+    "started_at": "2026-08-10T10:31:47.610408Z",
+    "status": "skipped",
+    "step_name": "route_table_recognition",
+    "warnings": []
+  },
+  {
+    "capability": "layout",
+    "completed_at": "2026-08-10T10:31:47.409970Z",
+    "confidence_summary": {},
+    "details": {
+      "health": {
+        "available": true,
+        "details": {},
+        "status": "available"
+      },
+      "plugin": "heuristic-layout"
+    },
+    "duration_ms": 0.13741699513047934,
+    "errors": [],
+    "execution_id": "EXEC-FFE1A583DE514932",
+    "fallback_used": true,
+    "input_references": [
+      "document:DOC-208019935F53308B"
+    ],
+    "model_execution_id": "MEXEC-E4B2DBC66A614DED",
+    "model_name": "heuristic-layout",
+    "model_version": "1.0.0",
+    "output_references": [
+      "layout:0_blocks"
+    ],
+    "resource_id": "heuristic-layout",
+    "resource_version": "1.0.0",
+    "started_at": "2026-08-10T10:31:47.409963Z",
+    "status": "completed",
+    "step_name": "run_layout",
+    "warnings": []
+  }
+]

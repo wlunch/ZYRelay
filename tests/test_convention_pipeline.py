@@ -33,9 +33,15 @@ def test_end_to_end_convention_extraction(
     conventions = package.som.code_conventions
 
     assert len(conventions) >= 10
-    assert {"naming", "formatting", "comment", "logging", "security", "testing", "review"} <= {
-        item.category.value for item in conventions
-    }
+    assert {
+        "naming",
+        "formatting",
+        "comment",
+        "logging",
+        "security",
+        "testing",
+        "review",
+    } <= {item.category.value for item in conventions}
     assert {"mandatory", "prohibited", "recommended"} <= {
         item.requirement_level.value for item in conventions
     }
@@ -48,7 +54,7 @@ def test_end_to_end_convention_extraction(
                 if block.block_id == item.source_evidence[0].block_id
             )
         ].text[
-            item.source_evidence[0].start_offset:item.source_evidence[0].end_offset
+            item.source_evidence[0].start_offset : item.source_evidence[0].end_offset
         ]
         == item.source_evidence[0].evidence_text
         for item in conventions
@@ -66,9 +72,7 @@ def test_end_to_end_convention_extraction(
     assert naming.rule_expression.parameters["style"] == "PascalCase"
     assert naming.positive_examples[0].code == "OrderService"
 
-    negative = next(
-        item for item in conventions if item.negative_examples
-    )
+    negative = next(item for item in conventions if item.negative_examples)
     assert negative.negative_examples[0].code == "order_service"
 
     assert "naming" in package.som.convention_index.by_category

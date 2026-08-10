@@ -1,0 +1,13 @@
+enterprise_id: enterprise-a
+profile_id: enterprise-a-local-ai
+version: 1.0.0
+resources:
+  ocr:
+    primary: paddleocr
+    fallbacks: [noop-ocr]
+  ner:
+    primary: gliner-ner
+    fallbacks: [heuristic-ner]
+  layout:
+    primary: doclayout-yolo
+    fallbacks: [heuristic-layout]

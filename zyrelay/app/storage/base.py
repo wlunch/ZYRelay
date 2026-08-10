@@ -6,9 +6,7 @@ from zyrelay.app.parsers import ParsedPage
 
 
 class Storage(Protocol):
-    def save_source(
-        self, document_id: str, file_name: str, content: bytes
-    ) -> Path: ...
+    def save_source(self, document_id: str, file_name: str, content: bytes) -> Path: ...
 
     def save_prepared(
         self,
@@ -20,4 +18,3 @@ class Storage(Protocol):
     def save_package(self, package: UOMPackage) -> Path: ...
 
     def load_package(self, document_id: str) -> UOMPackage: ...
-

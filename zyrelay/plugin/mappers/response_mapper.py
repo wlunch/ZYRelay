@@ -60,14 +60,15 @@ class PluginResponseMapper:
         if options.extract_labels:
             result.mentions = som["mentions"]
         if options.build_semantic_index:
-            result.semantic_index = self._semantic_index_summary(
-                som["semantic_index"]
-            )
+            result.semantic_index = self._semantic_index_summary(som["semantic_index"])
         if options.extract_business_objects:
             result.business_objects = business_objects
         if options.extract_code_conventions:
             result.code_conventions = conventions
-        if options.build_convention_index and operation != PluginOperation.EXTRACT_CONTRACT:
+        if (
+            options.build_convention_index
+            and operation != PluginOperation.EXTRACT_CONTRACT
+        ):
             result.convention_index = som.get("convention_index", {})
 
         if options.output_detail == OutputDetail.FULL:
@@ -88,9 +89,7 @@ class PluginResponseMapper:
                 if key == "source_uri" and isinstance(item, str):
                     sanitized[key] = artifact_uri
                 else:
-                    sanitized[key] = cls.sanitize(
-                        item, artifact_uri=artifact_uri
-                    )
+                    sanitized[key] = cls.sanitize(item, artifact_uri=artifact_uri)
             return sanitized
         if isinstance(value, list):
             return [cls.sanitize(item, artifact_uri=artifact_uri) for item in value]

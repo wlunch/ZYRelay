@@ -1,14 +1,16 @@
 from __future__ import annotations
 
+import logging
 import os
 import shutil
 import tempfile
 import time
 import uuid
+from collections.abc import Callable
 from dataclasses import replace
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Callable, TypeVar
+from typing import Any, TypeVar
 
 from zyrelay.app.core.config import load_yaml
 from zyrelay.app.models import BlockType
@@ -21,6 +23,7 @@ from zyrelay.app.pipeline.steps import (
     BuildConventionSectionsStep,
     BuildSemanticCandidatesStep,
     BuildSemanticIndexStep,
+    BuildSemanticObjectsStep,
     BuildUOMPackageStep,
     ExtractConventionCandidatesStep,
     LLMEnrichmentStep,
@@ -34,9 +37,15 @@ from zyrelay.app.storage import LocalStorage
 from zyrelay.ground import GroundChooseService, GroundRepository
 from zyrelay.provenance import ProvenanceService
 from zyrelay.resources import ResourcePlanner, ResourceRegistry
-from zyrelay.resources.models import OCRLine, OCRPageResult, ResourceRequest
+from zyrelay.resources.models import (
+    OCRLine,
+    OCRPageResult,
+    ResourceRequest,
+    ResourceResponse,
+)
 from zyrelay.resources.pdf_render import render_pdf_pages
 
+from .model_router import ModelGateDecision, ModelRouter
 from .models import (
     ModelExecutionRecord,
     RelayExecution,
@@ -45,8 +54,8 @@ from .models import (
     StepRecord,
 )
 
-
 Value = TypeVar("Value")
+logger = logging.getLogger(__name__)
 
 
 class SimpleRelayPipeline:
@@ -64,7 +73,9 @@ class SimpleRelayPipeline:
         model_execution_store,
     ) -> None:
         self.settings = settings
-        self.storage = LocalStorage(settings.data_root, keep_prepared=settings.keep_prepared)
+        self.storage = LocalStorage(
+            settings.data_root, keep_prepared=settings.keep_prepared
+        )
         self.ground_repository = ground_repository
         self.ground_chooser = ground_chooser
         self.resource_registry = resource_registry
@@ -142,11 +153,16 @@ class SimpleRelayPipeline:
                 lambda: self.resource_planner.build(
                     execution_id=execution.execution_id,
                     enterprise_id=request.enterprise_id,
+                    department_id=request.department_id,
+                    team_id=request.team_id,
+                    project_id=request.project_id,
+                    environment=request.environment.value,
                     requested_profile_id=request.resource_profile_id,
                     recommended_profile_id=profile.resource_profile_id,
                 ),
             )
             execution.resource_plan_id = plan.plan_id
+            model_router = ModelRouter()
 
             parser_capability = (
                 "pdf_parser" if context.document.file_type == "pdf" else "docx_parser"
@@ -181,51 +197,161 @@ class SimpleRelayPipeline:
                 lambda: parsed.requires_ocr,
                 output_summary={"requires_ocr": parsed.requires_ocr},
             )
-            if parsed.requires_ocr and context.document.file_type == "pdf":
-                if not request.enable_ocr:
-                    execution.warnings.append("OCR 已由请求显式关闭")
-                else:
-                    self._run_ocr(
-                        execution,
-                        plan.bindings["ocr"],
-                        plan.fallback_bindings.get("ocr", []),
-                        input_path,
-                        work_dir,
-                        context,
-                    )
-            elif request.enable_ocr:
-                self._run(
+            ocr_decision = model_router.decide(
+                "ocr",
+                context=context,
+                request=request,
+                resource_id=plan.bindings["ocr"],
+            )
+            if ocr_decision.should_run:
+                self._run_ocr(
                     execution,
-                    "optional_ocr",
-                    lambda: None,
-                    output_summary={"skipped": "native_text_or_docx"},
-                )
-
-            layout_id = plan.bindings["layout"]
-            self._run(
-                execution,
-                "detect_layout",
-                lambda: self.resource_registry.get(layout_id).execute(
-                    ResourceRequest(
-                        capability="layout",
-                        document_type=context.document.file_type,
-                        options={"parsed_document": parsed},
-                    ),
+                    plan,
+                    ocr_decision,
+                    plan.bindings["ocr"],
+                    plan.fallback_bindings.get("ocr", []),
+                    input_path,
+                    work_dir,
                     context,
-                ),
-                resource_id=layout_id,
+                )
+            else:
+                self._record_model_skip(execution, plan, context, ocr_decision)
+
+            # Classifier is advisory only.  It follows the OCR Gate so its
+            # input also includes recovered scanned-page text; planning remains
+            # before every model execution as required by the Relay contract.
+            self._route_auxiliary(
+                execution,
+                plan,
+                context,
+                model_router,
+                request,
+                "document_classifier",
+                options={
+                    "text": "\n".join(
+                        page.text for page in context.parsed_document.pages
+                    )
+                },
+            )
+
+            layout_options: dict[str, Any] = {"parsed_document": parsed}
+            # DocLayout-YOLO consumes rendered page images.  Rendering is only
+            # performed when that local primary is actually healthy; the normal
+            # heuristic fallback keeps the original lightweight behavior.
+            if (
+                context.document.file_type == "pdf"
+                and plan.bindings["layout"] == "doclayout-yolo"
+                and self.resource_registry.available("doclayout-yolo")
+                and (parsed.requires_ocr or request.enable_layout_model)
+            ):
+                layout_artifacts = self._run(
+                    execution,
+                    "render_layout_pages",
+                    lambda: render_pdf_pages(
+                        input_path,
+                        [page.page_no for page in parsed.pages],
+                        work_dir / "layout-pages",
+                        dpi=144,
+                        execution_id=execution.execution_id,
+                    ),
+                    resource_id="doclayout-yolo",
+                )
+                layout_options["page_images"] = [
+                    str(item.file_path) for item in layout_artifacts
+                ]
+            self._route_auxiliary(
+                execution,
+                plan,
+                context,
+                model_router,
+                request,
+                "layout",
+                options=layout_options,
             )
 
             core_settings = replace(self.settings, llm_enabled=False)
             if request.enable_llm:
                 execution.warnings.append("Relay 打样流程未启用 LLM，已保持规则优先")
             self._run_core(execution, "build_blocks", BuildBlocksStep(), context)
+            # A model may refine this later; parser block type is the stable
+            # default layout classification and remains fully traceable.
+            context.blocks = [
+                block.model_copy(update={"layout_type": block.block_type.value})
+                for block in context.blocks
+            ]
+            self._route_auxiliary(
+                execution,
+                plan,
+                context,
+                model_router,
+                request,
+                "language_detection",
+                options={"blocks": context.blocks},
+            )
+            table_options: dict[str, Any] = {"blocks": context.blocks}
+            if (
+                context.document.file_type == "pdf"
+                and plan.bindings["table_recognition"] == "table-transformer"
+                and self.resource_registry.available("table-transformer")
+                and request.enable_layout_model
+            ):
+                table_artifacts = self._run(
+                    execution,
+                    "render_table_pages",
+                    lambda: render_pdf_pages(
+                        input_path,
+                        [page.page_no for page in parsed.pages],
+                        work_dir / "table-pages",
+                        dpi=144,
+                        execution_id=execution.execution_id,
+                    ),
+                    resource_id="table-transformer",
+                )
+                table_options["table_images"] = [
+                    str(item.file_path) for item in table_artifacts
+                ]
+            self._route_auxiliary(
+                execution,
+                plan,
+                context,
+                model_router,
+                request,
+                "table_recognition",
+                options=table_options,
+            )
+            self._route_auxiliary(
+                execution,
+                plan,
+                context,
+                model_router,
+                request,
+                "spell_correction",
+                options={"blocks": context.blocks},
+            )
             self._run_core(execution, "normalize_text", NormalizeTextStep(), context)
+            self._route_auxiliary(
+                execution,
+                plan,
+                context,
+                model_router,
+                request,
+                "code_detection",
+                options={"blocks": context.blocks},
+            )
             self._run_core(
                 execution,
                 "run_existing_label_matching",
                 MatchLabelsStep(core_settings),
                 context,
+            )
+            self._route_auxiliary(
+                execution,
+                plan,
+                context,
+                model_router,
+                request,
+                "ner",
+                options={"blocks": context.blocks},
             )
             self._run_core(
                 execution,
@@ -279,6 +405,26 @@ class SimpleRelayPipeline:
                     plan.plan_id,
                 ),
             )
+            self._run_core(
+                execution,
+                "build_semantic_objects",
+                BuildSemanticObjectsStep(
+                    ground_snapshot_id=snapshot.snapshot_id,
+                    resource_plan_id=plan.plan_id,
+                ),
+                context,
+            )
+            self._run(
+                execution,
+                "attach_semantic_object_provenance",
+                lambda: self._attach_semantic_object_provenance(
+                    context,
+                    execution,
+                    selection.selection_id,
+                    snapshot.snapshot_id,
+                    plan.plan_id,
+                ),
+            )
             self._run(
                 execution,
                 "build_uom",
@@ -292,6 +438,14 @@ class SimpleRelayPipeline:
             context.package.processing.resource_plan_id = plan.plan_id
             context.package.processing.resolved_ground_hash = snapshot.resolved_hash
             context.package.processing.resource_plan_hash = plan.plan_hash
+            context.package.processing.execution_context = {
+                "enterprise_id": request.enterprise_id,
+                "department_id": request.department_id,
+                "team_id": request.team_id,
+                "project_id": request.project_id,
+                "environment": request.environment.value,
+                "retry_limit": request.retry_limit,
+            }
             context.package.processing.model_execution_ids = [
                 item.model_execution_id for item in execution.model_executions
             ]
@@ -304,14 +458,10 @@ class SimpleRelayPipeline:
             context.package.processing.steps = context.steps
             context.package.processing.warnings = context.warnings
             context.package.processing.errors = context.errors
-            self.storage.save_package(context.package)
             execution.warnings.extend(context.warnings)
-            execution.metrics = {
-                "total_duration_ms": (time.perf_counter() - started) * 1000,
-                "pages_processed": context.document.page_count or 0,
-                "blocks_generated": len(context.blocks),
-                "conventions_generated": len(context.code_conventions),
-            }
+            execution.metrics = self._execution_metrics(execution, context, started)
+            context.package.processing.performance = execution.metrics
+            self.storage.save_package(context.package)
             execution.artifacts = [
                 {
                     "artifact_type": "uom_package",
@@ -322,7 +472,10 @@ class SimpleRelayPipeline:
             execution.status = (
                 RelayStatus.PARTIAL
                 if (
-                    any(item.fallback_used for item in execution.model_executions)
+                    any(
+                        item.fallback_used and item.capability == "ocr"
+                        for item in execution.model_executions
+                    )
                     or (parsed.requires_ocr and not request.enable_ocr)
                 )
                 else RelayStatus.COMPLETED
@@ -343,13 +496,325 @@ class SimpleRelayPipeline:
                 input_path.unlink(missing_ok=True)
             else:
                 shutil.rmtree(work_dir, ignore_errors=True)
-            execution.completed_at = datetime.now(timezone.utc)
+            execution.completed_at = datetime.now(UTC)
             execution.duration_ms = (time.perf_counter() - started) * 1000
             execution.current_step = "complete_execution"
+
+    def _route_auxiliary(
+        self,
+        execution: RelayExecution,
+        plan,
+        context: ProcessingContext,
+        router: ModelRouter,
+        request: RelayRequest,
+        capability: str,
+        *,
+        options: dict[str, Any],
+    ) -> ResourceResponse | None:
+        decision = router.decide(
+            capability,
+            context=context,
+            request=request,
+            resource_id=plan.bindings[capability],
+            blocks=options.get("blocks"),
+        )
+        if not decision.should_run:
+            self._record_model_skip(execution, plan, context, decision)
+            return None
+        return self._run_auxiliary(
+            execution, plan, capability, context, options=options, decision=decision
+        )
+
+    def _record_model_skip(
+        self,
+        execution: RelayExecution,
+        plan,
+        context: ProcessingContext,
+        decision: ModelGateDecision,
+    ) -> None:
+        started_at = datetime.now(UTC)
+        resource = (
+            self.resource_registry.get(decision.resource_id)
+            if decision.resource_id in self.resource_registry.ids()
+            else None
+        )
+        metadata = getattr(resource, "metadata", dict)() if resource else {}
+        health = resource.health_check() if resource else None
+        record = ModelExecutionRecord(
+            model_execution_id=f"MEXEC-{uuid.uuid4().hex[:16].upper()}",
+            execution_id=execution.execution_id,
+            step_name=f"route_{decision.capability}",
+            resource_id=decision.resource_id,
+            resource_version=str(getattr(resource, "version", "disabled")),
+            model_name=str(metadata.get("model_id") or decision.resource_id),
+            model_version=str(
+                metadata.get("model_version")
+                or getattr(resource, "version", "disabled")
+            ),
+            capability=decision.capability,
+            status="skipped",
+            started_at=started_at,
+            completed_at=datetime.now(UTC),
+            duration_ms=0.0,
+            details={
+                "routing": decision.as_dict(),
+                "health": health.model_dump(mode="json")
+                if health
+                else {"status": "disabled"},
+            },
+        )
+        execution.model_executions.append(record)
+        self.model_execution_store.save(record, record.model_execution_id)
+        context.model_metadata.setdefault("routing", {})[decision.capability] = (
+            decision.as_dict()
+        )
+        self._record_plan_skip(plan, decision, record)
+
+    def _record_plan_skip(
+        self, plan, decision: ModelGateDecision, record: ModelExecutionRecord
+    ) -> None:
+        for index, binding in enumerate(plan.selection_records):
+            if binding.capability == decision.capability:
+                plan.selection_records[index] = binding.model_copy(
+                    update={
+                        "planned_execution": False,
+                        "actual_execution": False,
+                        "skip_reason": decision.reason,
+                        "gate_decision": "skip",
+                        "input_signals": decision.input_signals,
+                        "model_execution_id": record.model_execution_id,
+                    }
+                )
+                break
+        plan.resource_health.setdefault(decision.capability, {}).update(
+            {
+                "planned_execution": False,
+                "actual_execution": False,
+                "skip_reason": decision.reason,
+            }
+        )
+        self.resource_planner.store.save(plan, plan.plan_id)
+
+    def _run_auxiliary(
+        self,
+        execution: RelayExecution,
+        plan,
+        capability: str,
+        context: ProcessingContext,
+        *,
+        options: dict[str, Any],
+        decision: ModelGateDecision | None = None,
+    ) -> ResourceResponse:
+        """Execute a non-authoritative local model and persist its evidence trail.
+
+        This deliberately catches plugin errors: rule extraction is still able to
+        finish while the execution record and UOM processing section describe the
+        missing auxiliary metadata.
+        """
+        resource_id = plan.bindings[capability]
+        selected_primary = resource_id
+        planned_fallback = next(
+            (
+                item.fallback_used
+                for item in plan.selection_records
+                if item.capability == capability
+            ),
+            False,
+        )
+        started = time.perf_counter()
+        model_execution_id = f"MEXEC-{uuid.uuid4().hex[:16].upper()}"
+
+        def invoke(current_id: str) -> ResourceResponse:
+            resource = self.resource_registry.get(current_id)
+            try:
+                return resource.execute(
+                    ResourceRequest(
+                        capability=capability,
+                        document_type=context.document.file_type
+                        if context.document
+                        else None,
+                        options={**options, "model_execution_id": model_execution_id},
+                    ),
+                    context,
+                )
+            except Exception as exc:  # optional models must not break Rule First
+                return ResourceResponse(
+                    status="partial",
+                    payload={},
+                    warnings=[f"{current_id} failed: {exc}"],
+                    metadata={"error": str(exc)},
+                )
+
+        response = self._run(
+            execution,
+            f"run_{capability}",
+            lambda: invoke(resource_id),
+            resource_id=resource_id,
+        )
+        fallback_used = (
+            planned_fallback
+            or resource_id != selected_primary
+            or bool(response.metadata.get("fallback"))
+        )
+        if response.status != "completed":
+            for fallback_id in plan.fallback_bindings.get(capability, []):
+                if fallback_id == resource_id or not self.resource_registry.available(
+                    fallback_id
+                ):
+                    continue
+                execution.warnings.append(
+                    f"{capability} primary resource {resource_id} unavailable; fallback {fallback_id} selected"
+                )
+                resource_id = fallback_id
+                fallback_used = True
+                response = self._run(
+                    execution,
+                    f"run_{capability}_fallback",
+                    lambda: invoke(resource_id),
+                    resource_id=resource_id,
+                )
+                break
+        fallback_used = fallback_used or bool(response.metadata.get("fallback"))
+        latency_ms = (time.perf_counter() - started) * 1000
+        resource = self.resource_registry.get(resource_id)
+        health = resource.health_check()
+        metadata = getattr(resource, "metadata", dict)()
+        record = ModelExecutionRecord(
+            model_execution_id=model_execution_id,
+            execution_id=execution.execution_id,
+            step_name=f"run_{capability}",
+            resource_id=resource_id,
+            resource_version=str(getattr(resource, "version", "unknown")),
+            model_name=str(metadata.get("model_id") or resource_id),
+            model_version=str(
+                metadata.get("model_version") or getattr(resource, "version", "unknown")
+            ),
+            capability=capability,
+            input_references=[f"document:{context.document.document_id}"]
+            if context.document
+            else [],
+            output_references=[f"{capability}:{len(context.blocks)}_blocks"],
+            status=response.status,
+            started_at=datetime.now(UTC),
+            completed_at=datetime.now(UTC),
+            duration_ms=latency_ms,
+            fallback_used=fallback_used,
+            warnings=response.warnings,
+            details={
+                "plugin": resource_id,
+                "health": health.model_dump(mode="json"),
+                **response.metadata,
+            },
+        )
+        execution.model_executions.append(record)
+        self.model_execution_store.save(record, record.model_execution_id)
+        self._record_plan_execution(
+            plan, capability, resource_id, record, health, decision
+        )
+        if decision:
+            context.model_metadata.setdefault("routing", {})[capability] = (
+                decision.as_dict()
+            )
+        self._apply_auxiliary_payload(
+            context, capability, response.payload, response.metadata
+        )
+        context.warnings.extend(response.warnings)
+        return response
+
+    def _record_plan_execution(
+        self,
+        plan,
+        capability,
+        resource_id,
+        record,
+        health,
+        decision: ModelGateDecision | None = None,
+    ) -> None:
+        for index, binding in enumerate(plan.selection_records):
+            if binding.capability == capability:
+                plan.selection_records[index] = binding.model_copy(
+                    update={
+                        "selected_resource_id": resource_id,
+                        "plugin_name": resource_id,
+                        "model_execution_id": record.model_execution_id,
+                        "latency_ms": record.duration_ms,
+                        "fallback_used": record.fallback_used,
+                        "health": health.model_dump(mode="json"),
+                        "planned_execution": True,
+                        "actual_execution": True,
+                        "skip_reason": None,
+                        "gate_decision": "run",
+                        "input_signals": decision.input_signals if decision else {},
+                    }
+                )
+                break
+        plan.resource_health.setdefault(capability, {}).update(
+            {
+                "selected_resource_id": resource_id,
+                "model_execution_id": record.model_execution_id,
+                "latency_ms": record.duration_ms,
+                "fallback_used": record.fallback_used,
+                "planned_execution": True,
+                "actual_execution": True,
+                "health": health.model_dump(mode="json"),
+            }
+        )
+        self.resource_planner.store.save(plan, plan.plan_id)
+
+    @staticmethod
+    def _apply_auxiliary_payload(
+        context: ProcessingContext,
+        capability: str,
+        payload: Any,
+        metadata: dict[str, Any],
+    ) -> None:
+        data = payload if isinstance(payload, dict) else {}
+        section = {
+            "resource_metadata": metadata,
+            "result": data,
+        }
+        key = {
+            "document_classifier": "classifier",
+            "language_detection": "language",
+            "table_recognition": "table",
+            "spell_correction": "spell",
+            "ner": "ner",
+            "layout": "layout",
+        }.get(capability)
+        if key:
+            context.model_metadata[key] = section
+        blocks_by_id = {block.block_id: block for block in context.blocks}
+        updates: dict[str, dict[str, Any]] = {}
+        if capability == "language_detection":
+            for block_id, value in data.get("blocks", {}).items():
+                updates.setdefault(block_id, {})["language"] = value.get("language")
+        elif capability == "table_recognition":
+            for block_id, table_id in data.get("tables", {}).items():
+                updates.setdefault(block_id, {})["table_id"] = table_id
+        elif capability == "code_detection":
+            for block_id, value in data.get("blocks", {}).items():
+                updates.setdefault(block_id, {}).update(
+                    {
+                        "is_code": bool(value.get("is_code")),
+                        "code_language": value.get("code_language"),
+                    }
+                )
+        elif capability == "ner":
+            for block_id, entities in data.get("entities", {}).items():
+                updates.setdefault(block_id, {})["entities"] = entities
+        for block_id, values in updates.items():
+            if block_id in blocks_by_id:
+                blocks_by_id[block_id] = blocks_by_id[block_id].model_copy(
+                    update=values
+                )
+        if updates:
+            context.blocks = [blocks_by_id[block.block_id] for block in context.blocks]
 
     def _run_ocr(
         self,
         execution,
+        plan,
+        decision: ModelGateDecision,
         resource_id: str,
         fallback_resource_ids: list[str],
         path: Path,
@@ -366,7 +831,9 @@ class SimpleRelayPipeline:
         if not page_numbers:
             execution.warnings.append("OCR Gate 未找到需要识别的图片型 PDF 页面")
             return
-        ocr_config = load_yaml(self.settings.model_config).get("models", {}).get("paddleocr", {})
+        ocr_config = (
+            load_yaml(self.settings.model_config).get("models", {}).get("paddleocr", {})
+        )
         dpi = int(ocr_config.get("dpi", 200))
         artifacts = self._run(
             execution,
@@ -404,7 +871,9 @@ class SimpleRelayPipeline:
         )
         if response.status != "completed" and resource_id != "noop-ocr":
             for fallback_id in fallback_resource_ids:
-                if fallback_id == resource_id or not self.resource_registry.available(fallback_id):
+                if fallback_id == resource_id or not self.resource_registry.available(
+                    fallback_id
+                ):
                     continue
                 execution.warnings.append(
                     f"OCR primary resource {resource_id} 不可用，已回退到 {fallback_id}"
@@ -446,7 +915,8 @@ class SimpleRelayPipeline:
                     width=page_sizes.get(page_no, (0, 0))[0],
                     height=page_sizes.get(page_no, (0, 0))[1],
                     lines=group,
-                    average_confidence=sum(line.confidence for line in group) / len(group),
+                    average_confidence=sum(line.confidence for line in group)
+                    / len(group),
                     resource_id=resource_id,
                     resource_version=self.resource_registry.get(resource_id).version,
                     model_execution_id=group[0].model_execution_id,
@@ -454,9 +924,17 @@ class SimpleRelayPipeline:
                 for page_no, group in grouped.items()
             ]
             self._apply_ocr_pages(context, pages, resource_id, ocr_config)
-        lines = [line for page in pages if isinstance(page, OCRPageResult) for line in page.lines]
+        lines = [
+            line
+            for page in pages
+            if isinstance(page, OCRPageResult)
+            for line in page.lines
+        ]
         if resource_id in {"paddleocr", "noop-ocr"}:
-            model_id = response.metadata.get("model_execution_id") or planned_model_execution_id
+            model_id = (
+                response.metadata.get("model_execution_id")
+                or planned_model_execution_id
+            )
             record = ModelExecutionRecord(
                 model_execution_id=model_id,
                 execution_id=execution.execution_id,
@@ -472,34 +950,55 @@ class SimpleRelayPipeline:
                 input_references=[artifact["uri"] for artifact in public_artifacts],
                 output_references=[
                     f"ocr_lines:{len(lines)}",
-                    *[f"ocr_page:{page.page_no}" for page in pages if isinstance(page, OCRPageResult)],
+                    *[
+                        f"ocr_page:{page.page_no}"
+                        for page in pages
+                        if isinstance(page, OCRPageResult)
+                    ],
                 ],
                 status=response.status,
-                started_at=datetime.now(timezone.utc),
-                completed_at=datetime.now(timezone.utc),
+                started_at=datetime.now(UTC),
+                completed_at=datetime.now(UTC),
                 duration_ms=float(response.metadata.get("duration_ms", 0)),
                 confidence_summary=self._confidence_summary(lines),
-                fallback_used=resource_id == "noop-ocr" or response.status != "completed",
+                fallback_used=resource_id == "noop-ocr"
+                or response.status != "completed",
                 warnings=response.warnings,
                 details={
                     "device": response.metadata.get("device", "cpu"),
                     "paddleocr_version": response.metadata.get("paddleocr_version"),
-                    "paddlepaddle_version": response.metadata.get("paddlepaddle_version"),
+                    "paddlepaddle_version": response.metadata.get(
+                        "paddlepaddle_version"
+                    ),
                     "model_load_ms": response.metadata.get("model_load_ms", 0.0),
                     "page_count": len(pages),
                     "line_count": len(lines),
                     "page_metrics": response.metadata.get("page_metrics", []),
                     "page_artifacts": [
-                        {key: value for key, value in artifact.items() if key != "file_path"}
+                        {
+                            key: value
+                            for key, value in artifact.items()
+                            if key != "file_path"
+                        }
                         for artifact in public_artifacts
                     ],
                 },
             )
             execution.model_executions.append(record)
             self.model_execution_store.save(record, record.model_execution_id)
+            self._record_plan_execution(
+                plan,
+                "ocr",
+                resource_id,
+                record,
+                self.resource_registry.get(resource_id).health_check(),
+                decision,
+            )
 
     @staticmethod
-    def _apply_ocr_pages(context, pages: list[OCRPageResult], resource_id: str, config: dict) -> None:
+    def _apply_ocr_pages(
+        context, pages: list[OCRPageResult], resource_id: str, config: dict
+    ) -> None:
         lines = [line for page in pages for line in page.lines]
         resource_version = pages[0].resource_version if pages else "unknown"
         threshold = float(config.get("minimum_line_confidence", 0.5))
@@ -537,7 +1036,58 @@ class SimpleRelayPipeline:
         if not lines:
             return {}
         values = [line.confidence for line in lines]
-        return {"min": min(values), "max": max(values), "average": sum(values) / len(values)}
+        return {
+            "min": min(values),
+            "max": max(values),
+            "average": sum(values) / len(values),
+        }
+
+    @staticmethod
+    def _execution_metrics(
+        execution: RelayExecution, context: ProcessingContext, started: float
+    ) -> dict[str, Any]:
+        def step_duration(*names: str) -> float:
+            return sum(
+                item.duration_ms for item in execution.steps if item.step_name in names
+            )
+
+        def model_duration(capability: str) -> float:
+            return sum(
+                item.duration_ms
+                for item in execution.model_executions
+                if item.capability == capability and item.status == "completed"
+            )
+
+        details = [
+            item.details
+            for item in execution.model_executions
+            if item.status == "completed"
+        ]
+        return {
+            "total_duration_ms": (time.perf_counter() - started) * 1000,
+            "pages_processed": context.document.page_count or 0,
+            "blocks_generated": len(context.blocks),
+            "conventions_generated": len(context.code_conventions),
+            "parser_duration_ms": step_duration("parse_document"),
+            "ocr_duration_ms": model_duration("ocr"),
+            "layout_duration_ms": model_duration("layout"),
+            "table_duration_ms": model_duration("table_recognition"),
+            "ner_duration_ms": model_duration("ner"),
+            "model_load_duration_ms": sum(
+                float(item.get("model_load_ms", 0) or 0) for item in details
+            ),
+            "model_inference_duration_ms": sum(
+                item.duration_ms
+                for item in execution.model_executions
+                if item.status == "completed"
+            ),
+            "model_skipped_count": sum(
+                item.status == "skipped" for item in execution.model_executions
+            ),
+            "model_executed_count": sum(
+                item.status == "completed" for item in execution.model_executions
+            ),
+        }
 
     @staticmethod
     def _read_input(request: RelayRequest) -> bytes:
@@ -571,8 +1121,46 @@ class SimpleRelayPipeline:
                 blocks=context.blocks,
                 model_executions=execution.model_executions,
             )
-            updated.append(candidate.model_copy(update={"provenance_id": record.provenance_id}))
+            updated.append(
+                candidate.model_copy(update={"provenance_id": record.provenance_id})
+            )
         context.code_conventions = updated
+
+    def _attach_semantic_object_provenance(
+        self,
+        context,
+        execution,
+        selection_id: str,
+        snapshot_id: str,
+        plan_id: str,
+    ) -> None:
+        convention_provenance = {
+            item.provenance_id
+            for item in context.code_conventions
+            if item.provenance_id
+        }
+        model_ids = [item.model_execution_id for item in execution.model_executions]
+        updated = []
+        for semantic_object in context.semantic_objects:
+            # Rule objects may directly reuse the convention-level provenance.
+            if semantic_object.provenance_id in convention_provenance:
+                updated.append(semantic_object)
+                continue
+            record = self.provenance.create_for_semantic_object(
+                semantic_object,
+                execution_id=execution.execution_id,
+                ground_selection_id=selection_id,
+                ground_snapshot_id=snapshot_id,
+                resource_plan_id=plan_id,
+                model_execution_ids=model_ids,
+                model_executions=execution.model_executions,
+            )
+            updated.append(
+                semantic_object.model_copy(
+                    update={"provenance_id": record.provenance_id}
+                )
+            )
+        context.semantic_objects = updated
 
     def _run(
         self,
@@ -585,35 +1173,85 @@ class SimpleRelayPipeline:
         output_summary: dict | None = None,
     ) -> Value:
         execution.current_step = name
-        started_at = datetime.now(timezone.utc)
+        started_at = datetime.now(UTC)
         started = time.perf_counter()
-        try:
-            result = operation()
-        except Exception as exc:
-            execution.steps.append(
-                StepRecord(
-                    step_name=name,
-                    status="failed",
-                    started_at=started_at,
-                    completed_at=datetime.now(timezone.utc),
-                    duration_ms=(time.perf_counter() - started) * 1000,
-                    resource_id=resource_id,
-                    input_summary=input_summary or {},
-                    errors=[{"error_code": getattr(exc, "error_code", "unexpected_error"), "message": str(exc)}],
+        attempts = 0
+        while True:
+            attempts += 1
+            try:
+                result = operation()
+                break
+            except Exception as exc:
+                # Only retry explicitly opted-in transient resource operations;
+                # core extraction keeps its fail-closed semantics.
+                retryable = (
+                    resource_id is not None and attempts <= execution.retry_limit
                 )
-            )
-            raise
+                execution.execution_history.append(
+                    {
+                        "step_name": name,
+                        "attempt": attempts,
+                        "status": "retrying" if retryable else "failed",
+                        "timestamp": datetime.now(UTC).isoformat(),
+                        "resource_id": resource_id,
+                        "error_code": getattr(exc, "error_code", "unexpected_error"),
+                    }
+                )
+                if retryable:
+                    continue
+                execution.steps.append(
+                    StepRecord(
+                        step_name=name,
+                        status="failed",
+                        started_at=started_at,
+                        completed_at=datetime.now(UTC),
+                        duration_ms=(time.perf_counter() - started) * 1000,
+                        resource_id=resource_id,
+                        input_summary=input_summary or {},
+                        errors=[
+                            {
+                                "error_code": getattr(
+                                    exc, "error_code", "unexpected_error"
+                                ),
+                                "message": str(exc),
+                            }
+                        ],
+                        attempt=attempts,
+                    )
+                )
+                raise
         execution.steps.append(
             StepRecord(
                 step_name=name,
                 status="completed",
                 started_at=started_at,
-                completed_at=datetime.now(timezone.utc),
+                completed_at=datetime.now(UTC),
                 duration_ms=(time.perf_counter() - started) * 1000,
                 resource_id=resource_id,
                 input_summary=input_summary or {},
                 output_summary=output_summary or {},
+                attempt=attempts,
             )
+        )
+        execution.execution_history.append(
+            {
+                "step_name": name,
+                "attempt": attempts,
+                "status": "completed",
+                "timestamp": datetime.now(UTC).isoformat(),
+                "resource_id": resource_id,
+            }
+        )
+        logger.info(
+            "relay_step_completed",
+            extra={
+                "request_id": execution.request_id,
+                "task_id": execution.execution_id,
+                "document_id": execution.document_id,
+                "pipeline_step": name,
+                "duration_ms": execution.steps[-1].duration_ms,
+                "status": "completed",
+            },
         )
         return result
 

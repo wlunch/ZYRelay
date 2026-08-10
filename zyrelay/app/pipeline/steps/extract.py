@@ -24,4 +24,3 @@ class ExtractDocumentStep:
             context.document.page_count = parsed.page_count
             context.document.requires_ocr = parsed.requires_ocr
         return context
-

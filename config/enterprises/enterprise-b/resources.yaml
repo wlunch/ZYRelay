@@ -1,0 +1,10 @@
+enterprise_id: enterprise-b
+profile_id: enterprise-b-rule-first
+version: 1.0.0
+resources:
+  ocr:
+    primary: noop-ocr
+  ner:
+    enabled: false
+  layout:
+    primary: heuristic-layout

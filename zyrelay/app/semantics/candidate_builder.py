@@ -93,11 +93,7 @@ class CandidateBuilder:
             used_codes = matched_required + [
                 code for code in rule.optional_labels if by_label.get(code)
             ]
-            source = [
-                mention
-                for code in used_codes
-                for mention in by_label[code]
-            ]
+            source = [mention for code in used_codes for mention in by_label[code]]
             attributes = {
                 code: self._collapse_values(
                     [mention.normalized_value for mention in by_label[code]]
@@ -107,7 +103,8 @@ class CandidateBuilder:
             confidence = sum(item.confidence for item in source) / len(source)
             identity = "|".join(sorted(item.mention_id for item in source))
             candidate_id = (
-                "CAN-" + hashlib.sha256(f"{rule.type}|{identity}".encode()).hexdigest()[:16]
+                "CAN-"
+                + hashlib.sha256(f"{rule.type}|{identity}".encode()).hexdigest()[:16]
             )
             result.append(
                 SemanticCandidate(

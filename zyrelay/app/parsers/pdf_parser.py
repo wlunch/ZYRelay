@@ -51,9 +51,7 @@ class PDFParser:
             requires_ocr = bool(image_only_pages)
             warnings = []
             if image_only_pages:
-                warnings.append(
-                    f"PDF 图片页无可提取文本，需要 OCR：{image_only_pages}"
-                )
+                warnings.append(f"PDF 图片页无可提取文本，需要 OCR：{image_only_pages}")
             blank_pages = sorted(set(empty_pages) - set(image_only_pages))
             if blank_pages:
                 warnings.append(f"PDF 页面为空：{blank_pages}")

@@ -34,5 +34,10 @@ class PluginManifest(BaseModel):
     error_codes: list[str] = Field(default_factory=list)
     health_check: str
     documentation: str
+    dependencies: dict[str, str] = Field(default_factory=dict)
+    supported_languages: list[str] = Field(default_factory=list)
+    license: str | None = None
+    author: str | None = None
+    permissions: dict[str, str] = Field(default_factory=dict)
     compatibility: dict[str, Any] = Field(default_factory=dict)
     metadata: dict[str, Any] = Field(default_factory=dict)

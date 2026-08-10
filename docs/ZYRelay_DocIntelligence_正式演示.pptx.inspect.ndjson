@@ -1,0 +1,149 @@
+{"kind":"deck","id":"pr/lpq94p","name":"Deck"}
+{"kind":"layout","layoutId":"1cbabe88-57e0-4858-9c65-e9f6f00c7a88","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"af539250-6d8d-493c-94f0-f76b39d63a7d","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/5l0vnz","slide":1,"title":"ZYRelay DocIntelligence","textShapes":5}
+{"kind":"textbox","id":"sh/fah0rmdc","slide":1,"text":"ZYRelay DocIntelligence","textPreview":"ZYRelay DocIntelligence","textChars":23,"textLines":1,"bbox":[78,158,1000,62]}
+{"kind":"textbox","id":"sh/gvqh0rux","slide":1,"text":"文档智能解析、代码规范识别与可追溯基准测试","textPreview":"文档智能解析、代码规范识别与可追溯基准测试","textChars":21,"textLines":1,"bbox":[80,238,920,38]}
+{"kind":"shape","id":"sh/1wzitwvi","slide":1,"bbox":[80,300,110,5]}
+{"kind":"textbox","id":"sh/65ozuxcv","slide":1,"text":"内容：框架内容｜接口说明｜业务流程｜测试设计｜测试结果","textPreview":"内容：框架内容｜接口说明｜业务流程｜测试设计｜测试结果","textChars":27,"textLines":1,"bbox":[80,344,940,30]}
+{"kind":"textbox","id":"sh/r6xgn2dg","slide":1,"text":"版本 0.5.0  ·  基线 23 个案例  ·  2026-08-03","textPreview":"版本 0.5.0  ·  基线 23 个案例  ·  2026-08-03","textChars":37,"textLines":1,"bbox":[80,548,800,25]}
+{"kind":"textbox","id":"sh/s7qhw7ul","slide":1,"text":"ZYRelay DocIntelligence 正式演示  |  1","textPreview":"ZYRelay DocIntelligence 正式演示  |  1","textChars":34,"textLines":1,"bbox":[72,684,500,18]}
+{"kind":"notes","id":"nt/5l0vnz","slide":1,"text":"[Sources]\n本页事实与数据来源：benchmark/results/baseline/summary.json；benchmark/results/reports/dataset_validation.json；benchmark/README.md"}
+{"kind":"slide","id":"sl/0ls027","slide":2,"title":"框架内容","textShapes":10}
+{"kind":"textbox","id":"sh/6hknixs3","slide":2,"text":"框架内容","textPreview":"框架内容","textChars":4,"textLines":1,"bbox":[72,42,300,22]}
+{"kind":"textbox","id":"sh/tkb6tsbu","slide":2,"text":"系统以“规则优先、结果可追溯”为核心","textPreview":"系统以“规则优先、结果可追溯”为核心","textChars":18,"textLines":1,"bbox":[72,76,1080,48]}
+{"kind":"shape","id":"sh/sj25kna9","slide":2,"bbox":[72,132,88,4]}
+{"kind":"shape","id":"sh/fmdov29k","slide":2,"bbox":[84,194,330,214]}
+{"kind":"textbox","id":"sh/ulknmxsf","slide":2,"text":"输入","textPreview":"输入","textChars":2,"textLines":1,"bbox":[110,224,260,30]}
+{"kind":"textbox","id":"sh/h8v6xcrq","slide":2,"text":"PDF、DOCX\n扫描 PDF 可进入 OCR","textPreview":"PDF、DOCX | 扫描 PDF 可进入 OCR","textChars":23,"textLines":2,"bbox":[110,278,280,78]}
+{"kind":"shape","id":"sh/gnm5o7a5","slide":2,"bbox":[454,194,330,214]}
+{"kind":"textbox","id":"sh/vq94jitg","slide":2,"text":"处理","textPreview":"处理","textChars":2,"textLines":1,"bbox":[480,224,260,30]}
+{"kind":"textbox","id":"sh/ap0nadsv","slide":2,"text":"解析、分块、文本标准化\n标签与规则匹配","textPreview":"解析、分块、文本标准化 | 标签与规则匹配","textChars":19,"textLines":2,"bbox":[480,278,280,78]}
+{"kind":"shape","id":"sh/krmt43a5","slide":2,"bbox":[824,194,330,214]}
+{"kind":"textbox","id":"sh/lsvad8rq","slide":2,"text":"输出","textPreview":"输出","textChars":2,"textLines":1,"bbox":[850,224,260,30]}
+{"kind":"textbox","id":"sh/yp4b2dsf","slide":2,"text":"UOM Package、semantic_index\n候选对象、provenance","textPreview":"UOM Package、semantic_index | 候选对象、provenance","textChars":42,"textLines":2,"bbox":[850,278,280,78]}
+{"kind":"textbox","id":"sh/zqdsby90","slide":2,"text":"不在本期范围：知识图谱存储、向量数据库、复杂推理和自动生成不可解释知识。","textPreview":"不在本期范围：知识图谱存储、向量数据库、复杂推理和自动生成不可解释知识。","textChars":36,"textLines":1,"bbox":[90,472,1040,30]}
+{"kind":"textbox","id":"sh/8v6t8nah","slide":2,"text":"ZYRelay DocIntelligence 正式演示  |  2","textPreview":"ZYRelay DocIntelligence 正式演示  |  2","textChars":34,"textLines":1,"bbox":[72,684,500,18]}
+{"kind":"notes","id":"nt/0ls027","slide":2,"text":"[Sources]\n本页事实与数据来源：benchmark/results/baseline/summary.json；benchmark/results/reports/dataset_validation.json；benchmark/README.md"}
+{"kind":"slide","id":"sl/ddb7wc","slide":3,"title":"框架内容","textShapes":4}
+{"kind":"textbox","id":"sh/1c769cre","slide":3,"text":"框架内容","textPreview":"框架内容","textChars":4,"textLines":1,"bbox":[72,42,300,22]}
+{"kind":"textbox","id":"sh/e9gnex8n","slide":3,"text":"核心组件分工清晰，可分别替换与测试","textPreview":"核心组件分工清晰，可分别替换与测试","textChars":17,"textLines":1,"bbox":[72,76,1080,48]}
+{"kind":"shape","id":"sh/zap47298","slide":3,"bbox":[72,132,88,4]}
+{"kind":"textbox","id":"sh/9gr6dcra","slide":3,"text":"配置文件驱动业务标签和业务对象规则，Python 代码不硬编码具体业务词表。","textPreview":"配置文件驱动业务标签和业务对象规则，Python 代码不硬编码具体业务词表。","textChars":38,"textLines":1,"bbox":[112,550,980,30]}
+{"kind":"textbox","id":"sh/md0nih8j","slide":3,"text":"ZYRelay DocIntelligence 正式演示  |  3","textPreview":"ZYRelay DocIntelligence 正式演示  |  3","textChars":34,"textLines":1,"bbox":[72,684,500,18]}
+{"kind":"table","id":"tb/pobu94jm","slide":3,"name":"","rows":6,"cols":2,"preview":"组件 | 职责","bbox":[110,184,1040,330]}
+{"kind":"notes","id":"nt/ddb7wc","slide":3,"text":"[Sources]\n本页事实与数据来源：benchmark/results/baseline/summary.json；benchmark/results/reports/dataset_validation.json；benchmark/README.md"}
+{"kind":"slide","id":"sl/uy8wbn","slide":4,"title":"框架内容","textShapes":14}
+{"kind":"textbox","id":"sh/ji5c7ito","slide":4,"text":"框架内容","textPreview":"框架内容","textChars":4,"textLines":1,"bbox":[72,42,300,22]}
+{"kind":"textbox","id":"sh/kjed03a9","slide":4,"text":"输出既能被系统消费，也能回到原始文本核查","textPreview":"输出既能被系统消费，也能回到原始文本核查","textChars":20,"textLines":1,"bbox":[72,76,1080,48]}
+{"kind":"shape","id":"sh/lknu98bu","slide":4,"bbox":[72,132,88,4]}
+{"kind":"textbox","id":"sh/6lgv2dsf","slide":4,"text":"SourceDocument","textPreview":"SourceDocument","textChars":14,"textLines":1,"bbox":[110,178,250,30]}
+{"kind":"textbox","id":"sh/7mpcbit0","slide":4,"text":"文件类型、哈希、页数、解析状态、是否需要 OCR","textPreview":"文件类型、哈希、页数、解析状态、是否需要 OCR","textChars":24,"textLines":1,"bbox":[380,178,710,38]}
+{"kind":"shape","id":"sh/8nyd4nal","slide":4,"bbox":[90,185,7,25]}
+{"kind":"textbox","id":"sh/to7udsbq","slide":4,"text":"DocumentBlock","textPreview":"DocumentBlock","textChars":13,"textLines":1,"bbox":[110,256,250,30]}
+{"kind":"textbox","id":"sh/2pcbqtcv","slide":4,"text":"页码、顺序、原文、标准化文本、起止 offset","textPreview":"页码、顺序、原文、标准化文本、起止 offset","textChars":24,"textLines":1,"bbox":[380,256,710,38]}
+{"kind":"shape","id":"sh/nqlczetg","slide":4,"bbox":[90,263,7,25]}
+{"kind":"textbox","id":"sh/ned87mp0","slide":4,"text":"LabelMention","textPreview":"LabelMention","textChars":12,"textLines":1,"bbox":[110,334,250,30]}
+{"kind":"textbox","id":"sh/md4ryhof","slide":4,"text":"标签、命中原文、置信度、匹配方式、证据","textPreview":"标签、命中原文、置信度、匹配方式、证据","textChars":19,"textLines":1,"bbox":[380,334,710,38]}
+{"kind":"shape","id":"sh/90vq9w7q","slide":4,"bbox":[90,341,7,25]}
+{"kind":"textbox","id":"sh/8fm90r65","slide":4,"text":"semantic_index","textPreview":"semantic_index","textChars":14,"textLines":1,"bbox":[110,412,250,30]}
+{"kind":"textbox","id":"sh/zat83mpo","slide":4,"text":"按 label_code 聚合，定位到文档、页面、block 与 offset","textPreview":"按 label_code 聚合，定位到文档、页面、block 与 offset","textChars":39,"textLines":1,"bbox":[380,412,710,38]}
+{"kind":"shape","id":"sh/y9k7uho3","slide":4,"bbox":[90,419,7,25]}
+{"kind":"textbox","id":"sh/lcbq5c7u","slide":4,"text":"Candidate / UOM","textPreview":"Candidate / UOM","textChars":15,"textLines":1,"bbox":[110,490,250,30]}
+{"kind":"textbox","id":"sh/0b2pwr69","slide":4,"text":"业务对象候选、来源 mentions、处理步骤、告警和错误","textPreview":"业务对象候选、来源 mentions、处理步骤、告警和错误","textChars":29,"textLines":1,"bbox":[380,490,710,38]}
+{"kind":"shape","id":"sh/b6t8z2ps","slide":4,"bbox":[90,497,7,25]}
+{"kind":"textbox","id":"sh/q5k7qxo7","slide":4,"text":"关键要求：语义结果必须保留页码、block_id、offset 和原文证据；不能产生无法定位来源的结论。","textPreview":"关键要求：语义结果必须保留页码、block_id、offset 和原文证据；不能产生无法定位来源的结论。","textChars":52,"textLines":1,"bbox":[90,596,1060,32]}
+{"kind":"textbox","id":"sh/eh0rixsz","slide":4,"text":"ZYRelay DocIntelligence 正式演示  |  4","textPreview":"ZYRelay DocIntelligence 正式演示  |  4","textChars":34,"textLines":1,"bbox":[72,684,500,18]}
+{"kind":"notes","id":"nt/uy8wbn","slide":4,"text":"[Sources]\n本页事实与数据来源：benchmark/results/baseline/summary.json；benchmark/results/reports/dataset_validation.json；benchmark/README.md"}
+{"kind":"slide","id":"sl/f18spy","slide":5,"title":"接口说明","textShapes":4}
+{"kind":"textbox","id":"sh/7qdgfy1g","slide":5,"text":"接口说明","textPreview":"接口说明","textChars":4,"textLines":1,"bbox":[72,42,300,22]}
+{"kind":"textbox","id":"sh/srmh8321","slide":5,"text":"三种调用方式覆盖服务、程序和脚本场景","textPreview":"三种调用方式覆盖服务、程序和脚本场景","textChars":18,"textLines":1,"bbox":[72,76,1080,48]}
+{"kind":"shape","id":"sh/tsvyhojm","slide":5,"bbox":[72,132,88,4]}
+{"kind":"textbox","id":"sh/jmtgbe1k","slide":5,"text":"REST 返回中包含文档元数据、blocks、mentions、semantic_index、候选对象与处理记录。","textPreview":"REST 返回中包含文档元数据、blocks、mentions、semantic_index、候选对象与处理记录。","textChars":57,"textLines":1,"bbox":[94,570,1000,30]}
+{"kind":"textbox","id":"sh/kn2h4j25","slide":5,"text":"ZYRelay DocIntelligence 正式演示  |  5","textPreview":"ZYRelay DocIntelligence 正式演示  |  5","textChars":34,"textLines":1,"bbox":[72,684,500,18]}
+{"kind":"table","id":"tb/ja1kvidk","slide":5,"name":"","rows":7,"cols":3,"preview":"方式 | 接口或入口 | 用途","bbox":[92,172,1090,366]}
+{"kind":"notes","id":"nt/f18spy","slide":5,"text":"[Sources]\n本页事实与数据来源：benchmark/results/baseline/summary.json；benchmark/results/reports/dataset_validation.json；benchmark/README.md"}
+{"kind":"slide","id":"sl/g8ocy8","slide":6,"title":"业务流程","textShapes":20}
+{"kind":"textbox","id":"sh/ed8zu9kz","slide":6,"text":"业务流程","textPreview":"业务流程","textChars":4,"textLines":1,"bbox":[72,42,300,22]}
+{"kind":"textbox","id":"sh/1gjipojq","slide":6,"text":"处理流程按固定顺序执行，失败会记录而不是静默忽略","textPreview":"处理流程按固定顺序执行，失败会记录而不是静默忽略","textChars":24,"textLines":1,"bbox":[72,76,1080,48]}
+{"kind":"shape","id":"sh/0fahwj25","slide":6,"bbox":[72,132,88,4]}
+{"kind":"textbox","id":"sh/ni10ry1g","slide":6,"text":"→","textPreview":"→","textChars":1,"textLines":1,"bbox":[202,280,28,36]}
+{"kind":"shape","id":"sh/mhszytkv","slide":6,"bbox":[74,230,142,112]}
+{"kind":"textbox","id":"sh/94jit8jm","slide":6,"text":"文件校验","textPreview":"文件校验","textChars":4,"textLines":1,"bbox":[88,266,114,35]}
+{"kind":"textbox","id":"sh/o3ah0321","slide":6,"text":"→","textPreview":"→","textChars":1,"textLines":1,"bbox":[367,280,28,36]}
+{"kind":"shape","id":"sh/3mhgfulc","slide":6,"bbox":[239,230,142,112]}
+{"kind":"textbox","id":"sh/2lozmpkr","slide":6,"text":"解析提取","textPreview":"解析提取","textChars":4,"textLines":1,"bbox":[253,266,114,35]}
+{"kind":"textbox","id":"sh/gby9wbud","slide":6,"text":"→","textPreview":"→","textChars":1,"textLines":1,"bbox":[532,280,28,36]}
+{"kind":"shape","id":"sh/1crqpgvy","slide":6,"bbox":[404,230,142,112]}
+{"kind":"textbox","id":"sh/epgru1c7","slide":6,"text":"统一 blocks","textPreview":"统一 blocks","textChars":9,"textLines":1,"bbox":[418,266,114,35]}
+{"kind":"textbox","id":"sh/fap8n6ds","slide":6,"text":"→","textPreview":"→","textChars":1,"textLines":1,"bbox":[697,280,28,36]}
+{"kind":"shape","id":"sh/ofi9kbu9","slide":6,"bbox":[569,230,142,112]}
+{"kind":"textbox","id":"sh/pgratgvu","slide":6,"text":"标签匹配","textPreview":"标签匹配","textChars":4,"textLines":1,"bbox":[583,266,114,35]}
+{"kind":"textbox","id":"sh/2d0ri1c3","slide":6,"text":"→","textPreview":"→","textChars":1,"textLines":1,"bbox":[862,280,28,36]}
+{"kind":"shape","id":"sh/3e98r6do","slide":6,"bbox":[734,230,142,112]}
+{"kind":"textbox","id":"sh/4je9oru5","slide":6,"text":"语义索引","textPreview":"语义索引","textChars":4,"textLines":1,"bbox":[748,266,114,35]}
+{"kind":"textbox","id":"sh/5k7qhwvq","slide":6,"text":"→","textPreview":"→","textChars":1,"textLines":1,"bbox":[1027,280,28,36]}
+{"kind":"shape","id":"sh/l4fy5oj2","slide":6,"bbox":[899,230,142,112]}
+{"kind":"textbox","id":"sh/036xwjih","slide":6,"text":"候选对象","textPreview":"候选对象","textChars":4,"textLines":1,"bbox":[913,266,114,35]}
+{"kind":"shape","id":"sh/z2dg3e1c","slide":6,"bbox":[1064,230,142,112]}
+{"kind":"textbox","id":"sh/y14fu9kr","slide":6,"text":"UOM / 保存","textPreview":"UOM / 保存","textChars":8,"textLines":1,"bbox":[1078,266,114,35]}
+{"kind":"shape","id":"sh/9sfy9oje","slide":6,"bbox":[146,430,465,108]}
+{"kind":"textbox","id":"sh/876x0jit","slide":6,"text":"OCR Gate","textPreview":"OCR Gate","textChars":8,"textLines":1,"bbox":[172,452,180,28]}
+{"kind":"textbox","id":"sh/n6xg7e18","slide":6,"text":"图片型页面无可提取文本时标记 requires_ocr；真实模型可用则调用，不能下载时回退 NoOp。","textPreview":"图片型页面无可提取文本时标记 requires_ocr；真实模型可用则调用，不能下载时回退 NoOp。","textChars":51,"textLines":1,"bbox":[172,490,405,45]}
+{"kind":"shape","id":"sh/m5ofyt0n","slide":6,"bbox":[686,430,465,108]}
+{"kind":"textbox","id":"sh/xwzyd8ja","slide":6,"text":"LLM（可选）","textPreview":"LLM（可选）","textChars":7,"textLines":1,"bbox":[712,452,180,28]}
+{"kind":"textbox","id":"sh/wvqx43ip","slide":6,"text":"默认关闭，只补充规则未覆盖且有 block 证据的候选，不覆盖高置信度规则结果。","textPreview":"默认关闭，只补充规则未覆盖且有 block 证据的候选，不覆盖高置信度规则结果。","textChars":40,"textLines":1,"bbox":[712,490,405,45]}
+{"kind":"textbox","id":"sh/eh0vy507","slide":6,"text":"ZYRelay DocIntelligence 正式演示  |  6","textPreview":"ZYRelay DocIntelligence 正式演示  |  6","textChars":34,"textLines":1,"bbox":[72,684,500,18]}
+{"kind":"notes","id":"nt/g8ocy8","slide":6,"text":"[Sources]\n本页事实与数据来源：benchmark/results/baseline/summary.json；benchmark/results/reports/dataset_validation.json；benchmark/README.md"}
+{"kind":"slide","id":"sl/lm3q0q","slide":7,"title":"测试设计","textShapes":12}
+{"kind":"textbox","id":"sh/y10ny5wn","slide":7,"text":"测试设计","textPreview":"测试设计","textChars":4,"textLines":1,"bbox":[72,42,300,22]}
+{"kind":"textbox","id":"sh/l4rm9kvy","slide":7,"text":"测试采用“数据集 + 案例 + 评估 + 回归比较”四层设计","textPreview":"测试采用“数据集 + 案例 + 评估 + 回归比较”四层设计","textChars":30,"textLines":1,"bbox":[72,76,1080,48]}
+{"kind":"shape","id":"sh/k3i50fed","slide":7,"bbox":[72,132,88,4]}
+{"kind":"textbox","id":"sh/7q94bud4","slide":7,"text":"1. 数据集","textPreview":"1. 数据集","textChars":6,"textLines":1,"bbox":[110,182,185,30]}
+{"kind":"textbox","id":"sh/m50n2pwj","slide":7,"text":"官方来源、HTTPS 域名白名单、许可审核、哈希与稳定 BC-ID","textPreview":"官方来源、HTTPS 域名白名单、许可审核、哈希与稳定 BC-ID","textChars":33,"textLines":1,"bbox":[315,182,790,40]}
+{"kind":"shape","id":"sh/9srmd4va","slide":7,"bbox":[92,188,6,26]}
+{"kind":"textbox","id":"sh/8ri54zep","slide":7,"text":"2. 案例","textPreview":"2. 案例","textChars":5,"textLines":1,"bbox":[110,274,185,30]}
+{"kind":"textbox","id":"sh/nup4zqx0","slide":7,"text":"每份文档独立 YAML：处理模式、OCR 开关、最小预期与局部真值","textPreview":"每份文档独立 YAML：处理模式、OCR 开关、最小预期与局部真值","textChars":33,"textLines":1,"bbox":[315,274,790,40]}
+{"kind":"shape","id":"sh/29w36lwf","slide":7,"bbox":[92,280,6,26]}
+{"kind":"textbox","id":"sh/8vip0b6x","slide":7,"text":"3. 评估","textPreview":"3. 评估","textChars":5,"textLines":1,"bbox":[110,366,185,30]}
+{"kind":"textbox","id":"sh/twrqtgni","slide":7,"text":"block 顺序、证据、provenance、OCR 非空文本和 bbox","textPreview":"block 顺序、证据、provenance、OCR 非空文本和 bbox","textChars":37,"textLines":1,"bbox":[315,366,790,40]}
+{"kind":"shape","id":"sh/6tg7y1or","slide":7,"bbox":[92,372,6,26]}
+{"kind":"textbox","id":"sh/7u98r65c","slide":7,"text":"4. 回归","textPreview":"4. 回归","textChars":5,"textLines":1,"bbox":[110,458,185,30]}
+{"kind":"textbox","id":"sh/gzip4b6t","slide":7,"text":"对比 baseline / latest；召回、证据和 provenance 下降判为回归","textPreview":"对比 baseline / latest；召回、证据和 provenance 下降判为回归","textChars":45,"textLines":1,"bbox":[315,458,790,40]}
+{"kind":"shape","id":"sh/h0rqxgne","slide":7,"bbox":[92,464,6,26]}
+{"kind":"textbox","id":"sh/ux072lo3","slide":7,"text":"当前基线检查以结构、OCR、证据和追溯为主；业务字段/规则逐步增加经过人工审核的局部金标。","textPreview":"当前基线检查以结构、OCR、证据和追溯为主；业务字段/规则逐步增加经过人工审核的局部金标。","textChars":45,"textLines":1,"bbox":[95,578,1060,38]}
+{"kind":"textbox","id":"sh/vy98v658","slide":7,"text":"ZYRelay DocIntelligence 正式演示  |  7","textPreview":"ZYRelay DocIntelligence 正式演示  |  7","textChars":34,"textLines":1,"bbox":[72,684,500,18]}
+{"kind":"notes","id":"nt/lm3q0q","slide":7,"text":"[Sources]\n本页事实与数据来源：benchmark/results/baseline/summary.json；benchmark/results/reports/dataset_validation.json；benchmark/README.md"}
+{"kind":"slide","id":"sl/idmxdj","slide":8,"title":"测试结果","textShapes":14}
+{"kind":"textbox","id":"sh/gf2pwna5","slide":8,"text":"测试结果","textPreview":"测试结果","textChars":4,"textLines":1,"bbox":[72,42,300,22]}
+{"kind":"textbox","id":"sh/fet83i9k","slide":8,"text":"23 个实际案例全部完成，关键可追溯检查通过","textPreview":"23 个实际案例全部完成，关键可追溯检查通过","textChars":22,"textLines":1,"bbox":[72,76,1080,48]}
+{"kind":"shape","id":"sh/udk7udsz","slide":8,"bbox":[72,132,88,4]}
+{"kind":"textbox","id":"sh/sb2ps3at","slide":8,"text":"基线成功","textPreview":"基线成功","textChars":4,"textLines":1,"bbox":[740,190,260,28]}
+{"kind":"textbox","id":"sh/7atozy98","slide":8,"text":"23/23","textPreview":"23/23","textChars":5,"textLines":1,"bbox":[1008,190,140,30]}
+{"kind":"textbox","id":"sh/6907qts3","slide":8,"text":"预期检查","textPreview":"预期检查","textChars":4,"textLines":1,"bbox":[740,255,260,28]}
+{"kind":"textbox","id":"sh/58r6x8ri","slide":8,"text":"100%","textPreview":"100%","textChars":4,"textLines":1,"bbox":[1008,255,140,30]}
+{"kind":"textbox","id":"sh/k7ipo3ax","slide":8,"text":"证据有效性","textPreview":"证据有效性","textChars":5,"textLines":1,"bbox":[740,320,260,28]}
+{"kind":"textbox","id":"sh/u18rupsj","slide":8,"text":"100%","textPreview":"100%","textChars":4,"textLines":1,"bbox":[1008,320,140,30]}
+{"kind":"textbox","id":"sh/v2h8nuto","slide":8,"text":"provenance 有效性","textPreview":"provenance 有效性","textChars":14,"textLines":1,"bbox":[740,385,260,28]}
+{"kind":"textbox","id":"sh/w3q9wza9","slide":8,"text":"100%","textPreview":"100%","textChars":4,"textLines":1,"bbox":[1008,385,140,30]}
+{"kind":"textbox","id":"sh/h4zapkbu","slide":8,"text":"总处理耗时","textPreview":"总处理耗时","textChars":5,"textLines":1,"bbox":[740,450,260,28]}
+{"kind":"textbox","id":"sh/mdorq5s7","slide":8,"text":"632.2 秒","textPreview":"632.2 秒","textChars":7,"textLines":1,"bbox":[1008,450,140,30]}
+{"kind":"textbox","id":"sh/7yx8jats","slide":8,"text":"数据集校验：23 个条目；扫描件 6 个；配置计数校验通过。","textPreview":"数据集校验：23 个条目；扫描件 6 个；配置计数校验通过。","textChars":30,"textLines":1,"bbox":[86,574,1050,30]}
+{"kind":"textbox","id":"sh/8z69sfad","slide":8,"text":"ZYRelay DocIntelligence 正式演示  |  8","textPreview":"ZYRelay DocIntelligence 正式演示  |  8","textChars":34,"textLines":1,"bbox":[72,684,500,18]}
+{"kind":"chart","id":"ch/d47upgfu","slide":8,"name":"","chartType":"bar","bbox":[84,180,580,340]}
+{"kind":"notes","id":"nt/idmxdj","slide":8,"text":"[Sources]\n本页事实与数据来源：benchmark/results/baseline/summary.json；benchmark/results/reports/dataset_validation.json；benchmark/README.md"}
+{"kind":"slide","id":"sl/9yigp7","slide":9,"title":"总结","textShapes":12}
+{"kind":"textbox","id":"sh/b69w7i9s","slide":9,"text":"总结","textPreview":"总结","textChars":2,"textLines":1,"bbox":[72,42,300,22]}
+{"kind":"textbox","id":"sh/w7idgnax","slide":9,"text":"当前成果已可用于演示、回归验证与后续扩展","textPreview":"当前成果已可用于演示、回归验证与后续扩展","textChars":20,"textLines":1,"bbox":[72,76,1080,48]}
+{"kind":"shape","id":"sh/x8be9sri","slide":9,"bbox":[72,132,88,4]}
+{"kind":"textbox","id":"sh/y9kvixs3","slide":9,"text":"•","textPreview":"•","textChars":1,"textLines":1,"bbox":[110,190,18,30]}
+{"kind":"textbox","id":"sh/jatwb29o","slide":9,"text":"可演示：上传 PDF / DOCX，查看 blocks、标签、semantic_index、候选对象与追溯证据。","textPreview":"可演示：上传 PDF / DOCX，查看 blocks、标签、semantic_index、候选对象与追溯证据。","textChars":56,"textLines":1,"bbox":[134,190,986,36]}
+{"kind":"textbox","id":"sh/kb2dk7q9","slide":9,"text":"•","textPreview":"•","textChars":1,"textLines":1,"bbox":[110,268,18,30]}
+{"kind":"textbox","id":"sh/lcbedcru","slide":9,"text":"可验证：使用 benchmark 脚本重复执行 23 个案例，并与基线结果比较。","textPreview":"可验证：使用 benchmark 脚本重复执行 23 个案例，并与基线结果比较。","textChars":40,"textLines":1,"bbox":[134,268,986,36]}
+{"kind":"textbox","id":"sh/edgv6tsz","slide":9,"text":"•","textPreview":"•","textChars":1,"textLines":1,"bbox":[110,346,18,30]}
+{"kind":"textbox","id":"sh/zepczy9k","slide":9,"text":"可扩展：通过 YAML 增加标签、业务对象和案例；OCR / LLM 以插件方式接入。","textPreview":"可扩展：通过 YAML 增加标签、业务对象和案例；OCR / LLM 以插件方式接入。","textChars":43,"textLines":1,"bbox":[134,346,986,36]}
+{"kind":"textbox","id":"sh/ze9c7u5k","slide":9,"text":"下一步建议","textPreview":"下一步建议","textChars":5,"textLines":1,"bbox":[110,470,240,30]}
+{"kind":"textbox","id":"sh/ed0vyp4z","slide":9,"text":"为每类文档补充经人工审核的关键字段和规则金标，并将 baseline 纳入版本发布前的回归门禁。","textPreview":"为每类文档补充经人工审核的关键字段和规则金标，并将 baseline 纳入版本发布前的回归门禁。","textChars":48,"textLines":1,"bbox":[110,516,980,50]}
+{"kind":"textbox","id":"sh/1gru94nq","slide":9,"text":"演示入口：/docs（Swagger）或 Python / CLI 插件调用。","textPreview":"演示入口：/docs（Swagger）或 Python / CLI 插件调用。","textChars":39,"textLines":1,"bbox":[110,606,940,30]}
+{"kind":"textbox","id":"sh/0fid0zm5","slide":9,"text":"ZYRelay DocIntelligence 正式演示  |  9","textPreview":"ZYRelay DocIntelligence 正式演示  |  9","textChars":34,"textLines":1,"bbox":[72,684,500,18]}
+{"kind":"notes","id":"nt/9yigp7","slide":9,"text":"[Sources]\n本页事实与数据来源：benchmark/results/baseline/summary.json；benchmark/results/reports/dataset_validation.json；benchmark/README.md"}

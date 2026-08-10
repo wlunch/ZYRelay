@@ -88,10 +88,10 @@ class ValidationResult(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     valid: bool
-    errors: list["PluginError"] = Field(default_factory=list)
-    warnings: list["PluginWarning"] = Field(default_factory=list)
+    errors: list[PluginError] = Field(default_factory=list)
+    warnings: list[PluginWarning] = Field(default_factory=list)
 
 
-from .errors import PluginError, PluginWarning  # noqa: E402
+from .errors import PluginError, PluginWarning
 
 ValidationResult.model_rebuild()

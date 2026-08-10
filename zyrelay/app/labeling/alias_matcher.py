@@ -12,18 +12,14 @@ class AliasMatcher:
         self.fuzzy_enabled = fuzzy_enabled
         self.fuzzy_threshold = fuzzy_threshold
 
-    def match(
-        self, block: DocumentBlock, label: LabelDefinition
-    ) -> list[MatchResult]:
+    def match(self, block: DocumentBlock, label: LabelDefinition) -> list[MatchResult]:
         results = self._exact(block, label)
         if self.fuzzy_enabled:
             results.extend(self._fuzzy(block, label))
         return results
 
     @staticmethod
-    def _exact(
-        block: DocumentBlock, label: LabelDefinition
-    ) -> list[MatchResult]:
+    def _exact(block: DocumentBlock, label: LabelDefinition) -> list[MatchResult]:
         results: list[MatchResult] = []
         for alias in sorted(label.aliases, key=len, reverse=True):
             for found in re.finditer(re.escape(alias), block.text, flags=re.IGNORECASE):
@@ -41,9 +37,7 @@ class AliasMatcher:
                 )
         return results
 
-    def _fuzzy(
-        self, block: DocumentBlock, label: LabelDefinition
-    ) -> list[MatchResult]:
+    def _fuzzy(self, block: DocumentBlock, label: LabelDefinition) -> list[MatchResult]:
         results: list[MatchResult] = []
         tokens = list(re.finditer(r"[\u4e00-\u9fffA-Za-z0-9_-]{2,30}", block.text))
         for token_match in tokens:
@@ -64,4 +58,3 @@ class AliasMatcher:
                         )
                     )
         return results
-

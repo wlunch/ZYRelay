@@ -2,21 +2,23 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from zyrelay.app.conventions import (
+    CodeConventionCandidate,
+    ConventionIndex,
+    ConventionSection,
+)
 from zyrelay.app.models import (
     DocumentBlock,
     LabelDefinition,
     LabelMention,
     SemanticCandidate,
     SemanticIndexBucket,
+    SemanticObject,
+    SemanticValidationResult,
     SourceDocument,
     UOMPackage,
 )
 from zyrelay.app.parsers import ParsedDocument
-from zyrelay.app.conventions import (
-    CodeConventionCandidate,
-    ConventionIndex,
-    ConventionSection,
-)
 
 
 @dataclass
@@ -37,6 +39,9 @@ class ProcessingContext:
     convention_sections: list[ConventionSection] = field(default_factory=list)
     code_conventions: list[CodeConventionCandidate] = field(default_factory=list)
     convention_index: ConventionIndex = field(default_factory=ConventionIndex)
+    semantic_objects: list[SemanticObject] = field(default_factory=list)
+    semantic_validation: SemanticValidationResult | None = None
+    model_metadata: dict[str, dict[str, Any]] = field(default_factory=dict)
     package: UOMPackage | None = None
     steps: list[Any] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)

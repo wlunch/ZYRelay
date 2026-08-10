@@ -35,7 +35,10 @@ class ConventionCandidateValidator:
                 return f"证据 block 不存在：{evidence.block_id}"
             if evidence.end_offset > len(block.text):
                 return "证据 offset 超出 block"
-            if block.text[evidence.start_offset:evidence.end_offset] != evidence.evidence_text:
+            if (
+                block.text[evidence.start_offset : evidence.end_offset]
+                != evidence.evidence_text
+            ):
                 return "证据文本与原始 block 不一致"
 
         expression = candidate.rule_expression
@@ -44,8 +47,7 @@ class ConventionCandidateValidator:
                 evidence.evidence_text for evidence in candidate.source_evidence
             )
             expected = str(expression.expected)
-            if expected.endswith(".0"):
-                expected = expected[:-2]
+            expected = expected.removesuffix(".0")
             if not re.search(rf"(?<!\d){re.escape(expected)}(?!\d)", evidence_text):
                 return "规则数值未出现在原始证据中"
         return None

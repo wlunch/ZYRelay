@@ -9,7 +9,6 @@ from typing import Any
 
 import yaml
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 PACKAGE_ROOT = Path(__file__).resolve().parents[2]
 CONFIG_ROOT = (
@@ -29,14 +28,14 @@ class Settings:
     data_root: Path = DEFAULT_DATA_ROOT
     label_config: Path = CONFIG_ROOT / "labels.yaml"
     business_object_config: Path = CONFIG_ROOT / "business_objects.yaml"
-    code_convention_label_config: Path = (
-        CONFIG_ROOT / "code_convention_labels.yaml"
-    )
+    code_convention_label_config: Path = CONFIG_ROOT / "code_convention_labels.yaml"
     code_rule_pattern_config: Path = CONFIG_ROOT / "code_rule_patterns.yaml"
     plugin_config: Path = CONFIG_ROOT / "plugin.yaml"
     ground_config_dir: Path = CONFIG_ROOT / "ground"
     enterprise_config_dir: Path = CONFIG_ROOT / "enterprises"
     model_config: Path = CONFIG_ROOT / "models.yaml"
+    language_config: Path = CONFIG_ROOT / "languages.yaml"
+    threshold_config: Path = CONFIG_ROOT / "thresholds.yaml"
     ground_truth_dir: Path = CONFIG_ROOT / "ground_truth"
     max_file_size: int = 25 * 1024 * 1024
     keep_prepared: bool = True
@@ -49,7 +48,7 @@ class Settings:
     llm_model: str = ""
 
     @classmethod
-    def from_env(cls) -> "Settings":
+    def from_env(cls) -> Settings:
         return cls(
             data_root=Path(os.getenv("ZYRELAY_DATA_ROOT", cls.data_root)),
             label_config=Path(os.getenv("ZYRELAY_LABEL_CONFIG", cls.label_config)),
@@ -68,19 +67,19 @@ class Settings:
                     cls.code_rule_pattern_config,
                 )
             ),
-            plugin_config=Path(
-                os.getenv("ZYRELAY_PLUGIN_CONFIG", cls.plugin_config)
-            ),
+            plugin_config=Path(os.getenv("ZYRELAY_PLUGIN_CONFIG", cls.plugin_config)),
             ground_config_dir=Path(
                 os.getenv("ZYRELAY_GROUND_CONFIG_DIR", cls.ground_config_dir)
             ),
             enterprise_config_dir=Path(
-                os.getenv(
-                    "ZYRELAY_ENTERPRISE_CONFIG_DIR", cls.enterprise_config_dir
-                )
+                os.getenv("ZYRELAY_ENTERPRISE_CONFIG_DIR", cls.enterprise_config_dir)
             ),
-            model_config=Path(
-                os.getenv("ZYRELAY_MODEL_CONFIG", cls.model_config)
+            model_config=Path(os.getenv("ZYRELAY_MODEL_CONFIG", cls.model_config)),
+            language_config=Path(
+                os.getenv("ZYRELAY_LANGUAGE_CONFIG", cls.language_config)
+            ),
+            threshold_config=Path(
+                os.getenv("ZYRELAY_THRESHOLD_CONFIG", cls.threshold_config)
             ),
             ground_truth_dir=Path(
                 os.getenv("ZYRELAY_GROUND_TRUTH_DIR", cls.ground_truth_dir)
@@ -117,6 +116,43 @@ def config_hash(path: Path) -> str:
         load_yaml(path), ensure_ascii=False, sort_keys=True, separators=(",", ":")
     ).encode("utf-8")
     return hashlib.sha256(canonical).hexdigest()
+
+
+def configuration_inventory(settings: Settings) -> dict[str, dict[str, str]]:
+    """Return versioned, content-addressed business configuration metadata."""
+    sources = {
+        "labels": settings.label_config,
+        "business_objects": settings.business_object_config,
+        "code_convention_labels": settings.code_convention_label_config,
+        "code_rule_patterns": settings.code_rule_pattern_config,
+        "models": settings.model_config,
+        "languages": settings.language_config,
+        "thresholds": settings.threshold_config,
+    }
+    result: dict[str, dict[str, str]] = {}
+    for name, path in sources.items():
+        if not path.is_file():
+            continue
+        payload = load_yaml(path)
+        result[name] = {
+            "path": path.name,
+            "version": str(payload.get("version", "unversioned")),
+            "hash": config_hash(path),
+        }
+    return result
+
+
+def validate_configuration(path: Path) -> list[str]:
+    """Minimal fail-closed YAML validation shared by CLI, tests and startup."""
+    try:
+        payload = load_yaml(path)
+    except (OSError, yaml.YAMLError) as exc:
+        return [f"yaml_load_failed:{exc}"]
+    if not isinstance(payload, dict):
+        return ["root_mapping_required"]
+    if not payload:
+        return ["configuration_must_not_be_empty"]
+    return []
 
 
 def ground_truth_version(settings: Settings) -> str:

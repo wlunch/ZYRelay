@@ -8,7 +8,6 @@ from typing import TypeVar
 
 from pydantic import BaseModel
 
-
 Record = TypeVar("Record", bound=BaseModel)
 
 

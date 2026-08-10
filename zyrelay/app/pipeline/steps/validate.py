@@ -56,4 +56,3 @@ class ValidateFileStep:
                         raise InvalidFileError("DOCX 缺少 word/document.xml")
             except zipfile.BadZipFile as exc:
                 raise InvalidFileError("DOCX ZIP 结构无效") from exc
-

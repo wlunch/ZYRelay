@@ -9,13 +9,10 @@ from zyrelay.plugin.contracts import (
     PluginStatus,
     SourceType,
 )
-from zyrelay.plugin.registry import PluginRegistry
 from zyrelay.plugin.mappers import PluginRequestMapper
+from zyrelay.plugin.registry import PluginRegistry
 
-
-DOCX_MIME = (
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-)
+DOCX_MIME = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 
 
 def test_manifest_capabilities_and_schemas(plugin_factory) -> None:
@@ -24,7 +21,7 @@ def test_manifest_capabilities_and_schemas(plugin_factory) -> None:
     capabilities = plugin.get_capabilities()
 
     assert manifest.plugin_id == "zyrelay.doc-intelligence"
-    assert manifest.version == "0.5.0"
+    assert manifest.version == "1.0.0"
     assert manifest.model_dump_json()
     assert capabilities.features["ocr"] is False
     assert capabilities.features["llm_optional"] is True
@@ -36,11 +33,9 @@ def test_registry_and_capabilities_operation(plugin_factory) -> None:
     plugin = plugin_factory()
     registry = PluginRegistry()
     registry.register(plugin)
-    assert registry.get_manifest("zyrelay.doc-intelligence").version == "0.5.0"
+    assert registry.get_manifest("zyrelay.doc-intelligence").version == "1.0.0"
     assert len(registry.list_plugins()) == 1
-    response = plugin.execute(
-        PluginRequest(operation=PluginOperation.GET_CAPABILITIES)
-    )
+    response = plugin.execute(PluginRequest(operation=PluginOperation.GET_CAPABILITIES))
     assert response.status == PluginStatus.COMPLETED
     assert response.result.document["capabilities"]["features"]["ocr"] is False
     registry.unregister("zyrelay.doc-intelligence")
@@ -82,9 +77,7 @@ def test_request_validation_rejects_bad_inputs(plugin_factory) -> None:
     assert not unsupported.valid
     assert unsupported.errors[0].code == "unsupported_content_type"
 
-    bad_execution = plugin.execute(
-        PluginRequest(execution_id="EXEC-../../etc/passwd")
-    )
+    bad_execution = plugin.execute(PluginRequest(execution_id="EXEC-../../etc/passwd"))
     assert bad_execution.status == PluginStatus.FAILED
     assert bad_execution.errors[0].code == "invalid_request"
     assert bad_execution.execution_id != "EXEC-../../etc/passwd"
@@ -128,7 +121,7 @@ def test_python_sdk_output_levels_and_execution_record(
     response = plugin.execute(request)
 
     assert response.status == PluginStatus.COMPLETED
-    assert response.plugin_version == "0.5.0"
+    assert response.plugin_version == "1.0.0"
     assert response.result is not None
     assert response.result.summary.document_id
     assert response.result.mentions
@@ -167,9 +160,7 @@ def test_code_convention_mode_and_artifact_security(
                 file_name=sample_convention_docx.name,
                 content_type=DOCX_MIME,
             ),
-            options=PluginOptions(
-                mode="code_convention", output_detail="standard"
-            ),
+            options=PluginOptions(mode="code_convention", output_detail="standard"),
         )
     )
     assert response.status == PluginStatus.COMPLETED

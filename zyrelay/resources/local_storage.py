@@ -15,4 +15,6 @@ class LocalStorageResource:
         return request.capability == "storage"
 
     def execute(self, request: ResourceRequest, context: object) -> ResourceResponse:
-        return ResourceResponse(status="completed", metadata={"delegates_to": "LocalStorage"})
+        return ResourceResponse(
+            status="completed", metadata={"delegates_to": "LocalStorage"}
+        )

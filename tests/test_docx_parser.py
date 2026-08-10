@@ -15,4 +15,3 @@ def test_docx_paragraph_heading_and_table_order(sample_docx) -> None:
     assert "北京甲方有限公司" in result.elements[3].text
     assert result.elements[1].heading_level == 1
     assert result.page_count is None
-

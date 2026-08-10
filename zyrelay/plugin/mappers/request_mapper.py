@@ -14,18 +14,15 @@ from ..config import PluginRuntimeConfig
 from ..contracts import (
     PluginError,
     PluginOperation,
-    PluginRequest,
     PluginOptions,
+    PluginRequest,
     PluginWarning,
     SourceType,
     ValidationResult,
 )
 
-
 PDF_MIME = "application/pdf"
-DOCX_MIME = (
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-)
+DOCX_MIME = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 MIME_TO_EXTENSION = {PDF_MIME: ".pdf", DOCX_MIME: ".docx"}
 DOCUMENT_ID = re.compile(r"^DOC-[A-F0-9]{16}$")
 EXECUTION_ID = re.compile(r"^EXEC-[A-F0-9]{16}$")
@@ -59,16 +56,11 @@ class PluginRequestMapper:
             errors.append(self._error("plugin_disabled", "插件已禁用"))
             return ValidationResult(valid=False, errors=errors)
 
-        if request.execution_id and not EXECUTION_ID.fullmatch(
-            request.execution_id
-        ):
-            errors.append(
-                self._error("invalid_request", "execution_id 格式无效")
-            )
+        if request.execution_id and not EXECUTION_ID.fullmatch(request.execution_id):
+            errors.append(self._error("invalid_request", "execution_id 格式无效"))
 
         invalid_overrides = sorted(
-            set(request.options.config_overrides)
-            - set(self.config.overrides.allowed)
+            set(request.options.config_overrides) - set(self.config.overrides.allowed)
         )
         if invalid_overrides:
             errors.append(
@@ -100,9 +92,7 @@ class PluginRequestMapper:
             )
 
         if request.operation == PluginOperation.GET_CAPABILITIES:
-            return ValidationResult(
-                valid=not errors, errors=errors, warnings=warnings
-            )
+            return ValidationResult(valid=not errors, errors=errors, warnings=warnings)
 
         if request.input is None:
             errors.append(self._error("missing_input", "请求缺少 input"))
@@ -115,19 +105,13 @@ class PluginRequestMapper:
             bool(plugin_input.text),
         ]
         if sum(raw_fields) > 1:
-            errors.append(
-                self._error("conflicting_input", "原始内容输入只能提供一种")
-            )
+            errors.append(self._error("conflicting_input", "原始内容输入只能提供一种"))
 
         if request.operation == PluginOperation.GET_UOM:
             if not plugin_input.document_id:
-                errors.append(
-                    self._error("missing_input", "get_uom 需要 document_id")
-                )
+                errors.append(self._error("missing_input", "get_uom 需要 document_id"))
             elif not DOCUMENT_ID.fullmatch(plugin_input.document_id):
-                errors.append(
-                    self._error("invalid_request", "document_id 格式无效")
-                )
+                errors.append(self._error("invalid_request", "document_id 格式无效"))
             if any(raw_fields):
                 errors.append(
                     self._error(
@@ -142,9 +126,7 @@ class PluginRequestMapper:
                         "get_uom 的 source_type 必须为 document",
                     )
                 )
-            return ValidationResult(
-                valid=not errors, errors=errors, warnings=warnings
-            )
+            return ValidationResult(valid=not errors, errors=errors, warnings=warnings)
 
         if not plugin_input.file_path and not plugin_input.content_base64:
             errors.append(
@@ -155,10 +137,7 @@ class PluginRequestMapper:
             )
             return ValidationResult(valid=False, errors=errors, warnings=warnings)
 
-        if (
-            plugin_input.file_path
-            and plugin_input.source_type != SourceType.FILE
-        ) or (
+        if (plugin_input.file_path and plugin_input.source_type != SourceType.FILE) or (
             plugin_input.content_base64
             and plugin_input.source_type != SourceType.BASE64
         ):
@@ -176,10 +155,7 @@ class PluginRequestMapper:
                     "第一阶段不支持纯文本输入",
                 )
             )
-        if (
-            plugin_input.file_path
-            and request.metadata.get("_transport") == "http"
-        ):
+        if plugin_input.file_path and request.metadata.get("_transport") == "http":
             errors.append(
                 self._error(
                     "invalid_request",
@@ -194,9 +170,7 @@ class PluginRequestMapper:
                     "原始文件需要 file_name 和 content_type",
                 )
             )
-            return ValidationResult(
-                valid=not errors, errors=errors, warnings=warnings
-            )
+            return ValidationResult(valid=not errors, errors=errors, warnings=warnings)
 
         extension = Path(plugin_input.file_name).suffix.lower()
         expected_extension = MIME_TO_EXTENSION.get(plugin_input.content_type)
@@ -235,9 +209,7 @@ class PluginRequestMapper:
                         plugin_input.content_base64, validate=True
                     )
                     if len(content) > self.max_file_size:
-                        errors.append(
-                            self._error("file_too_large", "文件超过大小限制")
-                        )
+                        errors.append(self._error("file_too_large", "文件超过大小限制"))
                     elif expected_extension:
                         signature_error = self._signature_error(
                             expected_extension, content
@@ -265,9 +237,7 @@ class PluginRequestMapper:
         if plugin_input.file_path:
             content = Path(plugin_input.file_path).expanduser().read_bytes()
         else:
-            content = base64.b64decode(
-                plugin_input.content_base64 or "", validate=True
-            )
+            content = base64.b64decode(plugin_input.content_base64 or "", validate=True)
         extension = MIME_TO_EXTENSION[plugin_input.content_type or ""]
         signature_error = self._signature_error(extension, content)
         if signature_error:
@@ -280,9 +250,7 @@ class PluginRequestMapper:
             source_uri=plugin_input.source_uri,
         )
 
-    def _signature_error(
-        self, extension: str, content: bytes
-    ) -> PluginError | None:
+    def _signature_error(self, extension: str, content: bytes) -> PluginError | None:
         if not content:
             return self._error("invalid_file", "文件内容为空")
         if extension == ".pdf" and not content.startswith(b"%PDF-"):

@@ -1,7 +1,10 @@
+from datetime import datetime
 from enum import StrEnum
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
+
+from .document import utc_now
 
 
 class SemanticIndexOccurrence(BaseModel):
@@ -61,3 +64,63 @@ class SemanticCandidate(BaseModel):
     ontology_uri: str | None = None
     status: CandidateStatus = CandidateStatus.DETECTED
 
+
+class SemanticObjectType(StrEnum):
+    ENTITY = "entity"
+    RULE = "rule"
+    RELATION = "relation"
+    EVENT = "event"
+    DOCUMENT_OBJECT = "document_object"
+    OBSERVATION = "observation"
+    EVIDENCE = "evidence"
+    BUSINESS_OBJECT = "business_object"
+
+
+class SemanticObjectStatus(StrEnum):
+    DETECTED = "detected"
+    CONFIRMED = "confirmed"
+    REJECTED = "rejected"
+
+
+class SemanticOffset(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    start: int = Field(ge=0)
+    end: int = Field(ge=0)
+
+
+class SemanticObject(BaseModel):
+    """Deterministic, evidence-first handoff object for downstream systems."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    schema_version: str = "1.0"
+    object_id: str
+    object_type: SemanticObjectType
+    name: str
+    attributes: dict[str, Any] = Field(default_factory=dict)
+    confidence: float = Field(ge=0, le=1)
+    status: SemanticObjectStatus = SemanticObjectStatus.DETECTED
+    document_id: str
+    page: int | None = Field(default=None, ge=1)
+    block_id: str | None = None
+    offset: SemanticOffset | None = None
+    provenance_id: str
+    ground_snapshot_id: str | None = None
+    resource_plan_id: str | None = None
+    created_at: datetime = Field(default_factory=utc_now)
+    evidence_ids: list[str] = Field(default_factory=list)
+    source_object_id: str | None = None
+    target_object_id: str | None = None
+    category: str | None = None
+    language: str | None = None
+
+
+class SemanticValidationResult(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    valid: bool
+    object_count: int = Field(ge=0)
+    relation_count: int = Field(ge=0)
+    evidence_count: int = Field(ge=0)
+    errors: list[str] = Field(default_factory=list)

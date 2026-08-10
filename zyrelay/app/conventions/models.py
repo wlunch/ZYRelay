@@ -73,7 +73,7 @@ class EvidenceReference(BaseModel):
     mention_ids: list[str] = Field(default_factory=list)
 
     @model_validator(mode="after")
-    def validate_offsets(self) -> "EvidenceReference":
+    def validate_offsets(self) -> EvidenceReference:
         if self.end_offset <= self.start_offset:
             raise ValueError("evidence offsets must describe non-empty text")
         return self

@@ -18,7 +18,6 @@ from .models import (
 from .requirement_classifier import RequirementClassifier
 from .rule_expression_parser import RuleExpressionParser
 
-
 REQUIREMENT_WORDS = re.compile(
     r"必须|应当|应(?=使用|采用|添加|包含|遵循)|需要|禁止|不得|不允许|严禁|建议|推荐|宜|尽量|可以|可选|按需"
 )
@@ -148,10 +147,7 @@ class CodeConventionCandidateBuilder:
             level != RequirementLevel.UNKNOWN
             or expression is not None
             or (unit.table_context and category.value != "general")
-            or (
-                unit.block.block_type == BlockType.LIST
-                and category.value != "general"
-            )
+            or (unit.block.block_type == BlockType.LIST and category.value != "general")
         )
         if not has_signal:
             return None
@@ -170,7 +166,7 @@ class CodeConventionCandidateBuilder:
         language = languages[0] if len(languages) == 1 else None
         positive, negative = self.examples.inline(text, unit.block.block_id, language)
 
-        evidence_text = unit.block.text[unit.start_offset:unit.end_offset]
+        evidence_text = unit.block.text[unit.start_offset : unit.end_offset]
         evidence_mentions = [
             mention.mention_id
             for mention in scoped_mentions
@@ -189,9 +185,7 @@ class CodeConventionCandidateBuilder:
             )
         ]
         if heading_block is not None and heading_block.block_id != unit.block.block_id:
-            heading_mention_ids = [
-                mention.mention_id for mention in heading_mentions
-            ]
+            heading_mention_ids = [mention.mention_id for mention in heading_mentions]
             source_evidence.append(
                 EvidenceReference(
                     document_id=heading_block.document_id,
@@ -338,7 +332,7 @@ class CodeConventionCandidateBuilder:
             boundaries = [0]
             if len(REQUIREMENT_WORDS.findall(raw)) > 1:
                 for comma in re.finditer(r"[，,]", raw):
-                    following = raw[comma.end():].lstrip()
+                    following = raw[comma.end() :].lstrip()
                     if REQUIREMENT_WORDS.match(following):
                         boundaries.append(comma.end())
             boundaries.append(len(raw))

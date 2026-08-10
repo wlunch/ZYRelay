@@ -16,6 +16,32 @@ class ResourceHealth(BaseModel):
     details: dict[str, Any] = Field(default_factory=dict)
 
 
+class ResourceManifest(BaseModel):
+    """Marketplace-compatible description generated for every resource plugin."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    resource_id: str
+    resource_type: str
+    version: str
+    dependencies: dict[str, str] = Field(default_factory=dict)
+    configuration_schema: dict[str, Any] = Field(default_factory=dict)
+    supported_content_types: list[str] = Field(
+        default_factory=lambda: [
+            "application/pdf",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ]
+    )
+    supported_languages: list[str] = Field(
+        default_factory=lambda: ["zh", "en", "mixed"]
+    )
+    license: str = "Apache-2.0"
+    author: str = "ZYRelay"
+    compatibility: dict[str, str] = Field(
+        default_factory=lambda: {"api_version": "v1", "python": ">=3.11"}
+    )
+
+
 class ResourceRequest(BaseModel):
     model_config = ConfigDict(extra="forbid", arbitrary_types_allowed=True)
 
@@ -42,6 +68,18 @@ class ResourceBindingRecord(BaseModel):
     selection_reason: str
     fallback_used: bool = False
     rejected_resources: list[str] = Field(default_factory=list)
+    plugin_name: str | None = None
+    model_version: str | None = None
+    model_execution_id: str | None = None
+    latency_ms: float | None = None
+    health: dict[str, Any] = Field(default_factory=dict)
+    enabled: bool = True
+    planned_execution: bool = True
+    actual_execution: bool = False
+    skip_reason: str | None = None
+    gate_decision: str | None = None
+    input_signals: dict[str, Any] = Field(default_factory=dict)
+    compatibility: dict[str, Any] = Field(default_factory=dict)
 
 
 class ResourcePlan(BaseModel):
@@ -50,6 +88,12 @@ class ResourcePlan(BaseModel):
     plan_id: str
     execution_id: str
     enterprise_id: str
+    department_id: str | None = None
+    team_id: str | None = None
+    project_id: str | None = None
+    environment: str = "dev"
+    resource_config_version: str | None = None
+    resource_config_hash: str | None = None
     resource_profile_id: str
     bindings: dict[str, str]
     fallback_bindings: dict[str, list[str]] = Field(default_factory=dict)

@@ -2,7 +2,6 @@ from fastapi import APIRouter, Query, Request
 
 from zyrelay.app.services import DocumentService
 
-
 router = APIRouter(tags=["search"])
 
 
@@ -18,4 +17,3 @@ def search(
         label_code=label_code, document_id=document_id, value=value
     )
     return {"count": len(results), "results": results}
-

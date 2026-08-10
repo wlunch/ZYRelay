@@ -2,17 +2,23 @@ from zyrelay import __version__
 from zyrelay.app.core.config import (
     Settings,
     config_hash,
+    configuration_inventory,
     ground_truth_version,
+)
+from zyrelay.app.models import (
+    CandidateStatus,
+    CandidateType,
+    DocumentStatus,
+    SemanticCandidate,
 )
 from zyrelay.app.models.uom import (
     BOMSection,
     MOMSection,
     ProcessingRecord,
+    SemanticObjectSection,
     SOMSection,
     UOMPackage,
 )
-from zyrelay.app.models import DocumentStatus
-from zyrelay.app.models import CandidateStatus, CandidateType, SemanticCandidate
 from zyrelay.app.pipeline.context import ProcessingContext
 from zyrelay.app.storage import LocalStorage
 
@@ -42,6 +48,11 @@ class BuildUOMPackageStep:
                 code_conventions=context.code_conventions,
                 convention_index=context.convention_index,
             ),
+            semantic_objects=SemanticObjectSection(
+                objects=context.semantic_objects,
+                validation=context.semantic_validation
+                or SemanticObjectSection().validation,
+            ),
             bom=BOMSection(
                 business_objects=[
                     *business_objects(context),
@@ -61,6 +72,14 @@ class BuildUOMPackageStep:
                 code_rule_pattern_config_hash=config_hash(
                     self.settings.code_rule_pattern_config
                 ),
+                layout=context.model_metadata.get("layout", {}),
+                table=context.model_metadata.get("table", {}),
+                classifier=context.model_metadata.get("classifier", {}),
+                language=context.model_metadata.get("language", {}),
+                ner=context.model_metadata.get("ner", {}),
+                spell=context.model_metadata.get("spell", {}),
+                model_routing=context.model_metadata.get("routing", {}),
+                configuration=configuration_inventory(self.settings),
                 steps=context.steps,
                 warnings=context.warnings,
                 errors=context.errors,
@@ -131,7 +150,9 @@ class SaveResultStep:
             context.document.file_name,
             context.file_bytes,
         )
-        context.document.source_uri = source_path.as_uri()
+        # URI serialization must not depend on the caller supplying an
+        # absolute data root (benchmark runners commonly use relative output).
+        context.document.source_uri = source_path.resolve().as_uri()
         self.storage.save_prepared(
             context.document.document_id,
             context.parsed_document.pages,

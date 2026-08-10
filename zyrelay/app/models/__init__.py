@@ -8,6 +8,11 @@ from .semantic import (
     SemanticIndexBucket,
     SemanticIndexEntry,
     SemanticIndexOccurrence,
+    SemanticObject,
+    SemanticObjectStatus,
+    SemanticObjectType,
+    SemanticOffset,
+    SemanticValidationResult,
 )
 from .uom import ProcessingRecord, ProcessingStepRecord, UOMPackage
 
@@ -27,7 +32,11 @@ __all__ = [
     "SemanticIndexBucket",
     "SemanticIndexEntry",
     "SemanticIndexOccurrence",
+    "SemanticObject",
+    "SemanticObjectStatus",
+    "SemanticObjectType",
+    "SemanticOffset",
+    "SemanticValidationResult",
     "SourceDocument",
     "UOMPackage",
 ]
-

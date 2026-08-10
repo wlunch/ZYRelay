@@ -4,7 +4,6 @@ from .capabilities import CapabilitiesProvider
 from .config import PluginRuntimeConfig
 from .contracts import PluginManifest, PluginRequest, PluginResponse
 
-
 ERROR_CODES = [
     "plugin_disabled",
     "unsupported_operation",
@@ -46,7 +45,8 @@ class ManifestProvider:
             vendor=plugin.vendor,
             plugin_type=plugin.plugin_type,
             entrypoint="zyrelay.plugin.facade:DocIntelligencePlugin",
-            supported_inputs=[
+            supported_inputs=plugin.supported_content_types
+            or [
                 "application/pdf",
                 "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             ],
@@ -68,21 +68,27 @@ class ManifestProvider:
             configuration_schema={
                 "$ref": f"/api/v1/plugins/{plugin.plugin_id}/schemas/configuration"
             },
-            input_schema={
-                "$ref": f"/api/v1/plugins/{plugin.plugin_id}/schemas/input"
-            },
+            input_schema={"$ref": f"/api/v1/plugins/{plugin.plugin_id}/schemas/input"},
             output_schema={
                 "$ref": f"/api/v1/plugins/{plugin.plugin_id}/schemas/output"
             },
             error_codes=ERROR_CODES,
             health_check="/health",
             documentation="/docs",
+            dependencies=plugin.dependencies,
+            supported_languages=plugin.supported_languages,
+            license=plugin.license,
+            author=plugin.author,
+            permissions=plugin.permissions,
             compatibility={
                 "api_version": plugin.api_version,
                 "uom_schema_version": "1.0",
                 "python": ">=3.11",
             },
-            metadata={"capabilities": capabilities.model_dump(mode="json")},
+            metadata={
+                "capabilities": capabilities.model_dump(mode="json"),
+                "lifecycle_operations": ["install", "validate", "update", "disable"],
+            },
         )
 
     @staticmethod

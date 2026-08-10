@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import docx
-from docx.document import Document as DocxDocument
 from docx.table import Table
 from docx.text.paragraph import Paragraph
 
@@ -50,10 +49,7 @@ class DOCXParser:
                             )
                         )
 
-            metadata = document.core_properties
-            warnings = [
-                "DOCX 不包含可靠的物理分页信息，page_no 保持为空"
-            ]
+            warnings = ["DOCX 不包含可靠的物理分页信息，page_no 保持为空"]
             return ParsedDocument(
                 parser=self.name,
                 parser_version=self.version,

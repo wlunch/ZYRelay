@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import argparse
 import json
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
 from .contracts import (
     OutputDetail,
@@ -17,10 +17,7 @@ from .contracts import (
 )
 from .facade import DocIntelligencePlugin
 
-
-DOCX_MIME = (
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-)
+DOCX_MIME = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -32,7 +29,8 @@ def build_parser() -> argparse.ArgumentParser:
         item = subparsers.add_parser(command)
         item.add_argument("--file", required=True)
         item.add_argument(
-            "--mode", choices=[value.value for value in PluginMode],
+            "--mode",
+            choices=[value.value for value in PluginMode],
             default=PluginMode.AUTO.value,
         )
         if command == "execute":
@@ -74,9 +72,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 getattr(args, "output_detail", OutputDetail.STANDARD.value)
             ),
             enable_llm=getattr(args, "enable_llm", False),
-            enable_fuzzy_matching=getattr(
-                args, "enable_fuzzy_matching", False
-            ),
+            enable_fuzzy_matching=getattr(args, "enable_fuzzy_matching", False),
         ),
         metadata={"client": "cli"},
     )
@@ -95,10 +91,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
     else:
         _emit(payload)
-    return 0 if response.status in {
-        PluginStatus.COMPLETED,
-        PluginStatus.PARTIAL,
-    } else 4
+    return (
+        0
+        if response.status
+        in {
+            PluginStatus.COMPLETED,
+            PluginStatus.PARTIAL,
+        }
+        else 4
+    )
 
 
 def _content_type(path: Path) -> str:

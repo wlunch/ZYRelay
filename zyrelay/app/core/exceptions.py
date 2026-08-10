@@ -56,4 +56,3 @@ class LLMError(ZYRelayError):
 class DocumentNotFoundError(ZYRelayError):
     error_code = "document_not_found"
     status_code = 404
-

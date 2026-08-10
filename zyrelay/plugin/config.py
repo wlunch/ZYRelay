@@ -18,6 +18,12 @@ class PluginIdentityConfig(BaseModel):
     vendor: str
     plugin_type: str
     enabled: bool = True
+    author: str | None = None
+    license: str | None = None
+    supported_languages: list[str] = Field(default_factory=list)
+    supported_content_types: list[str] = Field(default_factory=list)
+    dependencies: dict[str, str] = Field(default_factory=dict)
+    permissions: dict[str, str] = Field(default_factory=dict)
 
 
 class PluginExecutionConfig(BaseModel):

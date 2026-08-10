@@ -6,8 +6,9 @@ import os
 import threading
 import time
 import uuid
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 from zyrelay.app.core.config import Settings, load_yaml
 
@@ -52,7 +53,9 @@ class PaddleOCRResource:
             details={
                 "package_installed": package_installed,
                 "offline_ready": ready_record and ready_models,
-                "cache_reference": str(config.get("cache_dir", "data/model_cache/paddleocr")),
+                "cache_reference": str(
+                    config.get("cache_dir", "data/model_cache/paddleocr")
+                ),
                 "required_models_ready": ready_models,
                 "allow_download": bool(config.get("allow_download", False)),
                 "model_version": config.get("model_version"),
@@ -61,6 +64,21 @@ class PaddleOCRResource:
                 "device": str(config.get("device", "cpu")),
             },
         )
+
+    def available(self) -> bool:
+        return self.health_check().available
+
+    def health(self) -> ResourceHealth:
+        return self.health_check()
+
+    def metadata(self) -> dict[str, Any]:
+        config = self._config()
+        return {
+            "plugin_name": self.resource_id,
+            "model_version": config.get("model_version", self.version),
+            "cache_dir": str(self._cache_dir(config)),
+            "enabled": bool(config.get("enabled", True)),
+        }
 
     def supports(self, request: ResourceRequest) -> bool:
         return request.capability == "ocr" and request.document_type == "pdf"
@@ -103,7 +121,11 @@ class PaddleOCRResource:
                     resource_id=self.resource_id,
                     resource_version=self._package_version("paddleocr") or self.version,
                     model_execution_id=execution_id,
-                    page_artifact={key: value for key, value in artifact.items() if key != "file_path"},
+                    page_artifact={
+                        key: value
+                        for key, value in artifact.items()
+                        if key != "file_path"
+                    },
                 )
                 page_duration_ms = (time.perf_counter() - page_started) * 1000
                 page.warnings.append(f"page_ocr_duration_ms={page_duration_ms:.2f}")
@@ -137,7 +159,9 @@ class PaddleOCRResource:
                 "page_count": len(pages),
                 "line_count": len(lines),
                 "average_confidence": (
-                    sum(line.confidence for line in lines) / len(lines) if lines else 0.0
+                    sum(line.confidence for line in lines) / len(lines)
+                    if lines
+                    else 0.0
                 ),
                 "page_metrics": page_metrics,
             },
@@ -169,7 +193,9 @@ class PaddleOCRResource:
             return None
         if isinstance(raw_results, list):
             return raw_results[0] if raw_results else None
-        if isinstance(raw_results, Iterable) and not isinstance(raw_results, (dict, str, bytes)):
+        if isinstance(raw_results, Iterable) and not isinstance(
+            raw_results, (dict, str, bytes)
+        ):
             return next(iter(raw_results), None)
         return raw_results
 
@@ -213,7 +239,9 @@ class PaddleOCRResource:
         os.environ["PADDLE_PDX_MODEL_SOURCE"] = "bos"
         # The resource is offline-only. Paddlex will use local model folders and
         # must not probe a model host during normal Relay execution.
-        os.environ["PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK"] = "" if allow_download else "1"
+        os.environ["PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK"] = (
+            "" if allow_download else "1"
+        )
 
 
 def normalize_paddleocr_result(
@@ -259,7 +287,10 @@ def normalize_paddleocr_result(
             )
         )
     lines.sort(key=lambda line: (line.bbox[1], line.bbox[0], line.reading_order))
-    lines = [line.model_copy(update={"reading_order": index}) for index, line in enumerate(lines)]
+    lines = [
+        line.model_copy(update={"reading_order": index})
+        for index, line in enumerate(lines)
+    ]
     orientation = _int_or_none((payload.get("doc_preprocessor_res") or {}).get("angle"))
     average = sum(line.confidence for line in lines) / len(lines) if lines else 0.0
     return OCRPageResult(
@@ -324,7 +355,12 @@ def _bbox(value: Any, polygon: list[list[float]]) -> list[float]:
         except TypeError:
             values = []
         if len(values) >= 4 and not hasattr(values[0], "__iter__"):
-            return [float(values[0]), float(values[1]), float(values[2]), float(values[3])]
+            return [
+                float(values[0]),
+                float(values[1]),
+                float(values[2]),
+                float(values[3]),
+            ]
     if polygon:
         xs = [point[0] for point in polygon]
         ys = [point[1] for point in polygon]

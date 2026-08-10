@@ -1,0 +1,12 @@
+version: 1.0.0
+languages:
+  - code: zh
+    name: Chinese
+  - code: en
+    name: English
+  - code: ja
+    name: Japanese
+  - code: ko
+    name: Korean
+  - code: mixed
+    name: Mixed

@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 import uuid
+from collections.abc import Callable
 from dataclasses import dataclass
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Callable
+from datetime import UTC, datetime
 
 from zyrelay import __version__
 from zyrelay.app.core.config import Settings
@@ -18,7 +17,7 @@ from .manifest import ManifestProvider
 
 
 def utc_now() -> datetime:
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 def generate_id(prefix: str) -> str:
@@ -60,9 +59,7 @@ def create_default_dependencies(
         document_service=service,
         service_factory=DocumentService,
         execution_repository=LocalExecutionRepository(executions_root),
-        artifact_repository=LocalArtifactRepository(
-            artifacts_root, generate_id
-        ),
+        artifact_repository=LocalArtifactRepository(artifacts_root, generate_id),
         manifest_provider=ManifestProvider(config, capabilities),
         capabilities_provider=capabilities,
     )

@@ -27,12 +27,17 @@ def test_ground_choose_explicit_snapshot_and_plan(relay_service) -> None:
     assert selection.selection_reason == "explicit_request"
     assert selection.rejected_profiles
     assert snapshot.resolved_hash
-    assert relay_service.ground_repository.snapshot_store.load(snapshot.snapshot_id) == snapshot
+    assert (
+        relay_service.ground_repository.snapshot_store.load(snapshot.snapshot_id)
+        == snapshot
+    )
     assert plan.plan_hash
     # The default is intentionally capability-driven: CI without the optional
     # model uses NoOp, while a provisioned offline PaddleOCR cache is selected.
     assert plan.bindings["ocr"] in {"noop-ocr", "paddleocr"}
-    ocr_record = next(item for item in plan.selection_records if item.capability == "ocr")
+    ocr_record = next(
+        item for item in plan.selection_records if item.capability == "ocr"
+    )
     assert ocr_record.fallback_used is (plan.bindings["ocr"] == "noop-ocr")
 
 

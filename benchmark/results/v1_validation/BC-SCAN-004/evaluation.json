@@ -1,0 +1,80 @@
+{
+  "block_count": 0,
+  "checks": {
+    "bbox_required": false,
+    "block_order_valid": true,
+    "evidence_valid": true,
+    "minimum_blocks": false,
+    "minimum_conventions": true,
+    "non_empty_ocr_text": false,
+    "ocr_executed": true,
+    "provenance_valid": true
+  },
+  "convention_count": 0,
+  "entity_recall": 1.0,
+  "error_count": 0,
+  "evidence_valid_rate": 1.0,
+  "expected_item_recall": 0.25,
+  "forbidden_output_count": 1,
+  "forbidden_outputs": [
+    "semantic_evidence_incomplete"
+  ],
+  "model_metrics": {
+    "classifier": {
+      "average_runtime_ms": 0.0,
+      "executed_count": 0,
+      "run_count": 1,
+      "skipped_count": 1
+    },
+    "code_detector": {
+      "average_runtime_ms": 0.0,
+      "executed_count": 0,
+      "run_count": 1,
+      "skipped_count": 1
+    },
+    "language": {
+      "average_runtime_ms": 46.6663,
+      "executed_count": 1,
+      "run_count": 1,
+      "skipped_count": 0
+    },
+    "layout": {
+      "average_runtime_ms": 0.1475,
+      "executed_count": 1,
+      "run_count": 1,
+      "skipped_count": 0
+    },
+    "ner": {
+      "average_runtime_ms": 46.2094,
+      "executed_count": 1,
+      "run_count": 1,
+      "skipped_count": 0
+    },
+    "ocr": {
+      "average_runtime_ms": 0.0,
+      "executed_count": 0,
+      "run_count": 1,
+      "skipped_count": 0
+    },
+    "spell": {
+      "average_runtime_ms": 0.0,
+      "executed_count": 0,
+      "run_count": 1,
+      "skipped_count": 1
+    },
+    "table": {
+      "average_runtime_ms": 0.0,
+      "executed_count": 0,
+      "run_count": 1,
+      "skipped_count": 1
+    }
+  },
+  "processing_success": true,
+  "provenance_valid_rate": 1.0,
+  "relation_count": 0,
+  "rule_recall": 1.0,
+  "semantic_evidence_completeness": 0.0,
+  "semantic_object_count": 1,
+  "stable_object_id": true,
+  "warning_count": 3
+}

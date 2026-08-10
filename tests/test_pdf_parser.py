@@ -8,4 +8,3 @@ def test_pdf_text_extraction_and_pages(sample_pdf) -> None:
     assert "HT-2026-001" in result.pages[0].text
     assert "100,000.00" in result.pages[1].text
     assert result.requires_ocr is False
-

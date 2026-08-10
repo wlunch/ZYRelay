@@ -18,8 +18,7 @@ class LabelRepository:
         try:
             raw = load_yaml(self.label_path)
             definitions = [
-                LabelDefinition.model_validate(item)
-                for item in raw.get("labels", [])
+                LabelDefinition.model_validate(item) for item in raw.get("labels", [])
             ]
             if not definitions:
                 raise ValueError("labels 列表为空")
@@ -55,4 +54,3 @@ class LabelRepository:
     def value_is_valid(self, label_code: str, value: str) -> bool:
         pattern = self._value_formats.get(label_code)
         return pattern is None or pattern.fullmatch(value.strip()) is not None
-

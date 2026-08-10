@@ -6,8 +6,7 @@ from pathlib import Path
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 
 from zyrelay.relay import RelayRequest, RelayService
-from zyrelay.relay.models import RelayInput, RelayMode
-
+from zyrelay.relay.models import RelayEnvironment, RelayInput, RelayMode
 
 router = APIRouter(prefix="/api/v1/relay", tags=["relay"])
 
@@ -21,8 +20,11 @@ async def process(
     request: Request,
     file: UploadFile = File(...),
     enterprise_id: str = Form("default"),
+    department_id: str | None = Form(None),
     team_id: str | None = Form(None),
     project_id: str | None = Form(None),
+    environment: RelayEnvironment = Form(RelayEnvironment.DEV),
+    retry_limit: int = Form(0),
     mode: RelayMode = Form(RelayMode.CODE_CONVENTION),
     ground_profile_id: str | None = Form(None),
     resource_profile_id: str | None = Form(None),
@@ -37,8 +39,11 @@ async def process(
     relay_request = RelayRequest(
         request_id=request.state.request_id,
         enterprise_id=enterprise_id,
+        department_id=department_id,
         team_id=team_id,
         project_id=project_id,
+        environment=environment,
+        retry_limit=retry_limit,
         mode=mode,
         ground_profile_id=ground_profile_id,
         resource_profile_id=resource_profile_id,

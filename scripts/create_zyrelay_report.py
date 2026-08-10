@@ -262,7 +262,7 @@ def add_title_block(doc: Document) -> None:
     add_text(p, "PaddleOCR 模型能力、演示与结果", size=15, color=DARK_BLUE)
     for label, value in [
         ("面向对象", "管理汇报与技术评审"),
-        ("版本", "0.5.0（已完成本地离线模型验证）"),
+        ("版本", "1.0.0（企业级可追溯语义对象层）"),
         ("日期", "2026 年 8 月 2 日"),
         ("验证范围", "PDF / DOCX 解析、扫描 PDF OCR、代码规范结构化与可追溯输出"),
     ]:

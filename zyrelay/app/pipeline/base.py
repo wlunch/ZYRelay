@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
 import logging
+from datetime import UTC, datetime
 from time import perf_counter
 from typing import Protocol
 
@@ -23,12 +23,12 @@ class Pipeline:
     def execute(self, context: ProcessingContext) -> ProcessingContext:
         logger = logging.getLogger("zyrelay.pipeline")
         for step in self.steps:
-            started_at = datetime.now(timezone.utc)
+            started_at = datetime.now(UTC)
             started = perf_counter()
             try:
                 context = step.execute(context)
             except Exception as exc:
-                ended_at = datetime.now(timezone.utc)
+                ended_at = datetime.now(UTC)
                 error_code = getattr(exc, "error_code", "unexpected_error")
                 context.steps.append(
                     ProcessingStepRecord(
@@ -59,7 +59,7 @@ class Pipeline:
                     },
                 )
                 raise
-            ended_at = datetime.now(timezone.utc)
+            ended_at = datetime.now(UTC)
             context.steps.append(
                 ProcessingStepRecord(
                     name=step.name,

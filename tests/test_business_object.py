@@ -40,4 +40,3 @@ def test_contract_candidate_not_created_without_required_labels() -> None:
     builder = CandidateBuilder(PROJECT_ROOT / "config" / "business_objects.yaml")
     candidates = builder.build([], [_mention("contract_no", "HT-001", 1)])
     assert all(item.name != "合同" for item in candidates)
-

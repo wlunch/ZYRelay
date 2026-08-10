@@ -15,4 +15,6 @@ class RuleEvidenceValidatorResource:
         return request.capability == "evidence_validator"
 
     def execute(self, request: ResourceRequest, context: object) -> ResourceResponse:
-        return ResourceResponse(status="completed", metadata={"delegates_to": "existing_validator"})
+        return ResourceResponse(
+            status="completed", metadata={"delegates_to": "existing_validator"}
+        )

@@ -22,5 +22,8 @@ class PythonDocxParserResource:
             status="completed",
             payload=parsed,
             warnings=parsed.warnings,
-            metadata={"page_count": parsed.page_count, "element_count": len(parsed.elements)},
+            metadata={
+                "page_count": parsed.page_count,
+                "element_count": len(parsed.elements),
+            },
         )

@@ -23,6 +23,25 @@ class RelayStatus(StrEnum):
     FAILED = "failed"
 
 
+class RelayEnvironment(StrEnum):
+    DEV = "dev"
+    TEST = "test"
+    PROD = "prod"
+
+
+class ExecutionContext(BaseModel):
+    """Immutable business scope carried by every Relay execution."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    enterprise_id: str = "default"
+    department_id: str | None = None
+    team_id: str | None = None
+    project_id: str | None = None
+    environment: RelayEnvironment = RelayEnvironment.DEV
+    retry_limit: int = Field(default=0, ge=0, le=3)
+
+
 class RelayInput(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -33,7 +52,7 @@ class RelayInput(BaseModel):
     source_uri: str | None = None
 
     @model_validator(mode="after")
-    def validate_one_content_source(self) -> "RelayInput":
+    def validate_one_content_source(self) -> RelayInput:
         if bool(self.file_path) == bool(self.content_base64):
             raise ValueError("file_path 与 content_base64 必须二选一")
         return self
@@ -44,8 +63,11 @@ class RelayRequest(BaseModel):
 
     request_id: str | None = None
     enterprise_id: str = "default"
+    department_id: str | None = None
     team_id: str | None = None
     project_id: str | None = None
+    environment: RelayEnvironment = RelayEnvironment.DEV
+    retry_limit: int = Field(default=0, ge=0, le=3)
     mode: RelayMode = RelayMode.CODE_CONVENTION
     ground_profile_id: str | None = None
     resource_profile_id: str | None = None
@@ -70,6 +92,7 @@ class StepRecord(BaseModel):
     output_summary: dict[str, Any] = Field(default_factory=dict)
     warnings: list[str] = Field(default_factory=list)
     errors: list[dict[str, Any]] = Field(default_factory=list)
+    attempt: int = Field(default=1, ge=1)
 
 
 class ModelExecutionRecord(BaseModel):
@@ -103,8 +126,11 @@ class RelayExecution(BaseModel):
     request_id: str
     document_id: str | None = None
     enterprise_id: str
+    department_id: str | None = None
     team_id: str | None = None
     project_id: str | None = None
+    environment: RelayEnvironment = RelayEnvironment.DEV
+    retry_limit: int = Field(default=0, ge=0)
     mode: RelayMode
     status: RelayStatus = RelayStatus.CREATED
     current_step: str | None = None
@@ -120,6 +146,7 @@ class RelayExecution(BaseModel):
     errors: list[dict[str, Any]] = Field(default_factory=list)
     metrics: dict[str, Any] = Field(default_factory=dict)
     artifacts: list[dict[str, Any]] = Field(default_factory=list)
+    execution_history: list[dict[str, Any]] = Field(default_factory=list)
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 

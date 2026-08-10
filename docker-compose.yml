@@ -1,0 +1,13 @@
+services:
+  zyrelay:
+    build: .
+    image: zyrelay-docintelligence:1.0.0
+    ports:
+      - "8000:8000"
+    environment:
+      ZYRELAY_DATA_ROOT: /app/data
+      ZYRELAY_LLM_ENABLED: "false"
+    volumes:
+      - ./data:/app/data
+      - ./data/model_cache:/app/data/model_cache
+    restart: unless-stopped

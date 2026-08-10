@@ -4,7 +4,6 @@ import csv
 import hashlib
 import json
 import mimetypes
-import os
 import re
 import shutil
 import tempfile
@@ -15,7 +14,6 @@ from urllib.parse import urlparse
 
 import fitz
 import yaml
-
 
 ROOT = Path(__file__).resolve().parents[2]
 BENCHMARK_ROOT = ROOT / "benchmark"
@@ -52,7 +50,9 @@ def sha256_file(path: Path) -> str:
 
 def json_dump(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    payload = json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True, default=str)
+    payload = json.dumps(
+        value, ensure_ascii=False, indent=2, sort_keys=True, default=str
+    )
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(payload + "\n", encoding="utf-8")
     json.loads(tmp.read_text(encoding="utf-8"))
@@ -144,10 +144,21 @@ def document_info(path: Path) -> dict[str, Any]:
             pages_with_text=sum(1 for text in page_texts if text.strip()),
             pages_with_images=image_pages,
             average_text_density=round(text_length / max(document.page_count, 1), 2),
-            is_scanned=text_length <= max(20, document.page_count * 5) and image_pages > 0,
-            has_tables=bool(re.search(r"\b(table|column|row)\b|\|.{2,}\|", joined, re.I)),
-            has_code_blocks=bool(re.search(r"\b(class|def|function|curl|HTTP/|\{\s*\})\b", joined, re.I)),
-            has_headings=bool(re.search(r"(?m)^(\d+(\.\d+)*\s+|[A-Z][A-Z\s]{5,}$)", joined)),
+            is_scanned=text_length <= max(20, document.page_count * 5)
+            and image_pages > 0,
+            has_tables=bool(
+                re.search(r"\b(table|column|row)\b|\|.{2,}\|", joined, re.IGNORECASE)
+            ),
+            has_code_blocks=bool(
+                re.search(
+                    r"\b(class|def|function|curl|HTTP/|\{\s*\})\b",
+                    joined,
+                    re.IGNORECASE,
+                )
+            ),
+            has_headings=bool(
+                re.search(r"(?m)^(\d+(\.\d+)*\s+|[A-Z][A-Z\s]{5,}$)", joined)
+            ),
             parser_status="ok",
         )
         document.close()
@@ -177,4 +188,11 @@ def write_manifest_csv(entries: list[dict[str, Any]], target: Path) -> None:
         writer = csv.DictWriter(handle, fieldnames=keys)
         writer.writeheader()
         for entry in entries:
-            writer.writerow({key: json.dumps(value, ensure_ascii=False) if isinstance(value, (list, dict)) else value for key, value in entry.items()})
+            writer.writerow(
+                {
+                    key: json.dumps(value, ensure_ascii=False)
+                    if isinstance(value, (list, dict))
+                    else value
+                    for key, value in entry.items()
+                }
+            )

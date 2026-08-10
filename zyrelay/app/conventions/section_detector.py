@@ -7,7 +7,6 @@ from zyrelay.app.models import BlockType, DocumentBlock
 
 from .models import ConventionSection
 
-
 NUMBERED_HEADING = re.compile(
     r"^\s*(?:\d+(?:\.\d+)*[、.\s]|[一二三四五六七八九十]+、|"
     r"[（(][一二三四五六七八九十\d]+[）)]|第[一二三四五六七八九十\d]+条)"
@@ -34,7 +33,8 @@ class ConventionSectionDetector:
             identity = "|".join(block.block_id for block in current_blocks)
             sections.append(
                 ConventionSection(
-                    section_id="SEC-" + hashlib.sha256(identity.encode()).hexdigest()[:16],
+                    section_id="SEC-"
+                    + hashlib.sha256(identity.encode()).hexdigest()[:16],
                     title=self._clean_title(current_title),
                     level=current_level,
                     block_ids=[block.block_id for block in current_blocks],
@@ -77,7 +77,9 @@ class ConventionSectionDetector:
 
     @staticmethod
     def _heading_confidence(block: DocumentBlock) -> float:
-        score = 0.90 if block.block_type in {BlockType.TITLE, BlockType.HEADING} else 0.75
+        score = (
+            0.90 if block.block_type in {BlockType.TITLE, BlockType.HEADING} else 0.75
+        )
         if any(hint in block.text for hint in HEADING_HINTS):
             score += 0.05
         return min(score, 0.98)

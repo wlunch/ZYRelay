@@ -22,4 +22,3 @@ def test_image_only_pdf_requires_ocr(tmp_path) -> None:
     assert result.requires_ocr is True
     assert result.pages[0].has_images is True
     assert result.pages[0].text.strip() == ""
-

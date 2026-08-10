@@ -16,6 +16,11 @@ class ProvenanceRecord(BaseModel):
     ground_selection_id: str
     ground_snapshot_id: str
     resource_plan_id: str
+    object_id: str | None = None
+    source_pages: list[int] = Field(default_factory=list)
+    source_offsets: list[dict[str, int]] = Field(default_factory=list)
+    resource_ids: list[str] = Field(default_factory=list)
+    execution_timestamp: datetime = Field(default_factory=utc_now)
     source_block_ids: list[str] = Field(default_factory=list)
     source_mention_ids: list[str] = Field(default_factory=list)
     rule_ids: list[str] = Field(default_factory=list)

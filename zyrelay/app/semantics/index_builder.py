@@ -10,9 +10,7 @@ from zyrelay.app.models import (
 
 
 class SemanticIndexBuilder:
-    def build(
-        self, mentions: list[LabelMention]
-    ) -> dict[str, SemanticIndexBucket]:
+    def build(self, mentions: list[LabelMention]) -> dict[str, SemanticIndexBucket]:
         grouped: dict[str, dict[str, list[SemanticIndexOccurrence]]] = defaultdict(
             lambda: defaultdict(list)
         )
@@ -58,4 +56,3 @@ class SemanticIndexBuilder:
                     }
                 )
         return dict(index)
-

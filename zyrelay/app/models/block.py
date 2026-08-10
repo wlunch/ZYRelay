@@ -29,6 +29,14 @@ class DocumentBlock(BaseModel):
     end_offset: int = Field(ge=0)
     heading_level: int | None = Field(default=None, ge=1, le=9)
     parent_block_id: str | None = None
+    # These fields are intentionally auxiliary.  The original parser text and
+    # offsets remain the source of truth for rule extraction and evidence.
+    layout_type: str | None = None
+    language: str | None = None
+    is_code: bool = False
+    code_language: str | None = None
+    table_id: str | None = None
+    entities: list[dict[str, Any]] = Field(default_factory=list)
     metadata: dict[str, Any] = Field(default_factory=dict)
 
     @model_validator(mode="after")
@@ -36,4 +44,3 @@ class DocumentBlock(BaseModel):
         if self.end_offset < self.start_offset:
             raise ValueError("end_offset must not precede start_offset")
         return self
-

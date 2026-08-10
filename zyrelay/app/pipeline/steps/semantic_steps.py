@@ -108,9 +108,7 @@ class LLMEnrichmentStep:
             )
             context.candidates.extend(enriched)
         except Exception as exc:
-            context.warnings.append(
-                f"LLM enrichment 失败但规则结果已保留：{exc}"
-            )
+            context.warnings.append(f"LLM enrichment 失败但规则结果已保留：{exc}")
         return context
 
 

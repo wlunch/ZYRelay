@@ -1,0 +1,552 @@
+{
+  "cases": [
+    {
+      "block_count": 66,
+      "case_id": "BC-CONTRACT-001",
+      "checks": {
+        "block_order_valid": true,
+        "evidence_valid": true,
+        "minimum_blocks": true,
+        "minimum_conventions": true,
+        "provenance_valid": true
+      },
+      "convention_count": 0,
+      "duration_ms": 5189.509084011661,
+      "entity_recall": 1.0,
+      "error_count": 0,
+      "evidence_valid_rate": 1.0,
+      "expected_item_recall": 1.0,
+      "forbidden_output_count": 0,
+      "forbidden_outputs": [],
+      "model_metrics": {
+        "classifier": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "code_detector": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "language": {
+          "average_runtime_ms": 92.1603,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "layout": {
+          "average_runtime_ms": 0.1374,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "ner": {
+          "average_runtime_ms": 72.4241,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "ocr": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "spell": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "table": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        }
+      },
+      "peak_memory_bytes": 28764304,
+      "plugin_comparison": {
+        "classifier": 0,
+        "code_detector": 0,
+        "language": 1,
+        "layout": 1,
+        "ner": 1,
+        "ocr": 0,
+        "spell": 0,
+        "table": 0
+      },
+      "processing_success": true,
+      "provenance_valid_rate": 1.0,
+      "relation_count": 0,
+      "rule_recall": 1.0,
+      "semantic_evidence_completeness": 1.0,
+      "semantic_object_count": 304,
+      "stable_object_id": true,
+      "status": "partial",
+      "warning_count": 1
+    },
+    {
+      "block_count": 66,
+      "case_id": "BC-CONTRACT-002",
+      "checks": {
+        "block_order_valid": true,
+        "evidence_valid": true,
+        "minimum_blocks": true,
+        "minimum_conventions": true,
+        "provenance_valid": true
+      },
+      "convention_count": 0,
+      "duration_ms": 4669.9193340027705,
+      "entity_recall": 1.0,
+      "error_count": 0,
+      "evidence_valid_rate": 1.0,
+      "expected_item_recall": 1.0,
+      "forbidden_output_count": 0,
+      "forbidden_outputs": [],
+      "model_metrics": {
+        "classifier": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "code_detector": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "language": {
+          "average_runtime_ms": 52.0683,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "layout": {
+          "average_runtime_ms": 0.1124,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "ner": {
+          "average_runtime_ms": 49.0077,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "ocr": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "spell": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "table": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        }
+      },
+      "peak_memory_bytes": 9208860,
+      "plugin_comparison": {
+        "classifier": 0,
+        "code_detector": 0,
+        "language": 1,
+        "layout": 1,
+        "ner": 1,
+        "ocr": 0,
+        "spell": 0,
+        "table": 0
+      },
+      "processing_success": true,
+      "provenance_valid_rate": 1.0,
+      "relation_count": 0,
+      "rule_recall": 1.0,
+      "semantic_evidence_completeness": 1.0,
+      "semantic_object_count": 300,
+      "stable_object_id": true,
+      "status": "partial",
+      "warning_count": 1
+    },
+    {
+      "block_count": 66,
+      "case_id": "BC-CONTRACT-003",
+      "checks": {
+        "block_order_valid": true,
+        "evidence_valid": true,
+        "minimum_blocks": true,
+        "minimum_conventions": true,
+        "provenance_valid": true
+      },
+      "convention_count": 0,
+      "duration_ms": 4593.003791989759,
+      "entity_recall": 1.0,
+      "error_count": 0,
+      "evidence_valid_rate": 1.0,
+      "expected_item_recall": 1.0,
+      "forbidden_output_count": 0,
+      "forbidden_outputs": [],
+      "model_metrics": {
+        "classifier": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "code_detector": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "language": {
+          "average_runtime_ms": 50.897,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "layout": {
+          "average_runtime_ms": 0.146,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "ner": {
+          "average_runtime_ms": 47.7389,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "ocr": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "spell": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "table": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        }
+      },
+      "peak_memory_bytes": 9201638,
+      "plugin_comparison": {
+        "classifier": 0,
+        "code_detector": 0,
+        "language": 1,
+        "layout": 1,
+        "ner": 1,
+        "ocr": 0,
+        "spell": 0,
+        "table": 0
+      },
+      "processing_success": true,
+      "provenance_valid_rate": 1.0,
+      "relation_count": 0,
+      "rule_recall": 1.0,
+      "semantic_evidence_completeness": 1.0,
+      "semantic_object_count": 300,
+      "stable_object_id": true,
+      "status": "completed",
+      "warning_count": 0
+    },
+    {
+      "block_count": 66,
+      "case_id": "BC-CONTRACT-004",
+      "checks": {
+        "block_order_valid": true,
+        "evidence_valid": true,
+        "minimum_blocks": true,
+        "minimum_conventions": true,
+        "provenance_valid": true
+      },
+      "convention_count": 0,
+      "duration_ms": 4575.668167002732,
+      "entity_recall": 1.0,
+      "error_count": 0,
+      "evidence_valid_rate": 1.0,
+      "expected_item_recall": 1.0,
+      "forbidden_output_count": 0,
+      "forbidden_outputs": [],
+      "model_metrics": {
+        "classifier": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "code_detector": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "language": {
+          "average_runtime_ms": 49.4536,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "layout": {
+          "average_runtime_ms": 0.178,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "ner": {
+          "average_runtime_ms": 47.6189,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "ocr": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "spell": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "table": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        }
+      },
+      "peak_memory_bytes": 9210113,
+      "plugin_comparison": {
+        "classifier": 0,
+        "code_detector": 0,
+        "language": 1,
+        "layout": 1,
+        "ner": 1,
+        "ocr": 0,
+        "spell": 0,
+        "table": 0
+      },
+      "processing_success": true,
+      "provenance_valid_rate": 1.0,
+      "relation_count": 0,
+      "rule_recall": 1.0,
+      "semantic_evidence_completeness": 1.0,
+      "semantic_object_count": 300,
+      "stable_object_id": true,
+      "status": "completed",
+      "warning_count": 0
+    },
+    {
+      "block_count": 0,
+      "case_id": "BC-SCAN-003",
+      "checks": {
+        "bbox_required": false,
+        "block_order_valid": true,
+        "evidence_valid": true,
+        "minimum_blocks": false,
+        "minimum_conventions": true,
+        "non_empty_ocr_text": false,
+        "ocr_executed": true,
+        "provenance_valid": true
+      },
+      "convention_count": 0,
+      "duration_ms": 3582.3156670085154,
+      "entity_recall": 1.0,
+      "error_count": 0,
+      "evidence_valid_rate": 1.0,
+      "expected_item_recall": 0.25,
+      "forbidden_output_count": 1,
+      "forbidden_outputs": [
+        "semantic_evidence_incomplete"
+      ],
+      "model_metrics": {
+        "classifier": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "code_detector": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "language": {
+          "average_runtime_ms": 46.3492,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "layout": {
+          "average_runtime_ms": 0.1485,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "ner": {
+          "average_runtime_ms": 45.396,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "ocr": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "spell": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "table": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        }
+      },
+      "peak_memory_bytes": 1165338,
+      "plugin_comparison": {
+        "classifier": 0,
+        "code_detector": 0,
+        "language": 1,
+        "layout": 1,
+        "ner": 1,
+        "ocr": 0,
+        "spell": 0,
+        "table": 0
+      },
+      "processing_success": true,
+      "provenance_valid_rate": 1.0,
+      "relation_count": 0,
+      "rule_recall": 1.0,
+      "semantic_evidence_completeness": 0.0,
+      "semantic_object_count": 1,
+      "stable_object_id": true,
+      "status": "partial",
+      "warning_count": 3
+    },
+    {
+      "block_count": 0,
+      "case_id": "BC-SCAN-004",
+      "checks": {
+        "bbox_required": false,
+        "block_order_valid": true,
+        "evidence_valid": true,
+        "minimum_blocks": false,
+        "minimum_conventions": true,
+        "non_empty_ocr_text": false,
+        "ocr_executed": true,
+        "provenance_valid": true
+      },
+      "convention_count": 0,
+      "duration_ms": 3893.563167017419,
+      "entity_recall": 1.0,
+      "error_count": 0,
+      "evidence_valid_rate": 1.0,
+      "expected_item_recall": 0.25,
+      "forbidden_output_count": 1,
+      "forbidden_outputs": [
+        "semantic_evidence_incomplete"
+      ],
+      "model_metrics": {
+        "classifier": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "code_detector": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "language": {
+          "average_runtime_ms": 46.6663,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "layout": {
+          "average_runtime_ms": 0.1475,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "ner": {
+          "average_runtime_ms": 46.2094,
+          "executed_count": 1,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "ocr": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 0
+        },
+        "spell": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        },
+        "table": {
+          "average_runtime_ms": 0.0,
+          "executed_count": 0,
+          "run_count": 1,
+          "skipped_count": 1
+        }
+      },
+      "peak_memory_bytes": 1160473,
+      "plugin_comparison": {
+        "classifier": 0,
+        "code_detector": 0,
+        "language": 1,
+        "layout": 1,
+        "ner": 1,
+        "ocr": 0,
+        "spell": 0,
+        "table": 0
+      },
+      "processing_success": true,
+      "provenance_valid_rate": 1.0,
+      "relation_count": 0,
+      "rule_recall": 1.0,
+      "semantic_evidence_completeness": 0.0,
+      "semantic_object_count": 1,
+      "stable_object_id": true,
+      "status": "partial",
+      "warning_count": 3
+    }
+  ],
+  "generated_at": "2026-08-10T10:32:13Z",
+  "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+  "python": "3.13.7 (v3.13.7:bcee1c32211, Aug 14 2025, 19:10:51) [Clang 16.0.0 (clang-1600.0.26.6)]",
+  "relay_version": "1.0.0"
+}

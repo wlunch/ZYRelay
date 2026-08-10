@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 import pytest
 
 from zyrelay.app.core.config import PROJECT_ROOT
-from zyrelay.relay import RelayService, RelayRequest
+from zyrelay.relay import RelayRequest, RelayService
 from zyrelay.relay.models import RelayInput, RelayStatus
 
 
@@ -38,14 +36,23 @@ def test_real_paddleocr_scanned_pdf_has_traceable_conventions() -> None:
     blocks = result.result["blocks"]
     assert blocks
     assert all(block["metadata"]["source_method"] == "ocr" for block in blocks)
-    assert all(block["metadata"]["model_execution_id"] == execution["model_execution_id"] for block in blocks)
-    assert any(block["metadata"]["bbox"][2] > block["metadata"]["bbox"][0] for block in blocks)
+    assert all(
+        block["metadata"]["model_execution_id"] == execution["model_execution_id"]
+        for block in blocks
+    )
+    assert any(
+        block["metadata"]["bbox"][2] > block["metadata"]["bbox"][0] for block in blocks
+    )
     assert any("System.out.println" in block["text"] for block in blocks)
     assert any("80" in block["text"] for block in blocks)
     candidates = result.result["code_conventions"]
     assert candidates
-    assert any(item["rule_expression"]["expected"] == 80 for item in candidates if item["rule_expression"])
+    assert any(
+        item["rule_expression"]["expected"] == 80
+        for item in candidates
+        if item["rule_expression"]
+    )
     provenance = service.get_provenance(candidates[0]["provenance_id"])
-    assert provenance.model_execution_ids == [execution["model_execution_id"]]
+    assert execution["model_execution_id"] in provenance.model_execution_ids
     assert provenance.evidence[0]["metadata"]["resource_id"] == "paddleocr"
     assert provenance.model_details[0]["details"]["paddleocr_version"] == "3.7.0"

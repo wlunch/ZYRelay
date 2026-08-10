@@ -26,7 +26,4 @@ def test_semantic_index_aggregates_by_label_and_document() -> None:
 
     assert list(index) == ["contract_no"]
     assert len(index["contract_no"].documents["DOC-001"]) == 2
-    assert (
-        index["contract_no"].documents["DOC-001"][0].normalized_value == "HT-001"
-    )
-
+    assert index["contract_no"].documents["DOC-001"][0].normalized_value == "HT-001"

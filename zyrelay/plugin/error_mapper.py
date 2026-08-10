@@ -4,7 +4,6 @@ from zyrelay.app.core.exceptions import ZYRelayError
 
 from .contracts import PluginError
 
-
 ERROR_MAP = {
     "unsupported_file_type": ("unsupported_content_type", "validation"),
     "invalid_file": ("invalid_file", "validation"),
@@ -21,9 +20,7 @@ ERROR_MAP = {
 
 def map_exception(exc: Exception) -> PluginError:
     source_code = getattr(exc, "error_code", None)
-    code, stage = ERROR_MAP.get(
-        source_code, ("internal_error", "execution")
-    )
+    code, stage = ERROR_MAP.get(source_code, ("internal_error", "execution"))
     message = exc.message if isinstance(exc, ZYRelayError) else "插件执行失败"
     details = exc.details if isinstance(exc, ZYRelayError) else {}
     return PluginError(

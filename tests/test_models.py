@@ -32,4 +32,3 @@ def test_core_models_serialize() -> None:
 
     assert document.model_dump(mode="json")["status"] == "completed"
     assert block.model_dump(mode="json")["block_type"] == "paragraph"
-

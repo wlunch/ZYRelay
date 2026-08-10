@@ -6,7 +6,12 @@ import fitz
 import pytest
 
 from benchmark.scripts.build_manifest import _case_expected
-from benchmark.scripts.common import document_info, json_dump, stable_benchmark_id, validate_source_url
+from benchmark.scripts.common import (
+    document_info,
+    json_dump,
+    stable_benchmark_id,
+    validate_source_url,
+)
 from benchmark.scripts.compare_results import compare
 from benchmark.scripts.create_scanned_pdf import create_scanned_pdf
 from benchmark.scripts.finalize_results import finalize
@@ -16,11 +21,29 @@ from benchmark.scripts.validate_dataset import validate
 
 
 def test_source_config_uses_https_whitelist() -> None:
-    validate_source_url({"source_id": "ok", "source_url": "https://example.com/a.pdf", "source_domain": "example.com"})
+    validate_source_url(
+        {
+            "source_id": "ok",
+            "source_url": "https://example.com/a.pdf",
+            "source_domain": "example.com",
+        }
+    )
     with pytest.raises(ValueError):
-        validate_source_url({"source_id": "bad", "source_url": "http://example.com/a.pdf", "source_domain": "example.com"})
+        validate_source_url(
+            {
+                "source_id": "bad",
+                "source_url": "http://example.com/a.pdf",
+                "source_domain": "example.com",
+            }
+        )
     with pytest.raises(ValueError):
-        validate_source_url({"source_id": "bad", "source_url": "https://evil.example/a.pdf", "source_domain": "example.com"})
+        validate_source_url(
+            {
+                "source_id": "bad",
+                "source_url": "https://evil.example/a.pdf",
+                "source_domain": "example.com",
+            }
+        )
 
 
 def test_manifest_ids_and_dataset_validation() -> None:
@@ -48,13 +71,25 @@ def test_scan_generation_removes_text_and_keeps_images(tmp_path) -> None:
 
 
 def test_expected_matcher_checks_evidence_offsets_and_ocr() -> None:
-    case = {"expected": {**_case_expected("code_convention", True), "minimum_blocks": 1}}
+    case = {
+        "expected": {**_case_expected("code_convention", True), "minimum_blocks": 1}
+    }
     result = {
         "status": "completed",
-        "warnings": [], "errors": [], "metrics": {},
+        "warnings": [],
+        "errors": [],
+        "metrics": {},
         "result": {
-            "blocks": [{"sequence": 0, "text": "OCR text", "metadata": {"source_method": "ocr", "bbox": [1, 2, 3, 4]}}],
-            "code_conventions": [{"source_evidence": {"page_no": 1}, "provenance_id": "PROV-1"}],
+            "blocks": [
+                {
+                    "sequence": 0,
+                    "text": "OCR text",
+                    "metadata": {"source_method": "ocr", "bbox": [1, 2, 3, 4]},
+                }
+            ],
+            "code_conventions": [
+                {"source_evidence": {"page_no": 1}, "provenance_id": "PROV-1"}
+            ],
             "model_executions": [{"model_name": "paddleocr"}],
         },
     }
@@ -66,15 +101,27 @@ def test_expected_matcher_checks_evidence_offsets_and_ocr() -> None:
 def test_source_audit_has_no_personal_data_flags() -> None:
     rows = build_audit()
     assert len(rows) >= 17
-    assert all(row["official_source"] and not row["contains_personal_data"] for row in rows)
+    assert all(
+        row["official_source"] and not row["contains_personal_data"] for row in rows
+    )
 
 
 def test_finalize_and_comparison_detect_semantic_regression(tmp_path) -> None:
     baseline = tmp_path / "baseline"
     case = baseline / "BC-CODE-001"
     case.mkdir(parents=True)
-    json_dump(case / "evaluation.json", {"expected_item_recall": 1.0, "evidence_valid_rate": 1.0, "provenance_valid_rate": 1.0})
-    json_dump(case / "relay_result.json", {"status": "completed", "metrics": {"total_duration_ms": 20}})
+    json_dump(
+        case / "evaluation.json",
+        {
+            "expected_item_recall": 1.0,
+            "evidence_valid_rate": 1.0,
+            "provenance_valid_rate": 1.0,
+        },
+    )
+    json_dump(
+        case / "relay_result.json",
+        {"status": "completed", "metrics": {"total_duration_ms": 20}},
+    )
     json_dump(case / "models.json", [])
     report = finalize(baseline)
     assert report["summary"]["successful_cases"] == 1

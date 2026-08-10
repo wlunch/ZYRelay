@@ -18,10 +18,7 @@ class PyMuPDFPdfParserResource:
 
     def execute(self, request: ResourceRequest, context: object) -> ResourceResponse:
         parsed = PDFParser().parse(Path(request.file_path or ""))
-        density = {
-            page.page_no: len(page.text.strip())
-            for page in parsed.pages
-        }
+        density = {page.page_no: len(page.text.strip()) for page in parsed.pages}
         return ResourceResponse(
             status="completed",
             payload=parsed,

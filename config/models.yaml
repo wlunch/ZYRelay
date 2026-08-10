@@ -22,3 +22,79 @@ models:
       - PP-OCRv6_medium_det
       - PP-OCRv6_medium_rec
     approval_status: development
+  minilm_classifier:
+    enabled: true
+    provider: sentence-transformers
+    model_id: sentence-transformers/all-MiniLM-L6-v2
+    model_version: "all-MiniLM-L6-v2"
+    cache_dir: data/model_cache/minilm
+    allow_download: true
+    offline_mode: true
+    packages: [sentence_transformers, transformers, torch]
+    required_files: [config.json, model.safetensors]
+    labels: [contract, invoice, code_specification, general_document]
+  fasttext_language:
+    enabled: true
+    provider: fasttext
+    model_id: lid.176.ftz
+    model_version: "lid.176.ftz"
+    model_file: lid.176.ftz
+    cache_dir: data/model_cache/fasttext
+    allow_download: true
+    offline_mode: true
+    packages: [fasttext]
+    required_files: [lid.176.ftz]
+  doclayout_yolo:
+    enabled: true
+    provider: doclayout-yolo
+    model_id: juliozhao/DocLayout-YOLO-DocStructBench
+    model_version: "DocLayout-YOLO DocStructBench"
+    model_file: doclayout_yolo_docstructbench_imgsz1024.pt
+    cache_dir: data/model_cache/doclayout_yolo
+    allow_download: true
+    offline_mode: true
+    packages: [doclayout_yolo]
+    required_files: [doclayout_yolo_docstructbench_imgsz1024.pt]
+    image_size: 1024
+    confidence: 0.20
+  table_transformer:
+    enabled: true
+    provider: transformers
+    model_id: microsoft/table-transformer-structure-recognition-v1.1-all
+    model_version: "v1.1-all"
+    cache_dir: data/model_cache/table_transformer
+    allow_download: true
+    offline_mode: true
+    packages: [transformers, torch]
+    required_files: [config.json, model.safetensors, preprocessor_config.json]
+  gliner:
+    enabled: true
+    provider: gliner
+    model_id: urchade/gliner_small-v2.1
+    backbone_model_id: microsoft/deberta-v3-small
+    model_version: "gliner_small-v2.1"
+    cache_dir: data/model_cache/gliner
+    allow_download: true
+    offline_mode: true
+    packages: [gliner, transformers, torch]
+    # GLiNER small uses microsoft/deberta-v3-small as its local tokenizer and
+    # encoder. The installer must cache this dependency too before activation.
+    required_files: [gliner_config.json, pytorch_model.bin, deberta-v3-small/config.json]
+    labels: [person, organization, location]
+    threshold: 0.50
+  tree_sitter:
+    enabled: true
+    provider: tree-sitter
+    model_version: "tree-sitter 0.26"
+    cache_dir: data/model_cache/tree_sitter
+    allow_download: false
+    offline_mode: true
+    packages: [tree_sitter, tree_sitter_python]
+  symspell:
+    enabled: true
+    provider: symspellpy
+    model_version: "SymSpellPy 6.10"
+    cache_dir: data/model_cache/symspell
+    allow_download: false
+    offline_mode: true
+    packages: [symspellpy]

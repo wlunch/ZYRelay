@@ -9,7 +9,6 @@ from typing import Any, Protocol
 from .contracts import ArtifactReference
 from .execution_repository import LocalExecutionRepository
 
-
 ARTIFACT_ID = re.compile(r"^ART-[A-F0-9]{16}$")
 
 
@@ -61,9 +60,7 @@ class LocalArtifactRepository:
             artifact_type=artifact_type,
             media_type="application/json",
             file_name=Path(file_name).name,
-            uri=(
-                f"plugin://executions/{execution_id}/artifacts/{artifact_id}"
-            ),
+            uri=(f"plugin://executions/{execution_id}/artifacts/{artifact_id}"),
             checksum=hashlib.sha256(payload).hexdigest(),
             size=len(payload),
             metadata=metadata or {},

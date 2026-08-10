@@ -1,12 +1,11 @@
 from fastapi import APIRouter, Query, Request
 
-from zyrelay.app.services import DocumentService
 from zyrelay.app.conventions import (
     ConventionStatus,
     RequirementLevel,
     RuleType,
 )
-
+from zyrelay.app.services import DocumentService
 
 router = APIRouter(tags=["code-conventions"])
 

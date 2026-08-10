@@ -6,18 +6,18 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from zyrelay import __version__
-from zyrelay.app.api.routes_documents import router as documents_router
-from zyrelay.app.api.routes_search import router as search_router
 from zyrelay.app.api.routes_conventions import router as conventions_router
+from zyrelay.app.api.routes_documents import router as documents_router
 from zyrelay.app.api.routes_plugins import router as plugins_router
+from zyrelay.app.api.routes_relay import router as relay_router
+from zyrelay.app.api.routes_search import router as search_router
 from zyrelay.app.core.config import Settings
 from zyrelay.app.core.exceptions import ZYRelayError
 from zyrelay.app.core.logging import configure_logging
 from zyrelay.app.services import DocumentService
-from zyrelay.plugin import DocIntelligencePlugin, PluginRegistry
+from zyrelay.plugin import DocIntelligencePlugin, PluginLifecycleManager, PluginRegistry
 from zyrelay.plugin.dependencies import create_default_dependencies
 from zyrelay.relay import RelayService
-from zyrelay.app.api.routes_relay import router as relay_router
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -40,6 +40,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         )
     )
     app.state.plugin_registry = registry
+    app.state.plugin_lifecycle = PluginLifecycleManager(registry)
     app.state.relay_service = RelayService(settings)
 
     @app.middleware("http")
@@ -63,9 +64,32 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             },
         )
 
+    @app.exception_handler(Exception)
+    async def unexpected_error_handler(request: Request, exc: Exception):
+        # Production responses intentionally omit internal paths and stack traces.
+        return JSONResponse(
+            status_code=500,
+            content={
+                "error_code": "internal_error",
+                "message": "内部处理失败，请使用 request_id 查询结构化日志",
+                "request_id": request.state.request_id,
+            },
+        )
+
     @app.get("/health", tags=["system"])
     def health():
-        return {"status": "ok", "service": "zyrelay-docintelligence", "version": __version__}
+        return {
+            "status": "ok",
+            "service": "zyrelay-docintelligence",
+            "version": __version__,
+            "plugins": {
+                plugin.get_manifest().plugin_id: app.state.plugin_lifecycle.health(
+                    plugin.get_manifest().plugin_id
+                )
+                for plugin in registry.list_plugins()
+            },
+            "resources": app.state.relay_service.resources.health(),
+        }
 
     app.include_router(documents_router)
     app.include_router(search_router)

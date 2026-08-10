@@ -16,17 +16,19 @@ from zyrelay.app.pipeline.steps import (
     BuildConventionSectionsStep,
     BuildSemanticCandidatesStep,
     BuildSemanticIndexStep,
+    BuildSemanticObjectsStep,
     BuildUOMPackageStep,
-    ExtractDocumentStep,
     ExtractConventionCandidatesStep,
+    ExtractDocumentStep,
     LLMEnrichmentStep,
     MatchLabelsStep,
     NormalizeTextStep,
     SaveResultStep,
-    ValidateFileStep,
     ValidateConventionCandidatesStep,
+    ValidateFileStep,
 )
 from zyrelay.app.storage import LocalStorage
+from zyrelay.provenance import ProvenanceService
 
 
 class DocumentService:
@@ -35,6 +37,7 @@ class DocumentService:
         self.storage = LocalStorage(
             self.settings.data_root, keep_prepared=self.settings.keep_prepared
         )
+        self.provenance = ProvenanceService(self.settings.data_root)
 
     def process(
         self, file_name: str, content: bytes, *, request_id: str | None = None
@@ -72,6 +75,10 @@ class DocumentService:
                     ExtractConventionCandidatesStep(self.settings),
                     ValidateConventionCandidatesStep(),
                     BuildConventionIndexStep(),
+                    BuildSemanticObjectsStep(
+                        ground_snapshot_id="GROUND-STANDALONE",
+                        resource_plan_id="RPLAN-STANDALONE",
+                    ),
                     BuildUOMPackageStep(self.settings),
                     SaveResultStep(self.storage),
                 ]
@@ -79,6 +86,22 @@ class DocumentService:
             context = pipeline.execute(context)
             if context.package is None or context.document is None:
                 raise RuntimeError("pipeline did not produce a package")
+
+            semantic_objects = []
+            for item in context.semantic_objects:
+                record = self.provenance.create_for_semantic_object(
+                    item,
+                    execution_id=task_id,
+                    ground_selection_id="GROUND-STANDALONE",
+                    ground_snapshot_id="GROUND-STANDALONE",
+                    resource_plan_id="RPLAN-STANDALONE",
+                    model_execution_ids=[],
+                )
+                semantic_objects.append(
+                    item.model_copy(update={"provenance_id": record.provenance_id})
+                )
+            context.semantic_objects = semantic_objects
+            context.package.semantic_objects.objects = semantic_objects
 
             # Build/save steps append their records after execution. Refresh the
             # persisted package so processing.steps is complete.
@@ -104,6 +127,68 @@ class DocumentService:
 
     def get_semantic_index(self, document_id: str):
         return self.get_package(document_id).som.semantic_index
+
+    def get_semantic_objects(
+        self,
+        document_id: str,
+        *,
+        object_type: str | None = None,
+        category: str | None = None,
+        language: str | None = None,
+        page: int | None = None,
+    ):
+        objects = self.get_package(document_id).semantic_objects.objects
+        return [
+            item
+            for item in objects
+            if (object_type is None or item.object_type.value == object_type)
+            and (category is None or item.category == category)
+            and (language is None or item.language == language)
+            and (page is None or item.page == page)
+        ]
+
+    def export_semantic_objects(
+        self, document_id: str, export_format: str
+    ) -> dict[str, Any]:
+        package = self.get_package(document_id)
+        objects = [
+            item.model_dump(mode="json", exclude_none=True)
+            for item in package.semantic_objects.objects
+        ]
+        if export_format == "json":
+            return {"document_id": document_id, "semantic_objects": objects}
+        if export_format == "json-ld":
+            return {
+                "@context": {
+                    "id": "@id",
+                    "type": "@type",
+                    "SemanticObject": "uom://semantic/SemanticObject",
+                },
+                "@id": f"uom://documents/{document_id}",
+                "@graph": [
+                    {"@id": item["object_id"], "@type": item["object_type"], **item}
+                    for item in objects
+                ],
+            }
+        if export_format == "graph-json":
+            return {
+                "document_id": document_id,
+                "nodes": [
+                    item for item in objects if item["object_type"] != "relation"
+                ],
+                "edges": [
+                    {
+                        "id": item["object_id"],
+                        "type": item["name"],
+                        "source": item.get("source_object_id"),
+                        "target": item.get("target_object_id"),
+                        "evidence_ids": item.get("evidence_ids", []),
+                    }
+                    for item in objects
+                    if item["object_type"] == "relation"
+                ],
+            }
+        raise ValueError("unsupported_semantic_export_format")
 
     def get_code_conventions(
         self,
@@ -194,7 +279,11 @@ class DocumentService:
                 continue
             for doc_id, occurrences in bucket.documents.items():
                 for occurrence in occurrences:
-                    if value and value.casefold() not in occurrence.normalized_value.casefold():
+                    if (
+                        value
+                        and value.casefold()
+                        not in occurrence.normalized_value.casefold()
+                    ):
                         continue
                     results.append(
                         {
