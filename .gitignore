@@ -37,10 +37,6 @@ data/model_cache/*
 !data/model_cache/.gitkeep
 benchmark/private/*
 !benchmark/private/.gitkeep
-benchmark/sources/**/*.pdf
-benchmark/sources/**/*.html
-benchmark/scanned/**/*.pdf
-benchmark/scanned/**/*.metadata.json
 benchmark/results/baseline/
 benchmark/results/latest/
 benchmark/results/document_inspection.json

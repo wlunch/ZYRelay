@@ -1,0 +1,30 @@
+{
+  "created_at": "2026-08-03T05:33:37Z",
+  "dimensions": [
+    {
+      "height": 2339,
+      "page_no": 1,
+      "width": 1654
+    },
+    {
+      "height": 2339,
+      "page_no": 2,
+      "width": 1654
+    },
+    {
+      "height": 2339,
+      "page_no": 3,
+      "width": 1654
+    }
+  ],
+  "dpi": 200,
+  "extractable_text_length": 0,
+  "file_size": 600918,
+  "image_pages": 3,
+  "page_count": 3,
+  "quality": "clean",
+  "sha256": "2cbd7186c567b98729a6a2a0f03e8407e9f20324c8aaa1e2b6693a8b5c115e0f",
+  "source_path": "benchmark/sources/enterprise_policy/ncsc-password-guidance.pdf",
+  "target_path": "benchmark/scanned/enterprise_policy/BC-SCAN-005.pdf",
+  "tool": "PyMuPDF 1.28.0"
+}

@@ -1,0 +1,30 @@
+{
+  "created_at": "2026-08-03T05:33:38Z",
+  "dimensions": [
+    {
+      "height": 1650,
+      "page_no": 1,
+      "width": 1275
+    },
+    {
+      "height": 1650,
+      "page_no": 2,
+      "width": 1275
+    },
+    {
+      "height": 1650,
+      "page_no": 3,
+      "width": 1275
+    }
+  ],
+  "dpi": 150,
+  "extractable_text_length": 0,
+  "file_size": 451168,
+  "image_pages": 3,
+  "page_count": 3,
+  "quality": "degraded",
+  "sha256": "5e99c5de463e20579ed93ddb1b4fc9a8e1fca9eb4e0832dbc0707e290c9f4c4a",
+  "source_path": "benchmark/sources/enterprise_policy/nist-800-61r2.pdf",
+  "target_path": "benchmark/scanned/enterprise_policy/BC-SCAN-006.pdf",
+  "tool": "PyMuPDF 1.28.0"
+}

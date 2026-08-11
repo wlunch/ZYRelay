@@ -1,10 +1,6 @@
 # Source documents and generated outputs remain local by default.
 private/*
 !private/.gitkeep
-sources/**/*.pdf
-sources/**/*.html
-scanned/**/*.pdf
-scanned/**/*.metadata.json
 results/latest/
 results/baseline/
 results/document_inspection.json

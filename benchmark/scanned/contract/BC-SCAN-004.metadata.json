@@ -1,0 +1,25 @@
+{
+  "created_at": "2026-08-03T05:33:37Z",
+  "dimensions": [
+    {
+      "height": 2105,
+      "page_no": 1,
+      "width": 1489
+    },
+    {
+      "height": 2105,
+      "page_no": 2,
+      "width": 1489
+    }
+  ],
+  "dpi": 180,
+  "extractable_text_length": 0,
+  "file_size": 449683,
+  "image_pages": 2,
+  "page_count": 2,
+  "quality": "medium",
+  "sha256": "4a036a848f3fd3a40be870fff3654a52c7e5f22ed6a51012a96c90108e0c504a",
+  "source_path": "benchmark/sources/contract/gsa-sf30.pdf",
+  "target_path": "benchmark/scanned/contract/BC-SCAN-004.pdf",
+  "tool": "PyMuPDF 1.28.0"
+}
