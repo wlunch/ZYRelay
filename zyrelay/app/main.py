@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import uuid
+from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from zyrelay import __version__
 from zyrelay.app.api.routes_conventions import router as conventions_router
+from zyrelay.app.api.routes_demo import router as demo_router
 from zyrelay.app.api.routes_documents import router as documents_router
 from zyrelay.app.api.routes_plugins import router as plugins_router
 from zyrelay.app.api.routes_relay import router as relay_router
@@ -96,6 +99,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(conventions_router)
     app.include_router(plugins_router)
     app.include_router(relay_router)
+    app.include_router(demo_router)
+    app.mount(
+        "/demo-assets",
+        StaticFiles(directory=str(Path(__file__).resolve().parent / "demo")),
+        name="demo-assets",
+    )
     return app
 
 

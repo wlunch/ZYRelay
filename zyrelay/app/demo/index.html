@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="ZYRelay Document Intelligence Relay demo" />
+    <title>Document Intelligence Demo | ZYRelay</title>
+    <link rel="stylesheet" href="/demo-assets/demo.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/demo" aria-label="ZYRelay Document Intelligence Demo">
+        <span class="brand-mark">Z</span>
+        <span><strong>ZYRelay</strong><small>Document Intelligence Demo</small></span>
+      </a>
+      <div class="topbar-actions"><span id="service-state" class="status-dot neutral">Checking service</span><a href="/docs" target="_blank" rel="noreferrer">API Docs ↗</a></div>
+    </header>
+
+    <main class="shell">
+      <section class="intro">
+        <div><p class="eyebrow">ENTERPRISE RELAY</p><h1>Document Intelligence Demo</h1><p>Upload a PDF or DOCX file and inspect its evidence-backed semantic results. This page orchestrates the existing Relay API; it does not alter the Relay pipeline.</p></div>
+        <button class="text-button" id="show-architecture" type="button">View architecture</button>
+      </section>
+
+      <section class="workspace" aria-label="Document processing workspace">
+        <div class="card upload-card">
+          <div class="card-heading"><div><p class="step">1</p><h2>Upload document</h2></div><span class="hint">PDF or DOCX</span></div>
+          <label id="drop-zone" class="drop-zone" for="file-input">
+            <input id="file-input" type="file" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+            <span class="upload-icon">↑</span><strong>Drop a document here</strong><span>or choose a file from your computer</span><button type="button" class="secondary-button" id="choose-file">Choose file</button>
+          </label>
+          <div id="file-summary" class="file-summary empty" aria-live="polite">No document selected</div>
+        </div>
+
+        <div class="card options-card">
+          <div class="card-heading"><div><p class="step">2</p><h2>Processing options</h2></div><span class="hint">Maps to Relay API</span></div>
+          <div class="form-grid">
+            <label>Enterprise<input id="enterprise-id" value="default" maxlength="80" /></label>
+            <label>Team<input id="team-id" placeholder="e.g. platform" maxlength="80" /></label>
+            <label>Project<input id="project-id" placeholder="e.g. procurement" maxlength="80" /></label>
+            <label>Mode<select id="mode"><option value="code_convention">Code convention</option><option value="contract">Contract</option><option value="auto">Auto</option></select></label>
+            <label>Output detail<select id="output-detail"><option value="full">Full (recommended for demo)</option><option value="standard">Standard</option><option value="summary">Summary</option></select></label>
+            <label>Ground profile<input id="ground-profile" placeholder="Optional profile ID" maxlength="100" /></label>
+          </div>
+          <div class="toggles"><label class="toggle"><input id="enable-ocr" type="checkbox" checked /><span></span>Enable OCR for scanned PDFs</label><label class="toggle"><input id="enable-layout" type="checkbox" /><span></span>Enable layout model</label></div>
+          <button id="process-button" class="primary-button" type="button" disabled>Process document <span>→</span></button>
+          <p id="request-note" class="request-note">Select a document to begin.</p>
+        </div>
+      </section>
+
+      <section class="card status-card" aria-live="polite">
+        <div class="status-summary"><div><p class="eyebrow">EXECUTION</p><h2 id="execution-title">Waiting for a document</h2><p id="execution-meta">The timeline will show actual Relay step records after processing.</p></div><div class="progress-wrap"><span id="progress-label">0%</span><div class="progress-track"><i id="progress-bar"></i></div></div></div>
+        <div id="timeline" class="timeline"></div>
+      </section>
+
+      <section id="results" class="results" hidden>
+        <div class="section-title"><div><p class="eyebrow">STRUCTURED OUTPUT</p><h2>Semantic results</h2></div><div id="result-badges" class="badges"></div></div>
+        <div class="result-grid">
+          <section class="card semantic-card"><div class="card-heading"><div><h3>Semantic object viewer</h3><p>Click an object to inspect its evidence.</p></div></div><div id="object-tabs" class="tabs" role="tablist"></div><div id="semantic-list" class="semantic-list"></div></section>
+          <aside class="card evidence-card"><div class="card-heading"><div><h3>Evidence viewer</h3><p>Trace each result to source text and processing records.</p></div></div><div id="evidence-content" class="empty-state">Select a semantic object to view its page, block, offsets, rule, Ground, plugin, model and provenance.</div></aside>
+        </div>
+
+        <div class="result-grid lower-grid">
+          <section class="card resource-card"><div class="card-heading"><div><h3>Resources and models</h3><p>Actual plan, selected plugins and fallback decisions.</p></div></div><div id="resource-content" class="empty-state">Resource information will appear after processing.</div></section>
+          <section class="card uom-card"><div class="card-heading"><div><h3>UOM package</h3><p>Browse the complete JSON output.</p></div><button id="download-uom" class="secondary-button" type="button" disabled>Download JSON</button></div><div id="uom-tabs" class="tabs compact" role="tablist"></div><div id="uom-tree" class="json-tree empty-state">No UOM package loaded.</div></section>
+        </div>
+      </section>
+
+      <section id="architecture" class="architecture" hidden>
+        <div class="section-title"><div><p class="eyebrow">ARCHITECTURE</p><h2>Relay demo orchestration</h2></div><button id="hide-architecture" class="text-button" type="button">Close</button></div>
+        <div class="card architecture-card"><div class="architecture-flow" aria-label="Upload then preprocessing then GroundChoose then ResourcePlan then Relay API then Parser then Small Models then Rule Engine then Semantic Objects then UOM Package"><span>Upload</span><b>↓</b><span>Preprocessing</span><b>↓</b><span>GroundChoose</span><b>↓</b><span>ResourcePlan</span><b>↓</b><span>Relay API</span><b>↓</b><span>Parser</span><b>↓</b><span>Small Models</span><b>↓</b><span>Rule Engine</span><b>↓</b><span>Semantic Objects</span><b>↓</b><span>UOM Package</span></div><details><summary>Mermaid source</summary><pre class="mermaid-source">flowchart LR
+  A[Upload] --> B[Preprocessing] --> C[GroundChoose] --> D[ResourcePlan]
+  D --> E[Relay API] --> F[Parser] --> G[Small Models]
+  G --> H[Rule Engine] --> I[Semantic Objects] --> J[UOM Package]</pre></details></div>
+      </section>
+    </main>
+    <template id="timeline-item-template"><div class="timeline-item"><span class="timeline-node"></span><div><strong></strong><small></small></div><em></em></div></template>
+    <script src="/demo-assets/demo.js" defer></script>
+  </body>
+</html>

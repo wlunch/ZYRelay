@@ -74,6 +74,17 @@ curl http://127.0.0.1:8000/health
 
 OpenAPI 文档位于 `http://127.0.0.1:8000/docs`。
 
+### Document Intelligence Demo
+
+启动服务后访问 `http://127.0.0.1:8000/demo`，可使用单页 Relay Demo 完成 PDF/DOCX 拖拽上传、企业范围与 OCR 选项设置，以及完整 Relay 处理。页面只调用已有 API：
+
+- `POST /api/v1/relay/process`
+- `GET /api/v1/relay/executions/{id}`、`/ground`、`/resources`、`/models`
+- `GET /api/v1/relay/provenance/{id}`
+- `GET /api/v1/documents/{document_id}/uom`（读取 Relay 已保存的 UOM，不新增接口）
+
+处理完成后，页面会显示实际步骤时间线、semantic objects 分组、点击对象后的原文证据与 provenance、资源计划/模型回退信息，以及可折叠的 UOM JSON 树和下载按钮。详细操作见 [Demo UI Guide](docs/DemoUI.md)。
+
 ## Relay 流程（1.0）
 
 `Relay` 是面向团队规范文档的固定、同步编排入口；它复用既有解析、标签、代码规范和 UOM 步骤，不引入工作流引擎。
